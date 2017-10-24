@@ -11,7 +11,10 @@ class Match extends Model
 {
     protected $fillable = [
       'match_time',
-      'competition_id'
+      'competition_id',
+      'results',
+      'team_A',
+      'team_B'
     ];
 
     public function teams()

@@ -17,8 +17,11 @@ class CreateMatchesTable extends Migration
             $table->increments('id');
             $table->timestamps();
 
-            $table->dateTimeTz('match_time');
+            $table->dateTimeTz('match_time')->nullable();
             $table->unsignedInteger('competition_id');
+            $table->unsignedInteger('team_A');
+            $table->unsignedInteger('team_B')->nullable();
+            $table->json('results')->nullable();
         });
     }
 
