@@ -3,6 +3,7 @@
 namespace KIPR;
 
 use KIPR\Team;
+use KIPR\Rule;
 use KIPR\Match;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,5 +25,10 @@ class Competition extends Model
     public function matches()
     {
       return $this->hasMany(Match::class);
+    }
+
+    public function rules()
+    {
+      return $this->hasMany(Rule::class);
     }
 }
