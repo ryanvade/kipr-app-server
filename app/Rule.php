@@ -11,5 +11,8 @@ class Rule extends Model
         'rules'
     ];
 
-    
+    public function getParsedRules()
+    {
+      return collect(json_decode($this->rules));
+    }
 }
