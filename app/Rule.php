@@ -2,17 +2,25 @@
 
 namespace KIPR;
 
+use KIPR\Competition;
 use Illuminate\Database\Eloquent\Model;
 
 class Rule extends Model
 {
     protected $fillable = [
         'year',
-        'rules'
+        'rules',
+        'competition_id'
     ];
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
+    }
 
     public function getParsedRules()
     {
-      return collect(json_decode($this->rules));
+        $rules = collect(json_decode($this->rules));
+        return $rules;
     }
 }

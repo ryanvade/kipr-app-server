@@ -117,4 +117,39 @@ class MatchTest extends TestCase
       # now check if the parsed results are the same as the actual parsed results
       $this->assertEquals($parsedResults, $actualParsedResults);
     }
+
+    public function test_it_can_parse_its_results_for_one_team()
+    {
+        # given a match time
+        $match_time = Carbon::Now();
+        # and a competition
+        $competition = factory(Competition::class)->create();
+        # and a Team A
+        $teamA = factory(Team::class)->create();
+        # and some results
+        $results = [
+         "A" => [
+           "robot_terrace" => 1,
+           "golfball_cup" => 4,
+         ]
+       ];
+       # create a match
+       $match = Match::create([
+         'match_time' => $match_time,
+         'competition_id' => $competition->id,
+         'team_A' => $teamA->id,
+         'results' => json_encode($results)
+       ]);
+       # get the parsed results
+       $parsedResults = $match->getParsedResults();
+       # and the actual parsed results
+       $actualParsedResults = collect([
+        "A" => collect([
+          "robot_terrace" => 1,
+          "golfball_cup" => 4,
+        ])
+      ]);
+      # now check if the parsed results are the same as the actual parsed results
+      $this->assertEquals($parsedResults, $actualParsedResults);
+    }
 }

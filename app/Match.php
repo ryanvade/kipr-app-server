@@ -31,46 +31,44 @@ class Match extends Model
         return $this->belongsTo(Competition::class);
     }
 
-    public function score(Rule $rule)
+    public function score(Rule $rule = null)
     {
-      $results = $this->getParsedResults();
-      $rules = $rule->getParsedRules();
-      $counts = $rules->where('type','count');
-      $mults = $rules->where('type','multiplier');
-      $customs = $rules->where('type','custom');
-
-      foreach($results as $teamResults)
-      {
-        //goes through each team
-
-        foreach($counts as $countRule)
-        {
-          //gets the count for each object in a given location
-
+        if ($rule == null) {
+            $rule = $this->competition->rule;
         }
 
-        foreach($mults as $multRule)
-        {
-          //gets the multipliers that need to be applied to a given
+        $results = $this->getParsedResults();
+        $rules = $rule->getParsedRules();
+        $counts = $rules->where('type', 'count');
+        $mults = $rules->where('type', 'multiplier');
+        $customs = $rules->where('type', 'custom');
+
+        foreach ($results as $teamResults) {
+            //goes through each team
+
+            foreach ($counts as $countRule) {
+                //gets the count for each object in a given location
+            }
+
+            foreach ($mults as $multRule) {
+                //gets the multipliers that need to be applied to a given
           //the count, object, and location
+            }
 
-        }
-
-        //need class to handle custom rules
+            //need class to handle custom rules
         //scores are summed and added to a collection
-      }
+        }
     }
 
     public function getParsedResults()
     {
-      $results = collect(json_decode($this->results));
+        $results = collect(json_decode($this->results));
 
 
-      foreach($results->keys() as $key)
-      {
-        $results[$key] = collect($results[$key]);
-      }
+        foreach ($results->keys() as $key) {
+            $results[$key] = collect($results[$key]);
+        }
 
-      return $results;
+        return $results;
     }
 }
