@@ -18,6 +18,7 @@ class CreateRulesTable extends Migration
             $table->timestamps();
             $table->string('year');
             $table->json('rules');
+            $table->unsignedInteger('competition_id');
         });
     }
 
