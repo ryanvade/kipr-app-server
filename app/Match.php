@@ -34,7 +34,7 @@ class Match extends Model
     public function score(Rule $rule = null)
     {
         if ($rule == null) {
-            $rule = $this->competition->rule;
+            $rule = $this->competition()->first()->rule;
         }
 
         $results = $this->getParsedResults();
@@ -70,5 +70,13 @@ class Match extends Model
         }
 
         return $results;
+    }
+
+    public function setResults($results)
+    {
+        $this->update([
+        'results' => $results
+      ]);
+        # TODO: Fire Event for match end
     }
 }
