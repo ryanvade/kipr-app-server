@@ -11,8 +11,8 @@ class Rule extends Model
         'rules'
     ];
 
-    public function getParsedRules()
+    public function competition()
     {
-      return collect(json_decode($this->rules));
+        return $this->belongsTo(Competition::class);
     }
 }
