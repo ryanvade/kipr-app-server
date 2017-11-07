@@ -9,7 +9,6 @@ use KIPR\Exceptions\InvalidResultException;
 
 class ScoringTest extends TestCase
 {
-
     public function test_no_modifiers()
     {
         $rules='{
@@ -31,7 +30,7 @@ class ScoringTest extends TestCase
             "blue_ball_in_cup": 5,
             "total": 11
         }';
-        
+
         $score = Tabulator::score($rules, $results);
         $this->assertEquals($score, json_decode($expected, true));
     }
@@ -51,7 +50,7 @@ class ScoringTest extends TestCase
         $expected = '{
             "total": 0
         }';
-        
+
         $score = Tabulator::score($rules, $results);
         $this->assertEquals($score, json_decode($expected, true));
     }
@@ -71,7 +70,7 @@ class ScoringTest extends TestCase
             "red_ball_in_cup": 5,
             "green_ball_in_cup": 5
         }';
-        
+
         $this->expectException(\KIPR\Exceptions\InvalidResultException::class);
         $score = Tabulator::score($rules, $results);
     }
@@ -183,7 +182,7 @@ class ScoringTest extends TestCase
             "red_ball_in_cup": 5,
             "blue_ball_in_cup": 5
         }';
-        
+
         $expected = json_decode('{
             "robot_on_terrace": 15,
             "red_ball_in_cup": 5,
@@ -212,4 +211,3 @@ class ScoringTest extends TestCase
         $this->assertEquals($expected, $score);
     }
 }
-

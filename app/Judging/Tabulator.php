@@ -10,26 +10,26 @@ use KIPR\Exceptions\InvalidResultException;
 use Illuminate\Contracts\Support\Jsonable;
 
 // TODO Make this a singleton?
-class Tabulator 
+class Tabulator
 {
-
-    public static function evaluateExpression($expr, $score) {
+    public static function evaluateExpression($expr, $score)
+    {
         preg_match("/^\s*(\S*)\s*(==|!=)\s*(\S*)\s*$/", $expr, $groups);
         $operator = $groups[2];
 
-        if(is_numeric($groups[1])) {
+        if (is_numeric($groups[1])) {
             $left_operand = intval($groups[1]);
         } else {
             $left_operand = $score[$groups[1]];
         }
 
-        if(is_numeric($groups[3])) {
+        if (is_numeric($groups[3])) {
             $right_operand = intval($groups[3]);
         } else {
             $right_operand = $score[$groups[3]];
         }
 
-        switch($operator) {
+        switch ($operator) {
             case "==":
                 return $left_operand == $right_operand;
             case "!=":
@@ -37,21 +37,17 @@ class Tabulator
         }
     }
 
-    private static function _score($rules, &$score) {
+    private static function _score($rules, $score)
+    {
         foreach ($rules as $r) {
-            if($r->type == "multiplier")
-            {
+            if ($r->type == "multiplier") {
                 $score[$r->target] = ($score[$r->target] ?? 0) * $r->value;
-            }
-            else if($r->type == "fixed")
-            {
+            } elseif ($r->type == "fixed") {
                 $score[$r->target] = ($score[$r->target] ?? 0) + $r->value;
-            }
-            else if($r->type == "set") {
+            } elseif ($r->type == "set") {
                 $score[$r->target] = $r->value;
-            }
-            else if($r->type == "conditional") {
-                if(Tabulator::evaluateExpression($r->value, $score)) {
+            } elseif ($r->type == "conditional") {
+                if (Tabulator::evaluateExpression($r->value, $score)) {
                     Tabulator::_score($r->target, $score);
                 }
             }
@@ -73,8 +69,8 @@ class Tabulator
         $rules = Tabulator::parse($rule);
 
         // Validate the match
-        foreach(array_keys($score) as $event) {
-            if(!array_key_exists($event, $rules->events)) {
+        foreach (array_keys($score) as $event) {
+            if (!array_key_exists($event, $rules->events)) {
                 throw new InvalidResultException("Unknown event: $event\n");
             }
         }
@@ -95,7 +91,7 @@ class Tabulator
         $results = json_decode($json, $array);
 
         //foreach ($results->keys() as $key) {
-            //$results[$key] = collect($results[$key]);
+        //$results[$key] = collect($results[$key]);
         //}
         return $results;
     }
