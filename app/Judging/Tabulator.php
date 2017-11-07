@@ -6,6 +6,7 @@ use KIPR\Team;
 use KIPR\Match;
 use KIPR\Score;
 use KIPR\Competition;
+use KIPR\Exceptions\InvalidResultException;
 use Illuminate\Contracts\Support\Jsonable;
 
 // TODO Make this a singleton?
@@ -74,8 +75,7 @@ class Tabulator
         // Validate the match
         foreach(array_keys($score) as $event) {
             if(!array_key_exists($event, $rules->events)) {
-                // TODO Throw exception
-                print_r("Invalid event $event\n");
+                throw new InvalidResultException("Unknown event: $event\n");
             }
         }
 
