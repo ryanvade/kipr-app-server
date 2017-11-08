@@ -18,10 +18,12 @@ export class JudgingPage {
   rules: Array<{label:string, value:number}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    //this will be change later to a for each loop to generate the rows
+    //this will be changed later to a for each loop to generate the rows
     this.rules = [
       {label:'Red ball(s) in bucket',value: 0},
       {label:'Blue ball(s) in bucket',value: 0},
+      {label:'Robots on Terrace',value: 0},
+      {label:'Super long description just to test something. Hopefully these are not that long.',value: 0},
       {label:'Robots on Terrace',value: 0}
     ]
   }

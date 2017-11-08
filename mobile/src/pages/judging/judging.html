@@ -24,18 +24,18 @@
       </ion-col>
     </ion-row>
     <!-- Juding Rules -->
-    <ion-row *ngFor="let rule of rules">
-      <ion-col>
-        <ion-item no-lines>
+    <ion-row *ngFor="let rule of rules" align-items-start justify-content-center>
+      <ion-col col-md-3>
+        <ion-item no-lines text-wrap>
           <ion-label>{{rule.label}}</ion-label>
         </ion-item>
       </ion-col>
-      <ion-col>
+      <ion-col col-md-2 offset-md-1>
         <ion-item no-lines>
         <button ion-button color="light" (click)="decrement(rule)" icon-only item-left>
           <ion-icon name="remove"></ion-icon>
         </button>
-        <ion-input id="" type="number" placeholder="{{rule.value}}" min="0"></ion-input>
+        <ion-input  type="number" placeholder="{{rule.value}}" min="0"></ion-input>
         <button ion-button color="light" (click)="increment(rule)" icon-only item-right>
           <ion-icon name="add"></ion-icon>
         </button>
