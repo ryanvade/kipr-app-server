@@ -5,11 +5,12 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Judging</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -23,57 +24,19 @@
       </ion-col>
     </ion-row>
     <!-- Juding Rules -->
-    <ion-row>
+    <ion-row *ngFor="let rule of rules">
       <ion-col>
         <ion-item no-lines>
-          <ion-label>Red ball(s) in bucket</ion-label>
+          <ion-label>{{rule.label}}</ion-label>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item no-lines>
-        <button ion-button color="light" icon-only item-left>
+        <button ion-button color="light" (click)="decrement(rule)" icon-only item-left>
           <ion-icon name="remove"></ion-icon>
         </button>
-        <ion-input type="number" placeholder="0"></ion-input>
-        <button ion-button color="light" icon-only item-right>
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item no-lines>
-          <ion-label>Blue ball(s) in bucket</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item no-lines>
-        <button ion-button color="light" icon-only item-left>
-          <ion-icon name="remove"></ion-icon>
-        </button>
-        <ion-input type="number" placeholder="0"></ion-input>
-        <button ion-button color="light" icon-only item-right>
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item no-lines>
-          <ion-label>Robots on Terrace</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item no-lines>
-        <button ion-button color="light" icon-only item-left>
-          <ion-icon name="remove"></ion-icon>
-        </button>
-        <ion-input type="number" placeholder="0"></ion-input>
-        <button ion-button color="light" icon-only item-right>
+        <ion-input id="" type="number" placeholder="{{rule.value}}" min="0"></ion-input>
+        <button ion-button color="light" (click)="increment(rule)" icon-only item-right>
           <ion-icon name="add"></ion-icon>
         </button>
       </ion-item>

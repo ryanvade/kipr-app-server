@@ -15,7 +15,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class JudgingPage {
 
+  rules: Array<{label:string, value:number}>;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    //this will be change later to a for each loop to generate the rows
+    this.rules = [
+      {label:'Red ball(s) in bucket',value: 0},
+      {label:'Blue ball(s) in bucket',value: 0},
+      {label:'Robots on Terrace',value: 0}
+    ]
+  }
+
+  increment(item){
+    item.value = item.value + 1;
+    console.log('add 1 to' + item);
+  }
+
+  decrement(item){
+    if(item.value > 0){
+        item.value = item.value - 1;
+        console.log('subtract 1 to' + item);
+    }
   }
 
   ionViewDidLoad() {
