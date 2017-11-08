@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class MatchController extends Controller
 {
+
+    public function __construct()
+    {
+      $this->middleware('auth:api');
+    }
     /**
       * Update the specified resource in storage.
       *
