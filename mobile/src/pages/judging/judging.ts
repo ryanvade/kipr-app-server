@@ -39,7 +39,7 @@ export class JudgingPage {
         console.log('subtract 1 to' + item);
     }
   }
-
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad JudgingPage');
   }
