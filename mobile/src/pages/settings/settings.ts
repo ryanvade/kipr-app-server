@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 /**
  * Generated class for the JudgingPage page.
  *
@@ -14,35 +14,20 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
+  barCodeData = null;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private qrScanner: QRScanner) { 
-             
   }
 
 funct(){
-  
-  console.log('asdl;fjksadf');
-  this.qrScanner.prepare()
-  .then((status: QRScannerStatus) => {
-     if (status.authorized) {
-       // start scanning
-       let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-         console.log('Scanning', text);
-
-         this.qrScanner.hide(); 
-         scanSub.unsubscribe(); 
-       });
-
-       // show camera preview
-       this.qrScanner.show();
-
-     } else if (status.denied) {
-     } else {
-     }
-  })
-  .catch((e: any) => console.log('Error is', e));
+  this.barcodeScanner.scan().then((barcodeData) => {
+    console.log(barcodeData);
+    this.barCodeData = barcodeData;
+  }, (err) => {
+    console.log(err);
+  });
 }
-  
+
   ionViewDidLoad() {
     console.log('Loaded');
   }
