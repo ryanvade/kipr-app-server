@@ -23,7 +23,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <!-- Juding Rules -->
+    <!-- Judging Rules -->
     <ion-row *ngFor="let rule of rules" align-items-start justify-content-center>
       <ion-col col-md-3>
         <ion-item no-lines text-wrap>
@@ -35,7 +35,7 @@
         <button ion-button color="light" (click)="decrement(rule)" icon-only item-left>
           <ion-icon name="remove"></ion-icon>
         </button>
-        <ion-input  type="number" placeholder="{{rule.value}}" min="0"></ion-input>
+        <ion-input  type="number" placeholder="0" value="{{rule.value}}" min="0"></ion-input>
         <button ion-button color="light" (click)="increment(rule)" icon-only item-right>
           <ion-icon name="add"></ion-icon>
         </button>
@@ -48,7 +48,7 @@
               <ion-icon text="submit"></ion-icon>
               Submit
             </button>
-      </ion-col>   
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
