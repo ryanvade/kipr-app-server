@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { JudgingPage } from '../pages/judging/judging';
 import { SettingsPage } from '../pages/settings/settings';
+import { Camera } from '@ionic-native/camera';
 
 @Component({
   templateUrl: 'app.html'

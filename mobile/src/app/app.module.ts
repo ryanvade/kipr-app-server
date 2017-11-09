@@ -10,6 +10,8 @@ import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Camera } from '@ionic-native/camera';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SettingsPage
   ],
   providers: [
+    Camera,
+    QRScanner,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
