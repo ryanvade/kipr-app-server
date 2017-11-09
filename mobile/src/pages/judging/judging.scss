@@ -3,13 +3,20 @@ page-judging {
     -moz-appearance: textfield;
     appearance: textfield;
     margin : 0;
+    text-align: center
   }
 
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     margin : 0;
+    
   }
-
+button{
+  align: center;
+  text-align: center;
+  padding: 7px;
+  text-transform: capitalize;
+}
   
 }
