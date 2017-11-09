@@ -32,11 +32,11 @@
       </ion-col>
       <ion-col col-md-2 offset-md-1>
         <ion-item no-lines>
-        <button ion-button color="light" (click)="decrement(rule)" icon-only item-left>
+        <button ion-button padding color="light" (click)="decrement(rule)" icon-only item-left>
           <ion-icon name="remove"></ion-icon>
         </button>
-        <ion-input  type="number" placeholder="0" value="{{rule.value}}" min="0"></ion-input>
-        <button ion-button color="light" (click)="increment(rule)" icon-only item-right>
+        <ion-input type="number" placeholder="0" value="{{rule.value}}" min="0"></ion-input>
+        <button ion-button padding color="light" (click)="increment(rule)" icon-only item-right>
           <ion-icon name="add"></ion-icon>
         </button>
       </ion-item>

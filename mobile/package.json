@@ -27,10 +27,7 @@
     "@ionic-native/status-bar": "4.3.2",
     "@ionic/storage": "2.0.1",
     "cordova-plugin-camera": "^2.4.1",
-<<<<<<< HEAD
-=======
     "cordova-plugin-compat": "^1.2.0",
->>>>>>> 2043ce59ff8811ef17cf548c508b05041a9d536b
     "cordova-plugin-qrscanner": "^2.5.0",
     "ionic-angular": "3.8.0",
     "ionicons": "3.0.0",
