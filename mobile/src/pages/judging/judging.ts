@@ -16,6 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class JudgingPage {
 
   rules: Array<{label:string, value:number}>;
+  teamName: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     //this will be changed later to a for each loop to generate the rows
@@ -25,7 +26,9 @@ export class JudgingPage {
       {label:'Robots on Terrace',value: 0},
       {label:'Super long description just to test something. Hopefully these are not that long.',value: 0},
       {label:'Robots on Terrace',value: 0}
-    ]
+    ];
+
+    this.teamName = navParams.get('name');
   }
 
   increment(item){
