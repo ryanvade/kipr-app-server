@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { JudgingPage } from '../pages/judging/judging';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
+import { Camera } from '@ionic-native/camera';
 
 @Component({
   templateUrl: 'app.html'
