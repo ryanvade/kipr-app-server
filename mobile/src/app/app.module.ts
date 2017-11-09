@@ -11,8 +11,7 @@ import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Camera } from '@ionic-native/camera';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [
@@ -37,11 +36,10 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
     SettingsPage
   ],
   providers: [
-    Camera,
-    QRScanner,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    BarcodeScanner,
   ]
 })
 export class AppModule {}
