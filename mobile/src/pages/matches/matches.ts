@@ -24,7 +24,7 @@ export class MatchesPage {
     ];
   }
 
-  buttonTapped(name){
+  teamTapped(name){
     this.navCtrl.push(JudgingPage,
       {
         name: name
