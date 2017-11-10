@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { JudgingPage } from '../judging/judging';
+import { MatchesPage } from '../matches/matches';
 
 @Component({
   selector: 'page-home',
@@ -12,8 +12,8 @@ export class HomePage {
 
   }
 
-  judging(){
-    this.navCtrl.push(JudgingPage,{})
+  matches(){
+    this.navCtrl.push(MatchesPage,{})
   }
 
 }

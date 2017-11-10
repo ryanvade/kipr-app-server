@@ -17,6 +17,7 @@ export class MatchesPage {
 
   matches: Array<{title:string, teamA:string, teamB:string}>;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    //will be generated based off of the how many teams sign up
     this.matches = [
       {title:'Match 1',teamA:'Team A', teamB:'Team B'},
       {title:'Match 2',teamA:'Team C', teamB:'Team D'},
@@ -31,13 +32,6 @@ export class MatchesPage {
       }
     );
   }
-/*
-  matchTapped(match){
-    this.navCtrl.push(JudgingPage,
-    {
-        match:match
-    })
-  }*/
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MatchesPage');
