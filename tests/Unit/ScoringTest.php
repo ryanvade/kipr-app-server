@@ -9,7 +9,6 @@ use KIPR\Exceptions\InvalidResultException;
 
 class ScoringTest extends TestCase
 {
-
     public function test_no_modifiers()
     {
         $rules='{
@@ -71,7 +70,7 @@ class ScoringTest extends TestCase
             "red_ball_in_cup": 5,
             "green_ball_in_cup": 5
         }';
-        
+
         $this->expectException(\KIPR\Exceptions\InvalidResultException::class);
         $score = Tabulator::score(json_decode($rules), json_decode($results, true));
     }
@@ -212,4 +211,3 @@ class ScoringTest extends TestCase
         $this->assertEquals(json_decode($expected, true), $score);
     }
 }
-
