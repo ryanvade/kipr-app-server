@@ -16,9 +16,7 @@ class CreateRulesTable extends Migration
         Schema::create('rules', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('year');
             $table->json('rules');
-            $table->unsignedInteger('competition_id');
         });
     }
 
