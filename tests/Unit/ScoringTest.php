@@ -32,7 +32,7 @@ class ScoringTest extends TestCase
             "total": 11
         }';
         
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
@@ -52,7 +52,7 @@ class ScoringTest extends TestCase
             "total": 0
         }';
         
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
@@ -73,7 +73,7 @@ class ScoringTest extends TestCase
         }';
         
         $this->expectException(\KIPR\Exceptions\InvalidResultException::class);
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
     }
 
     public function test_multiplier()
@@ -93,7 +93,7 @@ class ScoringTest extends TestCase
 
         $results = '{"event": 4}';
         $expected = '{"event": 12, "total": 12}';
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
@@ -114,7 +114,7 @@ class ScoringTest extends TestCase
 
         $results = '{"event": 4}';
         $expected = '{"event": 9, "total": 9}';
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
@@ -135,12 +135,12 @@ class ScoringTest extends TestCase
 
         $results = '{"event": 4}';
         $expected = '{"event": 4, "total": 4}';
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
 
         $results = '{"event": 3}';
         $expected = '{"event": 30, "total": 30}';
-        $score = Tabulator::score($rules, $results);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
@@ -184,16 +184,16 @@ class ScoringTest extends TestCase
             "blue_ball_in_cup": 5
         }';
         
-        $expected = json_decode('{
+        $expected = '{
             "robot_on_terrace": 15,
             "red_ball_in_cup": 5,
             "blue_ball_in_cup": 5,
             "balls_matched": 20,
             "total": 45
-        }', true);
+        }';
 
-        $score = Tabulator::score($rules, $results);
-        $this->assertEquals($expected, $score);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $this->assertEquals(json_decode($expected, true), $score);
 
         $results = '{
             "robot_on_terrace": 2,
@@ -201,15 +201,15 @@ class ScoringTest extends TestCase
             "blue_ball_in_cup": 3
         }';
 
-        $expected = json_decode('{
+        $expected = '{
             "robot_on_terrace": 60,
             "red_ball_in_cup": 7,
             "blue_ball_in_cup": 3,
             "total": 70
-        }', true);
+        }';
 
-        $score = Tabulator::score($rules, $results);
-        $this->assertEquals($expected, $score);
+        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $this->assertEquals(json_decode($expected, true), $score);
     }
 }
 

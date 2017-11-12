@@ -12,7 +12,6 @@ use Illuminate\Contracts\Support\Jsonable;
 // TODO Make this a singleton?
 class Tabulator 
 {
-
     public static function evaluateExpression($expr, $score) {
         preg_match("/^\s*(\S*)\s*(==|!=)\s*(\S*)\s*$/", $expr, $groups);
         $operator = $groups[2];
@@ -58,36 +57,30 @@ class Tabulator
         }
     }
 
-    // Take match
-    // Return score
-    public static function score($rule, $match)
+    public static function scoreMatch($rules, $results) {
+        $score_a = Tabulator::score($rules, $results["A"]);
+        $score_b = Tabulator::score($rules, $results["B"]);
+        return ["A" => $score_a, "B" => $score_b];
+    }
+
+    public static function score($rules, $results)
     {
-        if ($rule == null) {
-            $rule = $match->competition->rule;
-        }
-
-        // Initial score registers
-        $score = Tabulator::parse($match, true);
-
-        // List of rules to apply in order
-        $rules = Tabulator::parse($rule);
-
         // Validate the match
-        foreach(array_keys($score) as $event) {
+        foreach(array_keys($results) as $event) {
             if(!array_key_exists($event, $rules->events)) {
                 throw new InvalidResultException("Unknown event: $event\n");
             }
         }
 
         // Score the match
-        Tabulator::_score($rules->rules, $score);
+        Tabulator::_score($rules->rules, $results);
 
         $sum = 0;
-        foreach ($score as $catagory) {
+        foreach ($results as $catagory) {
             $sum += $catagory;
         }
-        $score["total"] = $sum;
-        return $score;
+        $results["total"] = $sum;
+        return $results;
     }
 
     public static function parse($json, $array = false)
