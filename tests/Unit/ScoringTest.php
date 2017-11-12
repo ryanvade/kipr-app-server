@@ -5,20 +5,21 @@ namespace Tests\Unit;
 use KIPR\Judging\Tabulator;
 use Tests\TestCase;
 use KIPR\Competition;
+use KIPR\Ruleset;
 use KIPR\Exceptions\InvalidResultException;
 
 class ScoringTest extends TestCase
 {
     public function test_no_modifiers()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "robot_on_terrace": {"min": 0, "max": 2},
                 "red_ball_in_cup": {"min": 0, "max": 10},
                 "blue_ball_in_cup": {"min": 0, "max": 10}
-            },
-            "rules": []
-        }';
+            }');
+        $ruleset->rules = [];
+
         $results = '{
             "robot_on_terrace": 1,
             "red_ball_in_cup": 5,
@@ -31,40 +32,40 @@ class ScoringTest extends TestCase
             "total": 11
         }';
         
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
     public function test_no_points()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "robot_on_terrace": {"min": 0, "max": 2},
                 "red_ball_in_cup": {"min": 0, "max": 10},
                 "blue_ball_in_cup": {"min": 0, "max": 10}
-            },
-            "rules": []
-        }';
+            }');
+        $ruleset->rules = [];
+
         $results = '{
         }';
         $expected = '{
             "total": 0
         }';
         
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
     public function test_fail_to_score_invalid()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "robot_on_terrace": {"min": 0, "max": 2},
                 "red_ball_in_cup": {"min": 0, "max": 10},
                 "blue_ball_in_cup": {"min": 0, "max": 10}
-            },
-            "rules": []
-        }';
+            }');
+        $ruleset->rules = [];
+
         $results = '{
             "robot_on_terrace": 1,
             "red_ball_in_cup": 5,
@@ -72,86 +73,85 @@ class ScoringTest extends TestCase
         }';
 
         $this->expectException(\KIPR\Exceptions\InvalidResultException::class);
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
     }
 
     public function test_multiplier()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "event": {"min": 0, "max": 10}
-            },
-            "rules": [
+            }');
+        $ruleset->rules = json_decode('[
                 {
                     "type": "multiplier",
                     "target": "event",
                     "value": 3
                 }
-            ]
-        }';
+            ]');
 
         $results = '{"event": 4}';
         $expected = '{"event": 12, "total": 12}';
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
     public function test_bonus()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "event": {"min": 0, "max": 10}
-            },
-            "rules": [
+            }');
+        $ruleset->rules = json_decode('
+            [
                 {
                     "type": "fixed",
                     "target": "event",
                     "value": 5
                 }
-            ]
-        }';
+            ]');
 
         $results = '{"event": 4}';
         $expected = '{"event": 9, "total": 9}';
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
     public function test_conditional()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "event": {"min": 0, "max": 10}
-            },
-            "rules": [
+            }');
+        $ruleset->rules = json_decode('[
                 {
                     "type": "conditional",
                     "value": "event == 3",
                     "target": [{"type": "multiplier", "value": 10, "target": "event"}]
                 }
-            ]
-        }';
+            ]');
 
         $results = '{"event": 4}';
         $expected = '{"event": 4, "total": 4}';
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
 
         $results = '{"event": 3}';
         $expected = '{"event": 30, "total": 30}';
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
 
     public function test_scoring_tabulation()
     {
-        $rules='{
-            "events": {
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{
                 "robot_on_terrace": {"min": 0, "max": 2},
                 "red_ball_in_cup": {"min": 0, "max": 10},
                 "blue_ball_in_cup": {"min": 0, "max": 10}
-            },
-            "rules": [
+            }');
+        $ruleset->rules = json_decode(
+            '[
                 {
                     "type": "multiplier",
                     "target": "robot_on_terrace",
@@ -175,8 +175,8 @@ class ScoringTest extends TestCase
                         "value": 2
                     }]
                 }
-            ]
-        }';
+            ]');
+
         $results = '{
             "robot_on_terrace": 1,
             "red_ball_in_cup": 5,
@@ -191,7 +191,7 @@ class ScoringTest extends TestCase
             "total": 45
         }';
 
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals(json_decode($expected, true), $score);
 
         $results = '{
@@ -207,7 +207,7 @@ class ScoringTest extends TestCase
             "total": 70
         }';
 
-        $score = Tabulator::score(json_decode($rules), json_decode($results, true));
+        $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals(json_decode($expected, true), $score);
     }
 }

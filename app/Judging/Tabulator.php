@@ -5,6 +5,7 @@ namespace KIPR\Judging;
 use KIPR\Team;
 use KIPR\Match;
 use KIPR\Score;
+use KIPR\Ruleset;
 use KIPR\Competition;
 use KIPR\Exceptions\InvalidResultException;
 use Illuminate\Contracts\Support\Jsonable;
@@ -37,7 +38,7 @@ class Tabulator
         }
     }
 
-    private static function _score($rules, $score)
+    private static function _score($rules, &$score)
     {
         foreach ($rules as $r) {
             if ($r->type == "multiplier") {
@@ -54,39 +55,29 @@ class Tabulator
         }
     }
 
-    public static function scoreMatch($rules, $results) {
-        $score_a = Tabulator::score($rules, $results["A"]);
-        $score_b = Tabulator::score($rules, $results["B"]);
+    public static function scoreMatch(Ruleset $ruleset, $results) {
+        $score_a = Tabulator::score($ruleset, $results["A"]);
+        $score_b = Tabulator::score($ruleset, $results["B"]);
         return ["A" => $score_a, "B" => $score_b];
     }
 
-    public static function score($rules, $results)
+    public static function score(Ruleset $ruleset, $results)
     {
         // Validate the match
         foreach (array_keys($results) as $event) {
-            if (!array_key_exists($event, $rules->events)) {
+            if (!array_key_exists($event, $ruleset->events)) {
                 throw new InvalidResultException("Unknown event: $event\n");
             }
         }
 
         // Score the match
-        Tabulator::_score($rules->rules, $results);
+        Tabulator::_score($ruleset->rules, $results);
 
         $sum = 0;
         foreach ($results as $catagory) {
             $sum += $catagory;
         }
         $results["total"] = $sum;
-        return $results;
-    }
-
-    public static function parse($json, $array = false)
-    {
-        $results = json_decode($json, $array);
-
-        //foreach ($results->keys() as $key) {
-        //$results[$key] = collect($results[$key]);
-        //}
         return $results;
     }
 }
