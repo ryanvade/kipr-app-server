@@ -4,21 +4,24 @@ namespace KIPR\Http\Controllers;
 
 use Illuminate\Http\Request;
 use KIPR\Judging\Tabulator;
+use KIPR\Ruleset;
 
 class MatchController extends Controller
 {
     public function score(Request $request) {
-        if($request->has("results")) {
-            $json = $request->input("results");
-            $results = json_decode($json, true);
+        if(!$request->has("results"))
+            abort(400, "Missing results field");
 
-			// TODO Get rules to score match by
-            $rules = json_decode("{}");
-            $results = Tabulator::scoreMatch($rules, $results);
+        if(!$request->has("ruleset_id"))
+            abort(400, "Missing ruleset_id field");
 
-            return response()->json($results);
-        }
-        abort(400, "Missing results field");
+        $json = $request->input("results");
+        $results = json_decode($json, true);
+
+        $ruleset = Ruleset::findOrFail($request->input("ruleset_id"));
+        $results = Tabulator::scoreMatch($ruleset, $results);
+
+        return response()->json($results);
     }
 }
 

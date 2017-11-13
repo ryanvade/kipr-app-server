@@ -27,8 +27,8 @@ class Competition extends Model
       return $this->hasMany(Match::class);
     }
 
-    public function rule()
+    public function ruleset()
     {
-      return $this->hasOne(Rule::class);
+      return $this->hasOne(Ruleset::class);
     }
 }

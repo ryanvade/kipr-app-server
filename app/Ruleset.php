@@ -11,4 +11,8 @@ class Ruleset extends Model
         'events',
         'rules',
     ];
+    protected $casts = [
+        'events' => 'object',
+        'rules' => 'object'
+    ];
 }
