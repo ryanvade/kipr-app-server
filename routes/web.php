@@ -18,7 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/match/score', 'MatchController@score');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRulesTable extends Migration
+class CreateRulesetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateRulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rules', function (Blueprint $table) {
+        Schema::create('rulesets', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('year');
+            $table->json('events');
             $table->json('rules');
-            $table->unsignedInteger('competition_id');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateRulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rules');
+        Schema::dropIfExists('rulesets');
     }
 }
