@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { JudgingPage } from '../pages/judging/judging';
+import { NewJudgingPage } from '../pages/new-judging/new-judging';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 
@@ -19,6 +20,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     HomePage,
     ListPage,
     JudgingPage,
+    NewJudgingPage,
     MatchesPage,
     SettingsPage
   ],
@@ -32,6 +34,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     HomePage,
     ListPage,
     JudgingPage,
+    NewJudgingPage,
     MatchesPage,
     SettingsPage
   ],
