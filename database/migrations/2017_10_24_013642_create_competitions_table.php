@@ -21,6 +21,7 @@ class CreateCompetitionsTable extends Migration
             $table->string('location');
             $table->dateTimeTz('start_date');
             $table->dateTimeTz('end_date');
+            $table->unsignedInteger('ruleset_id');
         });
     }
 

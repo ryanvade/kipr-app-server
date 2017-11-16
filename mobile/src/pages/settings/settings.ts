@@ -23,6 +23,7 @@ funct(){
   this.barcodeScanner.scan().then((barcodeData) => {
     console.log(barcodeData);
     this.barCodeData = barcodeData;
+    console.log('Barcode read: ' + barcodeData);
   }, (err) => {
     console.log(err);
   });
