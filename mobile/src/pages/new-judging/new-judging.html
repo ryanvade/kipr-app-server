@@ -56,12 +56,14 @@
             {{rule.description}}
           </ion-row>
         </ion-slide>
-        <ion-slide>
-          <ion-row justify-content-center align-items-center text-center>
-            <button   ion-button color="light" (click)="nextClicked()">
-              Next Team
-            </button>
+        <ion-slide justify-content-center align-items-center>
+          <ion-row>
+            <ion-col text-center>
+              <br>Swipe again to view next team scoring page
+            </ion-col>
           </ion-row>
+          <button ion-button color="dark" text-center (click) = 'teamName' item-center>Next
+          </button>
         </ion-slide>
       </ion-slides>
     </ion-row>
