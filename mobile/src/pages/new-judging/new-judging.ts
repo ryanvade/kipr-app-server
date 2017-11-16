@@ -41,14 +41,14 @@ export class NewJudgingPage {
   }
 
   next() {
-    let currentIndex = this.slides.getActiveIndex()
-    currentIndex = currentIndex+1;
+    let currentIndex = this.slides.getActiveIndex() 
+    currentIndex = currentIndex + 1;    
     console.log('Current index is '+ currentIndex);
   }
 
   back() {
     let currentIndex = this.slides.getActiveIndex();
-    currentIndex+1;
+    currentIndex = currentIndex - 1;
     console.log('Current index is', currentIndex);
   }
 

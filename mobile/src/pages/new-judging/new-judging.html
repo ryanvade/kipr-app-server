@@ -52,14 +52,20 @@
           </ion-row>
           <ion-row center>
             <ion-col text-center>
-                <button ion-button color="light" (click)="back(rule)"text-center item-center>
+                <button ion-button color="light" (click)='back()' text-center item-center>
                     <ion-icon text="previous"></ion-icon>
                     Back
                   </button>
-                  <button ion-button color="light" (click)= "next(rule)" text-center item-center>
+                  <button ion-button color="light" (click)= 'next()' text-center item-center>
                     <ion-icon text="next"></ion-icon>
                     Next
                   </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              <button ion-button color="dark" text-center (click) = 'teamName' item-center>Next Team
+              </button>
             </ion-col>
           </ion-row>
         </ion-slide>
