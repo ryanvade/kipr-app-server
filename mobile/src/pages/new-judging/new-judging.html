@@ -50,6 +50,18 @@
           <ion-row justify-content-center align-items-center padding-bottom>
             {{rule.description}}
           </ion-row>
+          <ion-row center>
+            <ion-col text-center>
+                <button ion-button color="light" (click)="back(rule)"text-center item-center>
+                    <ion-icon text="previous"></ion-icon>
+                    Back
+                  </button>
+                  <button ion-button color="light" (click)= "next(rule)" text-center item-center>
+                    <ion-icon text="next"></ion-icon>
+                    Next
+                  </button>
+            </ion-col>
+          </ion-row>
         </ion-slide>
       </ion-slides>
     </ion-row>

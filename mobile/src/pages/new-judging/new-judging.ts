@@ -40,6 +40,18 @@ export class NewJudgingPage {
     console.log('Current index is', currentIndex);
   }
 
+  next() {
+    let currentIndex = this.slides.getActiveIndex()
+    currentIndex = currentIndex++;
+    console.log('Current index is '+ currentIndex);
+  }
+
+  back() {
+    let currentIndex = this.slides.getActiveIndex();
+    currentIndex+1;
+    console.log('Current index is', currentIndex);
+  }
+
   increment(item){
     item.value = item.value + 1;
     console.log('add 1 to' + item);
@@ -51,6 +63,7 @@ export class NewJudgingPage {
         console.log('subtract 1 to' + item);
     }
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewJudgingPage');

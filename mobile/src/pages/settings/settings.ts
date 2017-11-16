@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+//import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 /**
  * Generated class for the JudgingPage page.
  *
@@ -15,18 +15,19 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 })
 export class SettingsPage {
   barCodeData = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner) {
+  //constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner)
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
   }
 
-funct(){
+/*funct(){
   this.barcodeScanner.scan().then((barcodeData) => {
     console.log(barcodeData);
     this.barCodeData = barcodeData;
   }, (err) => {
     console.log(err);
   });
-}
+}*/
 
   ionViewDidLoad() {
     console.log('Loaded');
