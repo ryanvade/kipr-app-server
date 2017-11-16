@@ -25,6 +25,11 @@
     </ion-row>
     <ion-row>
       <ion-slides pager (ionSlideDidChange)="slideChanged()">
+        <ion-slide justify-content-center align-items-center>
+          Tutorial
+              <br>Judges, swipe left to access scoring.
+              <br>Increment or decrement score by pushing +/- buttons accordingly.   
+        </ion-slide>
         <ion-slide padding-vertical *ngFor="let rule of rules">
           <ion-row justify-content-center>
             {{rule.title}}
@@ -50,21 +55,9 @@
           <ion-row justify-content-center align-items-center padding-bottom>
             {{rule.description}}
           </ion-row>
-          <ion-row center>
-            <ion-col text-center>
-                <button ion-button color="light" (click)='back()' text-center item-center>
-                    <ion-icon text="previous"></ion-icon>
-                    Back
-                  </button>
-                  <button ion-button color="light" (click)= 'next()' text-center item-center>
-                    <ion-icon text="next"></ion-icon>
-                    Next
-                  </button>
-            </ion-col>
-          </ion-row>
           <ion-row>
             <ion-col text-center>
-              <button ion-button color="dark" text-center (click) = 'teamName' item-center>Next Team
+              <button ion-button color="dark" text-center (click) = 'teamName' item-center>Submit     
               </button>
             </ion-col>
           </ion-row>
