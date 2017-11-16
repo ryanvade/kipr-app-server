@@ -42,7 +42,7 @@ export class NewJudgingPage {
 
   next() {
     let currentIndex = this.slides.getActiveIndex()
-    currentIndex = currentIndex++;
+    currentIndex = currentIndex+1;
     console.log('Current index is '+ currentIndex);
   }
 
