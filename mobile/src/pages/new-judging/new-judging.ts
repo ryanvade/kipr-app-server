@@ -40,16 +40,8 @@ export class NewJudgingPage {
     console.log('Current index is', currentIndex);
   }
 
-  next() {
-    let currentIndex = this.slides.getActiveIndex() 
-    currentIndex = currentIndex + 1;    
-    console.log('Current index is '+ currentIndex);
-  }
+  nextClicked(){
 
-  back() {
-    let currentIndex = this.slides.getActiveIndex();
-    currentIndex = currentIndex - 1;
-    console.log('Current index is', currentIndex);
   }
 
   increment(item){
