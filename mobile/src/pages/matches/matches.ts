@@ -26,10 +26,12 @@ export class MatchesPage {
     ];
   }
 
-  teamTapped(name){
+  teamTapped(name,match){
     this.navCtrl.push(NewJudgingPage,
       {
-        name: name
+        name: name,
+        match: match,
+        judgedOpponent: false
       }
     );
   }

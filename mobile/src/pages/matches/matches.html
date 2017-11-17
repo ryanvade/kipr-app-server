@@ -22,7 +22,7 @@
         {{match.title}}
       </ion-col>
       <ion-col col-auto>
-        <button padding margin ion-button (click)="teamTapped(match.teamA)">
+        <button padding margin ion-button (click)="teamTapped(match.teamA,match)">
           {{match.teamA}}
         </button>
       </ion-col>
@@ -30,7 +30,7 @@
           VS
       </ion-col>
       <ion-col col-auto>
-        <button padding margin ion-button (click)="teamTapped(match.teamB)">
+        <button padding margin ion-button (click)="teamTapped(match.teamB,match)">
           {{match.teamB}}
         </button>
       </ion-col>

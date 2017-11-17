@@ -20,7 +20,10 @@ export class NewJudgingPage {
   @ViewChild(Slides) slides: Slides;
 
   rules: Array<{title:string, value:number, description:string}>;
-  teamName: any;
+  teamName: string;
+  match: any;
+  opponent: string;
+  judgedOpponent:boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     //this will be changed later to a for each loop to generate the rows
@@ -33,6 +36,13 @@ export class NewJudgingPage {
     ];
 
     this.teamName = navParams.get('name');
+    this.match = navParams.get('match');
+    this.judgedOpponent = navParams.get('judgedOpponent');
+
+    if(this.match.teamA == this.teamName)
+      this.opponent = this.match.teamB;
+    else
+      this.opponent = this.match.teamA;
   }
 
   slideChanged() {
@@ -40,8 +50,14 @@ export class NewJudgingPage {
     console.log('Current index is', currentIndex);
   }
 
-  nextClicked(){
-
+  nextClicked(name,match){//need to push to self, look at list page in tutorial
+    this.navCtrl.push(NewJudgingPage,
+      {
+        name: name,
+        match: match,
+        judgedOpponent: true
+      }
+    );
   }
 
   increment(item){
