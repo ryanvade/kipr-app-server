@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
+import { MatchesPage } from '../matches/matches';
 
 /**
  * Generated class for the NewJudgingPage page.
@@ -72,6 +73,9 @@ export class NewJudgingPage {
     }
   }
 
+  matches(){
+    this.navCtrl.push(MatchesPage,{})
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewJudgingPage');

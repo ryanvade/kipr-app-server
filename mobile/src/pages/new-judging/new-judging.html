@@ -62,7 +62,7 @@
               <br>Swipe again to view next team scoring page
             </ion-col>
           </ion-row>
-          <button ion-button *ngIf="judgedOpponent" color="dark" text-center (click)="submit()" item-center>Submit</button>
+          <button ion-button *ngIf="judgedOpponent" color="dark" text-center (click)="matches()" item-center>Submit</button>
           <button ion-button *ngIf="!judgedOpponent" color="dark" text-center (click)="nextClicked(opponent,match)" item-center>Next</button>
         </ion-slide>
       </ion-slides>
