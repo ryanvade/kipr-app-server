@@ -58,7 +58,7 @@
         </ion-slide>
         <ion-slide justify-content-center align-items-center>
           <ion-row>
-            <ion-col text-center>
+            <ion-col *ngIf="!judgedOpponent" text-center>
               <br>Swipe again to view next team scoring page
             </ion-col>
           </ion-row>
