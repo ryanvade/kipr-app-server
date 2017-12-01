@@ -1,0 +1,28 @@
+{
+  "events":[
+     {
+      "min": 0,
+      "max": 10,
+      "title": "Red ball(s) in bucket",
+      "description": "Count all of the red ball(s) in bucket located in the highlighted area"
+    },
+    {
+      "min": 0,
+      "max": 10,
+      "title": "Blue ball(s) in bucket",
+      "description": "Count all of the red ball(s) in bucket located in the highlighted area"
+    },
+    {
+      "min": 0,
+      "max": 1,
+      "title": "Robot on Crater Slope",
+      "description": "A robot only scores if no part of it is touching outside of this region"
+    },
+    {
+      "min": 0,
+      "max": 2,
+      "title": "Robot on Terrace",
+      "description": "A robot only scores if no part of it is touching outside of the slope"
+    }
+  ]
+}
