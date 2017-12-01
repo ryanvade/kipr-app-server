@@ -36,8 +36,13 @@ export class NewJudgingPage {
       console.log(data);
       this.jsonRules = data;
       for(var _i = 0; _i < this.jsonRules.length; _i++){
-          this.rules.push({value:this.jsonRules[_i].min,min:this.jsonRules[_i].min, max:this.jsonRules[_i].max, title:this.jsonRules[_i].title,description:this.jsonRules[_i].description});
-          //console.log(this.jsonRules[_i]);
+          this.rules.push({
+            value:this.jsonRules[_i].min,
+            min:this.jsonRules[_i].min,
+            max:this.jsonRules[_i].max,
+            title:this.jsonRules[_i].title,
+            description:this.jsonRules[_i].description}
+          );
       }
     });
 
@@ -56,7 +61,8 @@ export class NewJudgingPage {
     console.log('Current index is', currentIndex);
   }
 
-  nextClicked(name,match){//need to push to self, look at list page in tutorial
+  nextClicked(name,match){
+    //need to push to self
     this.navCtrl.push(NewJudgingPage,
       {
         name: name,
