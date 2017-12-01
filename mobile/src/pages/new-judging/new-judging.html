@@ -38,7 +38,7 @@
             <ion-img width="150" height="150" src="assets/imgs/botguy.png"></ion-img>
           </ion-row>
           <ion-row justify-content-center>
-            <ion-input type="number" placeholder="0" size="2" maxlength="2" value="{{rule.value}}" min="0"></ion-input>
+            <ion-input type="number" placeholder="0" size="2" maxlength="2" value="{{rule.value}}" min="{{rule.min}}" max="{{rule.max}}"></ion-input>
           </ion-row>
           <ion-row justify-content-center>
             <ion-col col-auto padding-right>
