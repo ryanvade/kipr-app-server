@@ -41,7 +41,9 @@ export class NewJudgingPage {
             min:this.jsonRules[_i].min,
             max:this.jsonRules[_i].max,
             title:this.jsonRules[_i].title,
-            description:this.jsonRules[_i].description}
+            description:this.jsonRules[_i].description,
+            img:'assets/imgs/botguy.png'
+          }
           );
       }
     });

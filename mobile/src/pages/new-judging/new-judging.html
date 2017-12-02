@@ -34,8 +34,8 @@
           <ion-row justify-content-center>
             {{rule.title}}
           </ion-row>
-          <ion-row padding justify-content-center >
-            <ion-img width="200" height="200" src="../assets/imgs/botguy.png"></ion-img>
+          <ion-row>
+            <img src="{{rule.img}}" class="slide-image" style="width:200px!important;height:200px!important;margin:0px auto;">
           </ion-row>
           <ion-row justify-content-center>
             <ion-input type="number" placeholder="0" size="2" maxlength="2" value="{{rule.value}}" min="{{rule.min}}" max="{{rule.max}}"></ion-input>
