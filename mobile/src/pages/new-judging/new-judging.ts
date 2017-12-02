@@ -22,7 +22,7 @@ export class NewJudgingPage {
 
   @ViewChild(Slides) slides: Slides;
 
-  rules: Array<{value:number,min:number, max:number, title:string, description:string}>;
+  rules: Array<{value:number,min:number, max:number, title:string, description:string, img:string}>;
   teamName: string;
   match: any;
   opponent: string;
