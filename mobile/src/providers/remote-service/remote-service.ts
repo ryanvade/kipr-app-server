@@ -20,8 +20,6 @@ export class RemoteServiceProvider {
   getRules(){
     return this.http.get("assets/json/events.json")
       .map(res => res.json().events);
-      //.do((res : Response) => console.log(res.json()))
-      //.catch(error => error);
   }
 
 }
