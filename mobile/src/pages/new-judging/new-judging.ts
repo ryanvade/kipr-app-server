@@ -42,7 +42,7 @@ export class NewJudgingPage {
             max:this.jsonRules[_i].max,
             title:this.jsonRules[_i].title,
             description:this.jsonRules[_i].description,
-            img:'assets/imgs/botguy.png'
+            img:'assets/imgs/ruleExample.png'
           }
           );
       }
