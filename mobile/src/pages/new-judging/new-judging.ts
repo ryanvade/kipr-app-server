@@ -24,7 +24,7 @@ export class NewJudgingPage {
 
   rules: Array<{value:number,min:number, max:number, title:string, description:string, img:string}>;
   teamName: string;
-  match: any;
+  match: {title:string, teamA:string, teamB:string};
   opponent: string;
   judgedOpponent: boolean;
   jsonRules = [];
@@ -35,17 +35,34 @@ export class NewJudgingPage {
     this.remoteService.getRules().subscribe(data=>{
       console.log(data);
       this.jsonRules = data;
-      for(var _i = 0; _i < this.jsonRules.length; _i++){
-          this.rules.push({
-            value:this.jsonRules[_i].min,
-            min:this.jsonRules[_i].min,
-            max:this.jsonRules[_i].max,
-            title:this.jsonRules[_i].title,
-            description:this.jsonRules[_i].description,
-            img:'assets/imgs/ruleExample.png'
-          }
-          );
+
+      //Will try to make this look a little cleaner later on
+      if(this.match.teamA === this.teamName){
+        for(var _i = 0; _i < this.jsonRules.length; _i++){
+            this.rules.push({
+              value:this.jsonRules[_i].min,
+              min:this.jsonRules[_i].min,
+              max:this.jsonRules[_i].max,
+              title:this.jsonRules[_i].title,
+              description:this.jsonRules[_i].description,
+              img:this.jsonRules[_i].imgA
+            }
+            );
+        }
+      }else{
+        for(var _j = 0; _j < this.jsonRules.length; _j++){
+            this.rules.push({
+              value:this.jsonRules[_j].min,
+              min:this.jsonRules[_j].min,
+              max:this.jsonRules[_j].max,
+              title:this.jsonRules[_j].title,
+              description:this.jsonRules[_j].description,
+              img:this.jsonRules[_j].imgB
+            }
+            );
+        }
       }
+
     });
 
     this.teamName = navParams.get('name');
