@@ -25,7 +25,8 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
-    SettingsPage
+    SettingsPage,
+    SignInPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +41,8 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
-    SettingsPage
+    SettingsPage,
+    SignInPage
   ],
   providers: [
     StatusBar,

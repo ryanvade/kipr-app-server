@@ -27,7 +27,8 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
       { title: 'Matches', component: MatchesPage},
-      { title: 'Settings', component: SettingsPage}
+      { title: 'Settings', component: SettingsPage},
+      { title: 'Sign In', component:SignInPage}
     ];
 
   }
