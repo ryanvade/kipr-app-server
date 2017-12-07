@@ -7,7 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
-import { SignInPage } from '../pages/signIn/signIn'; 
+import { SignInPage } from '../pages/signInGUI/signIn'; 
 
 @Component({
   templateUrl: 'app.html'
