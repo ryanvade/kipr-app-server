@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Sign In</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-list>
+  <ion-item>
+    <ion-label color="primary">Team name</ion-label>
+    <ion-input placeholder="Team name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Gender</ion-label>
+    <ion-select [(ngModel)]="gender">
+      <ion-option value="f">Female</ion-option>
+      <ion-option value="m">Male</ion-option>
+      <ion-option value="o">Other</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-list>

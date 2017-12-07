@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
-import { MatchesPage } from '../matches/matches'
+import { MatchesPage } from '../matches/matches';
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 
 /**
