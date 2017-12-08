@@ -13,3 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 Route::patch('/match/{match}/score', 'MatchController@update');
+Route::post('/competition/{competition}/team/{team}/signin', 'TeamController@signin');
