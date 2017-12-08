@@ -7,17 +7,33 @@
     </ion-navbar>
   </ion-header>
 
+<ion-content padding>
   <ion-list>
-  <ion-item>
-    <ion-label color="primary">Team name</ion-label>
-    <ion-input placeholder="Team name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Gender</ion-label>
-    <ion-select [(ngModel)]="gender">
-      <ion-option value="f">Female</ion-option>
-      <ion-option value="m">Male</ion-option>
-      <ion-option value="o">Other</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-row center>  
+      <ion-col text-center> 
+      Team A
+      <button ion-button color="light">
+        <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row center>
+    <ion-col text-center>
+      Team B
+      <button ion-button color="light">
+        <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+    
+  <ion-row center>
+    <ion-col text-center>
+      Team C
+      <button ion-button color="light">
+        <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
 </ion-list>
+</ion-content>
