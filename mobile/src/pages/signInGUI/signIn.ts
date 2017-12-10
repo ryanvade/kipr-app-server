@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ViewChild } from '@angular/core';
-import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
+import { IonicPage,NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -10,6 +8,12 @@ import { RemoteServiceProvider } from '../../providers/remote-service/remote-ser
 })
 
 export class SignInPage {
+
+teams: string[];
+
+constructor(public navCtrl: NavController, public navParams:NavParams){
+  this.teams = ['Team A','Team B','Team C','Team D','Team E','Team F'];
+}
 
 ionViewDidLoad() {
     console.log('ionViewDidLoad SignInPage');
