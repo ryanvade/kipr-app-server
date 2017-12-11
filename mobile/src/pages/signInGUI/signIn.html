@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Sign In</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-row *ngFor="let team of teams;let i = index;" justify-content-center align-items-center>
+      <ion-col col-auto padding>
+        <label>{{team}}</label>
+      </ion-col>
+      <ion-col col-auto>
+        <button ion-button color="light">
+          <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+</ion-list>
+</ion-content>

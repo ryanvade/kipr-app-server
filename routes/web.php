@@ -20,3 +20,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/match/score', 'MatchController@score');
 
+<<<<<<< HEAD
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/judgeGUI', function(){return view('judgeGUI');});
+=======
+>>>>>>> tabulator
