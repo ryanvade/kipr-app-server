@@ -34,4 +34,12 @@ class Match extends Model
     public function setFinalScore(Score $score) {
         $this->results = score;
     }
+
+    public function setResults($results)
+    {
+        $this->update([
+        'results' => $results
+      ]);
+        # TODO: Fire Event for match end
+    }
 }
