@@ -21,6 +21,21 @@ const routes = [
   path: '/login',
   name: 'login',
   component: require('./components/login.vue')
+  },
+  {
+  path: '/',
+  name: 'panel',
+  component: require('./components/panel.vue')
+  },
+  {
+  path: '/ruleset/create',
+  name: 'ruleset_create',
+  component: require('./components/map.vue')
+  },
+  {
+  path: '/ruleset/zones',
+  name: 'zones',
+  component: require('./components/zones.vue')
   }
 ];
 
@@ -33,7 +48,9 @@ const store = new Vuex.Store({
     access_token: null,
     expires_at: null,
     refresh_token: null,
-    token_type: null
+    token_type: null,
+    map_image: null,
+    scoring_zones: [],
   },
   mutations: {
     access_token(state, token) {
@@ -47,6 +64,12 @@ const store = new Vuex.Store({
     },
     token_type(state, type) {
       state.token_type = type;
+    },
+    update_map(state, image) {
+        state.map_image = image;
+    },
+    update_zones(state, zone_list) {
+        state.zones = zone_list;
     }
   }
 })
