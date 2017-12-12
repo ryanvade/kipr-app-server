@@ -5,11 +5,11 @@ namespace KIPR;
 use KIPR\Team;
 use KIPR\Rule;
 use KIPR\Match;
+use KIPR\CompetitionTeam;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model
 {
-
     protected $fillable = [
       'name',
       'location',
@@ -19,16 +19,20 @@ class Competition extends Model
 
     public function teams()
     {
-      return $this->belongsToMany(Team::class, 'competition_teams');
+        return $this->belongsToMany(Team::class, 'competition_teams')->using(CompetitionTeam::class);
     }
 
     public function matches()
     {
-      return $this->hasMany(Match::class);
+        return $this->hasMany(Match::class);
     }
 
     public function ruleset()
     {
-      return $this->hasOne(Ruleset::class);
+        return $this->hasOne(Ruleset::class);
+    }
+
+    public function competitionTeams() {
+      return $this->hasMany(CompetitionTeam::class);
     }
 }

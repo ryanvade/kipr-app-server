@@ -15,6 +15,8 @@ class CreateCompetitionTeamsTable extends Migration
     {
         Schema::create('competition_teams', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('signed_in')->default(false);
+            $table->dateTimeTz('sign_in_time')->nullable();
             $table->timestamps();
 
             $table->unsignedInteger('competition_id');
