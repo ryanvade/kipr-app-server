@@ -1,0 +1,5 @@
+.git
+.env
+mobile/
+vendor/
+node_modules/
