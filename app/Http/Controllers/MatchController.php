@@ -3,11 +3,10 @@
 namespace KIPR\Http\Controllers;
 
 use KIPR\Match;
+use KIPR\Ruleset;
 use KIPR\Judging\Score;
 use KIPR\Juding\Tabulator;
 use Illuminate\Http\Request;
-use KIPR\Judging\Tabulator;
-use KIPR\Ruleset;
 
 class MatchController extends Controller
 {
@@ -56,4 +55,3 @@ class MatchController extends Controller
         return response()->json($results);
     }
 }
-
