@@ -2,6 +2,7 @@
 
 namespace KIPR\Http\Controllers;
 
+use KIPR\Competition;
 use Illuminate\Http\Request;
 
 class CompetitionController extends Controller
