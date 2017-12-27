@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { SettingsProvider } from '../settings/settings';
 import 'rxjs/add/operator/map';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+import { Injectable } from '@angular/core';
+import { SettingsProvider } from '../settings/settings';
 
 /*
   Generated class for the CompetitionProvider provider.
@@ -18,7 +19,9 @@ export class CompetitionProvider {
 
   async getCompetitions() {
     let serverName = await this.settings.getServerName();
-    return await this.http.get(serverName + "/api/competitions").map(res => res.json());
+    return this.http.get(serverName + "/api/competitions")
+      .map(res => res.json())
+      .toPromise();
   }
 
 }

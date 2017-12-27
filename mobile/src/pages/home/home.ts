@@ -19,15 +19,12 @@ export class HomePage {
     this.apiError = false;
     this.loadComplete = false;
     // TODO Clean up
-    this.competitionProvider.getCompetitions().then((val) => {
-      val.subscribe((result) => {
-        this.competitions = result;
-        console.log(this.competitions);
-        if(this.competitions.length <= 0) {
-          this.displayNoResults = true;
-        }
-        this.loadComplete = true;
-      });
+    this.competitionProvider.getCompetitions().then(val => {
+      this.competitions = val;
+      if (this.competitions.length <= 0) {
+        this.displayNoResults = true;
+      }
+      this.loadComplete = true;
     }).catch(err => {
       console.error(err);
       this.apiError = true;
@@ -35,8 +32,8 @@ export class HomePage {
 
   }
 
-  matches(){
-    this.navCtrl.push(MatchesPage,{})
+  matches() {
+    this.navCtrl.push(MatchesPage, {})
   }
 
 }
