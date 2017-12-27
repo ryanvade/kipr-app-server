@@ -19,6 +19,9 @@ export class CompetitionProvider {
 
   async getCompetitions() {
     let serverName = await this.settings.getServerName();
+    if (serverName == null) {
+      serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
+    }
     return this.http.get(serverName + "/api/competitions")
       .map(res => res.json())
       .toPromise();

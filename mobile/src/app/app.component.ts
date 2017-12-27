@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Storage } from '@ionic/storage';
+import { SettingsProvider } from '../providers/settings/settings';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -18,18 +18,18 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public storage: Storage) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public settings: SettingsProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
-      { title: 'Matches', component: MatchesPage},
-      { title: 'Settings', component: SettingsPage},
-      { title: 'Sign In', component:SignInPage}
+      { title: 'Matches', component: MatchesPage },
+      { title: 'Settings', component: SettingsPage },
+      { title: 'Sign In', component: SignInPage }
     ];
 
   }
@@ -38,13 +38,14 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.storage.get('settings:server_name').then((val) => {
-        if(val === null) {
+      this.settings.getFirstTimeUse().then(val => {
+        if (val != 'TRUE') {
           this.firstTimeUse();
         }
         this.statusBar.styleDefault();
         this.splashScreen.hide();
       });
+
     });
   }
 
@@ -56,6 +57,6 @@ export class MyApp {
 
   firstTimeUse() {
     console.log('First Time Use');
-    this.storage.set('settings:server_name', 'https://kipr.ryanowens.info'); // TODO in defaults module
+    this.settings.setDefaults();
   }
 }
