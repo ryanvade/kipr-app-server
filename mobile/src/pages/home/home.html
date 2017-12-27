@@ -8,14 +8,16 @@
 </ion-header>
 
 <ion-content padding text-center>
-  <h2>Welcome to the KIPR Scoring App</h2>
-
-  <p>
-    Click here to judge a match.
-  </p>
-  <p>
-    <button ion-button (click)="matches()">Matches</button>
-  </p>
+  <h2 *ngIf="competitions.length > 0">Current Competitions</h2>
+  <ion-list *ngIf="competitions.length > 0">
+    <button ion-item *ngFor="let comp of competitions">
+      <div class="item-note">
+        {{comp.name}}
+      </div>
+    </button>
+  </ion-list>
+  <h2 *ngIf="displayNoResults">No Competitions to Display</h2>
+  <h2 *ngIf="apiError">Unable to load competitions</h2>
 
   <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
 </ion-content>
