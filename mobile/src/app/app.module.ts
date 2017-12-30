@@ -17,6 +17,7 @@ import { SignInPage } from '../pages/signInGUI/signIn';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { SettingsProvider } from '../providers/settings/settings';
 import { CompetitionProvider } from '../providers/competition/competition';
@@ -53,6 +54,7 @@ import { CompetitionProvider } from '../providers/competition/competition';
     StatusBar,
     Network,
     SplashScreen,
+    OpenNativeSettings,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BarcodeScanner,
     RemoteServiceProvider,

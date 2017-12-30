@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Network } from '@ionic-native/network';
 import { AlertController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { CompetitionProvider } from '../../providers/competition/competition';
 
 @Component({
@@ -20,7 +21,7 @@ export class HomePage {
   private alert: any = null;
   private loading: Boolean = true;
 
-  constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform, private alertCtrl: AlertController) {
+  constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform, private alertCtrl: AlertController, private openNativeSettings: OpenNativeSettings) {
     this.noNetwork = !this.hasNetwork();
     if (!this.noNetwork) {
       this.getData();
@@ -49,6 +50,12 @@ export class HomePage {
         this.alert = this.alertCtrl.create({
           title: "Network Disconnected",
           subTitle: "You are offline, please connect to continue.",
+          buttons: [{
+            text: 'Open Network Settings',
+            handler: () => {
+              this.openNativeSettings.open('wifi');
+            }
+          }]
         });
         this.alert.present();
       }
