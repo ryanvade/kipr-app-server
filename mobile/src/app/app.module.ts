@@ -21,6 +21,7 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { SettingsProvider } from '../providers/settings/settings';
 import { CompetitionProvider } from '../providers/competition/competition';
+import { StatusProvider } from '../providers/status/status';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CompetitionProvider } from '../providers/competition/competition';
     BarcodeScanner,
     RemoteServiceProvider,
     SettingsProvider,
-    CompetitionProvider
+    CompetitionProvider,
+    StatusProvider
   ]
 })
 export class AppModule {}

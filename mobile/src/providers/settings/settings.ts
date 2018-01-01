@@ -24,11 +24,16 @@ export class SettingsProvider {
     return await this.storage.get('settings:first_time_use');
   }
 
+  async getAuthToken() {
+    return await this.storage.get('auth:token');
+  }
+
   setDefaults() {
     console.log("Setting Default Values");
     // TODO: Defaults Object
     this.setServerName('https://kipr.ryanowens.info');
     this.setFirstTimeUse('TRUE');
+    this.setAuthToken('');
   }
 
   setFirstTimeUse(val) {
@@ -37,6 +42,10 @@ export class SettingsProvider {
 
   setServerName(name) {
     this.storage.set('settings:server_name', name);
+  }
+
+  setAuthToken(token) {
+    this.storage.set('auth:token', token);
   }
 
 }
