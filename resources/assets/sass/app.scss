@@ -4,3 +4,40 @@
 
 // import Bulma
 @import "~bulma";
+
+.adminpanelbody {
+  background-color: #ECF0F3;
+  min-height: 100vh;
+}
+
+.menu-list li a:hover {
+  background: transparent;
+  color: $primary;
+}
+
+.adminpanel-wrapper {
+  .navbar {
+    border-top: 4px solid $primary;
+  }
+
+
+  .brand-text:hover {
+    color: #7a7a7a;
+  }
+
+    @media screen and (max-width: 1023px) {
+      .admin-panel-content {
+        padding: 1.5rem;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      .admin-panel-content {
+        padding: 1rem;
+      }
+    }
+}
+
+.logout-button {
+  text-decoration: none!important;
+}

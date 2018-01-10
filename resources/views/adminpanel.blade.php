@@ -15,12 +15,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="adminpanelbody">
   <div id="app">
-    <router-view>
-    </router-view>
+    <admin></admin>
   </div>
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

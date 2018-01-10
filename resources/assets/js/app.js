@@ -8,39 +8,34 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import VueRouter from 'vue-router'
-
-import Vuex from 'vuex'
+import AdminPanel from './components/admin/AdminPanel.vue';
+import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
-const routes = [
-  {
-  path: '/login',
-  name: 'login',
-  component: require('./components/login.vue')
+const routes = [{
+    path: '/admin',
+    name: 'index',
+    component: require('./components/admin/index.vue')
   },
   {
-  path: '/',
-  name: 'panel',
-  component: require('./components/panel.vue')
+    path: '/admin/ruleset/create',
+    name: 'ruleset_create',
+    component: require('./components/admin/rulesets/map.vue')
   },
   {
-  path: '/ruleset/create',
-  name: 'ruleset_create',
-  component: require('./components/map.vue')
-  },
-  {
-  path: '/ruleset/zones',
-  name: 'zones',
-  component: require('./components/zones.vue')
+    path: '/admin/ruleset/zones',
+    name: 'ruleset_zones',
+    component: require('./components/admin/rulesets/zones.vue')
   }
 ];
 
 const router = new VueRouter({
-  routes
+  mode: 'history',
+  routes: routes
 });
 
 const store = new Vuex.Store({
@@ -66,28 +61,23 @@ const store = new Vuex.Store({
       state.token_type = type;
     },
     update_map(state, image) {
-        state.map_image = image;
+      state.map_image = image;
     },
     update_zones(state, zone_list) {
-        state.zones = zone_list;
+      state.zones = zone_list;
     }
   }
 })
 
 const app = new Vue({
+  components: {
+    'admin': AdminPanel
+  },
   router,
   store,
   data: {
     user: null,
   },
-  created() {
-    axios.get('/api/user').then((response) => {
-      // console.log(response);
-    }).catch((error) => {
-      console.log("Need to login");
-      this.$router.push('/login');
-    });
-  },
-  methods: {
-  }
-}).$mount('#app')
+  created() {},
+  methods: {}
+}).$mount('#app');

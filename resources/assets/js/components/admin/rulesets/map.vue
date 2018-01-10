@@ -33,16 +33,15 @@
 <script>
 export default {
   methods: {
-    submit()
-    {
+    submit() {
       this.$router.push('/ruleset/zones');
     },
     update_image(name, file) {
-        var url = window.URL.createObjectURL(file[0]);
-        document.getElementById('preview').src = url;
-        this.$store.commit('update_map', url);
-        console.log(this.$store);
-        console.log(url);
+      var url = window.URL.createObjectURL(file[0]);
+      document.getElementById('preview').src = url;
+      this.$store.commit('update_map', url);
+      console.log(this.$store);
+      console.log(url);
     }
   }
 }
