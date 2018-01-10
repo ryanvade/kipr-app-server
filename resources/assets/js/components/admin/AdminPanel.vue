@@ -35,7 +35,7 @@
             <p class="menu-label has-text-weight-bold">Administration</p>
             <ul class="menu-list">
               <li>
-                <router-link class="" :to="{ name: 'index', params: {} }">Admin Home</router-link>
+                <router-link class="" :to="{ name: 'index', params: {} }" exact>Admin Home</router-link>
               </li>
             </ul>
             <p class="menu-label has-text-weight-bold">Rulesets</p>

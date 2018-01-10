@@ -14,6 +14,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Current User passed in from Controller -->
+    <script>
+      var user = {!! $user !!};
+    </script>
 </head>
 <body class="adminpanelbody">
   <div id="app">

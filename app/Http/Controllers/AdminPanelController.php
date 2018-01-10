@@ -9,7 +9,7 @@ class AdminPanelController extends Controller
 {
     public function __construct()
     {
-        $this->middleware([]);
+        $this->middleware(['auth']);
     }
     /**
       * Return the view which contains the admin panel SPA.
@@ -20,9 +20,11 @@ class AdminPanelController extends Controller
     public function index(Request $request)
     {
       $client = Client::where('name', 'Laravel Password Grant Client')->firstOrFail();
+      $user = auth()->user();
         return view('adminpanel')->with([
           'client_id' => $client->id,
-          'client_secret' => $client->secret
+          'client_secret' => $client->secret,
+          'user' => $user
         ]);
     }
 }

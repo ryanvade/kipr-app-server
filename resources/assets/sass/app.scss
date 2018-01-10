@@ -5,6 +5,11 @@
 // import Bulma
 @import "~bulma";
 
+// import Font Awesome
+@import "~font-awesome/scss/font-awesome";
+
+
+// Admin Panel
 .adminpanelbody {
   background-color: #ECF0F3;
   min-height: 100vh;
@@ -36,8 +41,30 @@
         padding: 1rem;
       }
     }
+
+    .index-content {
+      margin-top: 10px;
+      .box {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        padding: 0.75rem;
+        margin: 25px;
+      }
+    }
+    .card:nth-child(2) {
+      margin-top: 15px;
+    }
+    .hero {
+      margin-top: 10px;
+    }
 }
 
 .logout-button {
   text-decoration: none!important;
 }
+
+.router-link-active {
+  color: $primary!important;
+}
+// End Admin Panel
