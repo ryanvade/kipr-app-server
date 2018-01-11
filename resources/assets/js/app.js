@@ -30,6 +30,11 @@ const routes = [{
     path: '/admin/ruleset/zones',
     name: 'ruleset_zones',
     component: require('./components/admin/rulesets/zones.vue')
+  },
+  {
+    path: '/admin/tokens/judging',
+    name: 'judging_tokens',
+    component: require('./components/admin/auth/JudgingTokens.vue')
   }
 ];
 
@@ -46,6 +51,7 @@ const store = new Vuex.Store({
     token_type: null,
     map_image: null,
     scoring_zones: [],
+    competition: null
   },
   mutations: {
     access_token(state, token) {
@@ -65,6 +71,9 @@ const store = new Vuex.Store({
     },
     update_zones(state, zone_list) {
       state.zones = zone_list;
+    },
+    set_competition(state, competition) {
+      state.competition = competition;
     }
   }
 })

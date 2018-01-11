@@ -67,4 +67,10 @@
 .router-link-active {
   color: $primary!important;
 }
+
+.card-footer {  
+  .is-danger {
+    color: $red;
+  }
+}
 // End Admin Panel

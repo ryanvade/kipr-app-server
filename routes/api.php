@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 Route::get('/user', 'UserController@current');
 Route::patch('/match/{match}/score', 'MatchController@update');
+Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions');

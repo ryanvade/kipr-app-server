@@ -25,16 +25,25 @@ class ApiController extends Controller
           'status' => 'unathorized'
         ], 403);
         }
+        # get token count
+        $count = $user->tokens()->count();
         # get a new Personal Access Token
-        $token = $user->createToken('Judging Competition ' . $competition->id)->accessToken;
+        $token = $user->createToken($user->name . ' Judging ' . $count)->accessToken;
         # get a token and expiration date string
         $value = $token . ";" . Carbon::now()->addHours(8)->toDateTimeString() . ";";
         # generate the QR code and put it in an img src format
-        $src = "data:image/png;base64, " . base64_encode(QrCode::format('png')->generate($value));
+        $token->image = "data:image/png;base64, " . base64_encode(QrCode::format('png')->generate($value));
         # return the image
         return response()->json([
         'status' => 'success',
-        'qrcode_src' => $src
+        'token' => $token
       ]);
+    }
+
+    public function getAuthTokensForCompetition(Request $request, Competition $competition) {
+      // Get the Tokens
+      // Append the required Competition information to the token
+      // Turn the tokens into QR Codes
+      // return them
     }
 }

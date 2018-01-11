@@ -47,6 +47,12 @@
                 <router-link class="" :to="{ name: 'ruleset_zones', params: {} }">Define Scoring Zones</router-link>
               </li>
             </ul>
+            <p class="menu-label has-text-weight-bold">Authentication</p>
+            <ul class="menu-list">
+              <li>
+                <router-link class="" :to="{ name: 'judging_tokens', params: {} }" exact>Judging Authentication</router-link>
+              </li>
+            </ul>
           </aside>
         </div>
         <div class="column is-9 is-two-thirds-mobile is-two-thirds-tablet admin-panel-content">
@@ -61,6 +67,25 @@
 
 <script>
 export default {
+  mounted() {
+    let competition = this.$store.state.competition;
+    if(competition == null || (competition.end_data < Date.now())) {
+      window.axios.get('/api/competition/current').then((response) => {
+        if(response.data.status == "success") {
+          const competitions = response.data.competitions;
+          if(competitions.length == 1) {
+            this.$store.commit('set_competition', response.data.competitions[0]);
+          } else if(competitions.length > 1) {
+            // Display Modal to ask for the current competition
+          } else {
+            // Redirect to Competition Creation page
+          }
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+  },
   methods: {
     logout() {
       window.axios.post('/logout').then((response) => {
