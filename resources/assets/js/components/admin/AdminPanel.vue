@@ -55,7 +55,7 @@
             </ul>
           </aside>
         </div>
-        <div class="column is-9 is-two-thirds-mobile is-two-thirds-tablet admin-panel-content">
+        <div class="column is-9 admin-panel-content">
           <!-- http://via.placeholder.com/350x150 -->
           <!-- Router View -->
           <router-view></router-view>
@@ -68,23 +68,6 @@
 <script>
 export default {
   mounted() {
-    let competition = this.$store.state.competition;
-    if(competition == null || (competition.end_data < Date.now())) {
-      window.axios.get('/api/competition/current').then((response) => {
-        if(response.data.status == "success") {
-          const competitions = response.data.competitions;
-          if(competitions.length == 1) {
-            this.$store.commit('set_competition', response.data.competitions[0]);
-          } else if(competitions.length > 1) {
-            // Display Modal to ask for the current competition
-          } else {
-            // Redirect to Competition Creation page
-          }
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-    }
   },
   methods: {
     logout() {

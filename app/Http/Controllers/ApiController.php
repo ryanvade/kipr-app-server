@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth:api');
+    }
     /**
       * Get a QR code for judging.
       *
@@ -42,8 +46,21 @@ class ApiController extends Controller
 
     public function getAuthTokensForCompetition(Request $request, Competition $competition) {
       // Get the Tokens
-      // Append the required Competition information to the token
-      // Turn the tokens into QR Codes
-      // return them
+      $user = auth()->user();
+      $tokens = $user->tokens()->get();
+      $judging_tokens = [];
+      foreach ($tokens as $token ) {
+        if(in_array("judging", $token->scopes)) {
+          // Append the required Competition information to the token
+          $token->competition = $competition;
+          // Turn the tokens into QR Codes
+          $token->image = "data:image/png;base64," . base64_encode(\QrCode::format('png')->generate($token->id . '|' . $competition->id));
+          array_push($judging_tokens, $token);
+        }
+      }
+      return response()->json([
+        'status' => 'success',
+        'tokens' => collect($judging_tokens)
+      ]);
     }
 }

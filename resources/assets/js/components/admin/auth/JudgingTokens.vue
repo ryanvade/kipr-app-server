@@ -15,22 +15,28 @@
           </footer>
         </div>
       </div>
-    <div v-for="token in tokens" class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          Created on {{ token.created_at }}
-        </p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          {{ token.id }}
-
-        </div>
+    <!-- Token cards -->
+    <div class="card" v-for="token in tokens" style="max-width: 200px;">
+      <div class="card-image">
+        <figure class="image">
+          <img :src="token.image" alt="QR Code">
+        </figure>
       </div>
-      <footer class="card-footer">
-        <a href="#" class="card-footer-item">Get QR code</a>
-        <a href="#" class="card-footer-item is-danger">Delete</a>
-      </footer>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+          </div>
+        </div>
+
+        <div class="content">
+          Created At: {{ token.created_at }}
+          <br>
+          Expires At: {{ token.expires_at}}
+        </div>
+        <footer class="card-footer">
+          <a href="#" class="card-footer-item is-danger">Delete</a>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
@@ -43,13 +49,24 @@ export default {
       tokens: []
     };
   },
-  mounted() {
+  created() {
     // Get Current Competition
     this.competition = this.$store.state.competition;
-    if(this.competition != null) {
-      // Get the Auth Token QR Codes for the competition
-      window.axios.get('/api/competition/' + this.competition.id + '/auth/tokens').then((results) => {
-        console.log(results);
+    let competition = this.$store.state.competition;
+    if(competition == null || (competition.end_data < Date.now())) {
+      window.axios.get('/api/competition/current').then((response) => {
+        if(response.data.status == "success") {
+          const competitions = response.data.competitions;
+          if(competitions.length == 1) {
+            this.competition = competitions[0];
+            this.$store.commit('set_competition', response.data.competitions[0]);
+            this.getTokens();
+          } else if(competitions.length > 1) {
+            // Display Modal to ask for the current competition
+          } else {
+            // Redirect to Competition Creation page
+          }
+        }
       }).catch((error) => {
         console.error(error);
       });
@@ -59,6 +76,15 @@ export default {
     createToken() {
       // Create an Auth Token
       // Get all auth tokens
+    },
+    getTokens() {
+      let id = this.competition.id;
+      window.axios.get(`/api/competition/${id}/tokens/judging`).then((result) => {
+        console.log(result);
+        this.tokens = result.data.tokens;
+      }).catch((error) => {
+        console.error(error);
+      });
     }
   }
 }

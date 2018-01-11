@@ -11,8 +11,8 @@ class CompetitionController extends Controller
     public function getCurrentCompetitions()
     {
         $today = Carbon::now();
-        $competitions = Competition::where('start_date', '>', $today)
-                                  ->where('end_date', '<', $today)
+        $competitions = Competition::where('start_date', '<', $today)
+                                  ->where('end_date', '>', $today)
                                   ->get();
         return response()->json([
           'status' => 'success',
