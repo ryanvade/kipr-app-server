@@ -4,7 +4,10 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item brand-text" href="/">KIPR Scoring App</a>
+          <a class="navbar-item brand-text" href="/">
+            <img src="/images/botguy.png" alt="Botguy" style="height: 40px!important; margin-right: 3px;">
+            KIPR Scoring App
+          </a>
           <div class="navbar-burger burger" data-target="navMenu">
             <span></span>
             <span></span>
@@ -14,7 +17,7 @@
         <div id="navMenu" class="navbar-menu">
           <!-- Left side of Navbar -->
           <div class="navbar-start">
-
+            <router-link class="navbar-item" :to="{ name: 'index', params: {} }" exact>Admin Home</router-link>
           </div>
           <!-- Right side of Navbar -->
           <div class="navbar-right">
@@ -32,10 +35,10 @@
       <div class="columns">
         <div class="column is-3 is-hidden-touch">
           <aside class="menu">
-            <p class="menu-label has-text-weight-bold">Administration</p>
+            <p class="menu-label has-text-weight-bold">Competitions</p>
             <ul class="menu-list">
               <li>
-                <router-link class="" :to="{ name: 'index', params: {} }" exact>Admin Home</router-link>
+                <router-link class="" :to="{ name: 'create_competition', params: {} }">Create Competition</router-link>
               </li>
             </ul>
             <p class="menu-label has-text-weight-bold">Rulesets</p>
@@ -47,7 +50,10 @@
             <p class="menu-label has-text-weight-bold">Authentication</p>
             <ul class="menu-list">
               <li>
-                <router-link class="" :to="{ name: 'judging_tokens', params: {} }" exact>Judging Authentication</router-link>
+                <router-link class="" :to="{ name: 'judging_tokens', params: {} }">Judging Authentication</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'signin_tokens', params: {} }">Sign In Authentication</router-link>
               </li>
             </ul>
           </aside>

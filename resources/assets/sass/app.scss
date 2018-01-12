@@ -52,8 +52,8 @@
         margin: 25px;
       }
     }
-    .card:nth-child(2) {
-      margin-top: 15px;
+    .card:nth-child(n-2) {
+      margin-left: 15px;
     }
     .hero {
       margin-top: 10px;
@@ -73,6 +73,55 @@
     color: $red;
   }
 }
+.qr-codes .card {
+  max-width: 200px!important;
+  float: left;
+  margin-top: 20px;
+}
+
+.qr-codes .level {
+  background: white;
+  padding: 15px;
+}
+
+.qr-token {
+  cursor: pointer;
+  max-width: 200px!important;
+}
+
+
+.qr-token:hover {
+  filter: brightness(95%);
+}
+
+.token-modal-wrapper .modal-container {
+    width: 50vw;
+    height: 70vh;
+  }
+
+.large-qr-code {
+  display: block;
+  margin: 0 auto;
+}
+
+.loader-wrapper {
+  height: 90vh;
+  padding-top: 29vh;
+  padding-left: 20vw;
+}
+
+.no-competition-modal-wrapper .modal-container {
+  min-width: 400px;
+}
+
+.missing-competition-modal .router-link-active{
+  color: white !important;
+}
+
+.delete-button:hover {
+  background-color: hsl(0, 0%, 96%);
+}
+
 // End Admin Panel
 // Spinner
 .loader {

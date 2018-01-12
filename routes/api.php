@@ -20,4 +20,5 @@ Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions
 
 
 Route::patch('/match/{match}/score', 'MatchController@update');
-Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTokensForCompetition');
+Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTokensForJudging');
+Route::get('/competition/{competition}/tokens/signin', 'ApiController@getAuthTokensForSignIn');

@@ -73,6 +73,16 @@ const routes = [{
     path: '/admin/tokens/judging',
     name: 'judging_tokens',
     component: require('./components/admin/auth/JudgingTokens.vue')
+  },
+  {
+    path: '/admin/tokens/signin',
+    name: 'signin_tokens',
+    component: require('./components/admin/auth/SignInTokens.vue')
+  },
+  {
+    path: '/admin/competitions/create',
+    name: 'create_competition',
+    component: require('./components/admin/competitions/CreateCompetition.vue')
   }
 ];
 

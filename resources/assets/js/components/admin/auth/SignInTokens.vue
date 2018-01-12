@@ -7,10 +7,10 @@
       <!-- No Tokens Modal -->
       <modal v-if="!loading && tokens.length < 1">
         <div slot="header">
-          <strong>No Judging Tokens</strong>
+          <strong>No Sign In Tokens</strong>
         </div>
         <div slot="body">
-          No judging tokens are currently available.
+          No Sign In tokens are currently available.
         </div>
         <div class="missing-competition-modal" slot="footer">
           <router-link class="button is-info" :to="{ name: 'index', params: {} }">Go Home</router-link>
@@ -23,12 +23,12 @@
           <div class="level-left">
             <div class="level-item">
               <p class="subtitle is-5">
-                <strong>{{ tokens.length }}</strong> Judging Tokens
+                <strong>{{ tokens.length }}</strong> Sign In Tokens
               </p>
             </div>
             <div class="level-item">
               <p class="has-text-grey">
-                Click on a QR Code to enable judging.
+                Click on a QR Code to enable Sign In.
               </p>
             </div>
           </div>
@@ -67,9 +67,9 @@
             <div class="is-5"><strong>Expires</strong> {{ fromNow(token.expires_at) }}</div>
           </div>
           <div class="" slot="body">
-            <img :src="token.image" alt="Judging Token" class="large-qr-code">
+            <img :src="token.image" alt="Sign In Token" class="large-qr-code">
             <div class="subtitle">
-              Scan the QR Code with the KIPR Mobile App to enable judging.
+              Scan the QR Code with the KIPR Mobile App to enable Sign In.
             </div>
           </div>
         </modal>
@@ -116,7 +116,7 @@ export default {
     }
   },
   created() {
-    console.log("Judging Tokens Mounted");
+    console.log("Sign In Tokens Mounted");
     let comp = this.$store.state.competition;
     if (comp == null || (window.moment(comp.end_time).unix() < window.moment().local().unix())) {
       console.log("Getting Current Competitions");
@@ -131,8 +131,8 @@ export default {
       // Create an Auth Token
       // Get all auth tokens
       const params = {
-        name: window.user.name + ' Judging ' + (this.tokens.length + 1),
-        scopes: ['judging']
+        name: window.user.name + ' Sign In ' + (this.tokens.length + 1),
+        scopes: ['sign_in']
       };
       window.axios.post('/oauth/personal-access-tokens', params).then((response) => {
         console.log(response);
@@ -167,10 +167,10 @@ export default {
       let id = this.competition.id;
       this.tokens = [];
       let self = this;
-      window.axios.get(`/api/competition/${id}/tokens/judging`).then((result) => {
+      window.axios.get(`/api/competition/${id}/tokens/signin`).then((result) => {
         console.log(result);
         result.data.tokens.forEach((token) => {
-          if (token.revoked == false && token.scopes.includes('judging')) {
+          if (token.revoked == false && token.scopes.includes('sign_in')) {
             self.tokens.push(token);
           }
         });

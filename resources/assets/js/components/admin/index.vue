@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="">
-    <section class="hero welcome is-small is-primary is-bold">
+    <div class="loader-wrapper" v-if="loading">
+      <div class="loader"></div>
+    </div>
+    <section class="hero welcome is-small is-primary is-bold" v-if="!loading">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">{{ welcomeText }}</h1>
@@ -128,7 +131,11 @@ export default {
       welcomeText: "Hello",
       competitionCount: 0,
       matchCount: 0,
-      teamCount: 0
+      teamCount: 0,
+      competitionsLoading: true,
+      matchesLoading: true,
+      teamsLoading: true,
+      eventsLoading: true
     };
   },
   mounted() {
@@ -137,12 +144,18 @@ export default {
     this.getCompetitionCount();
     this.getMatchCount();
     this.getTeamCount();
+    this.getEvents();
   },
   methods: {
+    getEvents() {
+      // TODO
+      this.eventsLoading = false;
+    },
     getCompetitionCount() {
       window.axios.get('/api/competition/count').then((result) => {
         console.log(result);
         this.competitionCount = result.data.competition_count;
+        this.competitionsLoading = false;
       }).catch((error) => {
         console.error(error);
       });
@@ -151,6 +164,7 @@ export default {
       window.axios.get('/api/match/count').then((result) => {
         console.log(result);
         this.matchCount = result.data.match_count;
+        this.matchesLoading = false;
       }).catch((error) => {
         console.error(error);
       });
@@ -159,9 +173,15 @@ export default {
       window.axios.get('/api/team/count').then((result) => {
         console.log(result);
         this.teamCount = result.data.team_count;
+        this.teamsLoading = false;
       }).catch((error) => {
         console.error(error);
       });
+    }
+  },
+  computed: {
+    loading() {
+      return this.competitionsLoading || this.matchesLoading || this.teamsLoading || this.eventsLoading;
     }
   }
 }
