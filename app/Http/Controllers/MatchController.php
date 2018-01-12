@@ -37,4 +37,12 @@ class MatchController extends Controller
           'score' => $score
         ]);
     }
+
+    public function getMatchCount() {
+      $count = Match::count();
+      return response()->json([
+        'status' => 'success',
+        'match_count' => $count
+      ]);
+    }
 }

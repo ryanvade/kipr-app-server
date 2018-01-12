@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/user', 'UserController@current');
-Route::patch('/match/{match}/score', 'MatchController@update');
+Route::get('/team/count', 'TeamController@getTeamCount');
+Route::get('/match/count', 'MatchController@getMatchCount');
+Route::get('/competition/count', 'CompetitionController@getCompetitionCount');
 Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions');
+
+
+Route::patch('/match/{match}/score', 'MatchController@update');
 Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTokensForCompetition');

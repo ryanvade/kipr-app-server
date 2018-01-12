@@ -43,9 +43,6 @@
               <li>
                 <router-link class="" :to="{ name: 'ruleset_create', params: {} }">Create Ruleset</router-link>
               </li>
-              <li>
-                <router-link class="" :to="{ name: 'ruleset_zones', params: {} }">Define Scoring Zones</router-link>
-              </li>
             </ul>
             <p class="menu-label has-text-weight-bold">Authentication</p>
             <ul class="menu-list">

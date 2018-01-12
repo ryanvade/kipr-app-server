@@ -54,7 +54,7 @@ class ApiController extends Controller
           // Append the required Competition information to the token
           $token->competition = $competition;
           // Turn the tokens into QR Codes
-          $token->image = "data:image/png;base64," . base64_encode(\QrCode::format('png')->generate($token->id . '|' . $competition->id));
+          $token->image = "data:image/png;base64," . base64_encode(\QrCode::format('png')->size(500)->generate($token->id . '|' . $competition->id));
           array_push($judging_tokens, $token);
         }
       }

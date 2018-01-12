@@ -19,4 +19,12 @@ class CompetitionController extends Controller
           'competitions' => $competitions
         ]);
     }
+
+    public function getCompetitionCount() {
+      $count = Competition::count();
+      return response()->json([
+        'status' => 'success',
+        'competition_count' => $count
+      ]);
+    }
 }

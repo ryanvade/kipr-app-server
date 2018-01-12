@@ -12,19 +12,19 @@
         <div class="level-item has-text-centered">
           <div class="box">
             <p class="heading">Competitions</p>
-            <p class="title">{{ Math.floor(Math.random() * (6000 - 0 + 1)) }}</p>
+            <p class="title">{{ competitionCount }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div class="box">
             <p class="heading">Matches</p>
-            <p class="title">{{ Math.floor(Math.random() * (6000 - 0 + 1)) }}</p>
+            <p class="title">{{ matchCount }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div class="box">
             <p class="heading">Teams</p>
-            <p class="title">{{ Math.floor(Math.random() * (6000 - 0 + 1)) }}</p>
+            <p class="title">{{ teamCount }}</p>
           </div>
         </div>
       </nav>
@@ -125,12 +125,44 @@
 export default {
   data() {
     return {
-      welcomeText: "Hello"
+      welcomeText: "Hello",
+      competitionCount: 0,
+      matchCount: 0,
+      teamCount: 0
     };
   },
   mounted() {
     // Can access window global at this point
     this.welcomeText = "Hello, " + window.user.name;
+    this.getCompetitionCount();
+    this.getMatchCount();
+    this.getTeamCount();
+  },
+  methods: {
+    getCompetitionCount() {
+      window.axios.get('/api/competition/count').then((result) => {
+        console.log(result);
+        this.competitionCount = result.data.competition_count;
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+    getMatchCount() {
+      window.axios.get('/api/match/count').then((result) => {
+        console.log(result);
+        this.matchCount = result.data.match_count;
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+    getTeamCount() {
+      window.axios.get('/api/team/count').then((result) => {
+        console.log(result);
+        this.teamCount = result.data.team_count;
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
   }
 }
 </script>

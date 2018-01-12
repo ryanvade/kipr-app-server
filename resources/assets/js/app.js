@@ -7,15 +7,53 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.moment = require('moment-timezone');
 
 import AdminPanel from './components/admin/AdminPanel.vue';
+import createPersistedState from 'vuex-persistedstate';
+import Modal from './components/Modal.vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 
-Vue.use(VueRouter)
-Vue.use(Vuex)
+Vue.use(VueRouter);
+Vue.use(Vuex);
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+const store = new Vuex.Store({
+  plugins: [createPersistedState()],
+  state: {
+    access_token: null,
+    expires_at: null,
+    refresh_token: null,
+    token_type: null,
+    map_image: null,
+    scoring_zones: [],
+    competition: null,
+  },
+  mutations: {
+    access_token(state, token) {
+      state.access_token = token;
+    },
+    expires_at(state, date) {
+      state.expires_at = date;
+    },
+    refresh_token(state, token) {
+      state.refresh_token = token;
+    },
+    token_type(state, type) {
+      state.token_type = type;
+    },
+    update_map(state, image) {
+      state.map_image = image;
+    },
+    update_zones(state, zone_list) {
+      state.zones = zone_list;
+    },
+    set_competition(state, competition) {
+      state.competition = competition;
+    }
+  }
+});
+
 const routes = [{
     path: '/admin',
     name: 'index',
@@ -43,44 +81,9 @@ const router = new VueRouter({
   routes: routes
 });
 
-const store = new Vuex.Store({
-  state: {
-    access_token: null,
-    expires_at: null,
-    refresh_token: null,
-    token_type: null,
-    map_image: null,
-    scoring_zones: [],
-    competition: null
-  },
-  mutations: {
-    access_token(state, token) {
-      state.access_token = token;
-    },
-    expires_at(state, date) {
-      state.expires_at = date;
-    },
-    refresh_token(state, token) {
-      state.refresh_token = token;
-    },
-    token_type(state, type) {
-      state.token_type = type;
-    },
-    update_map(state, image) {
-      state.map_image = image;
-    },
-    update_zones(state, zone_list) {
-      state.zones = zone_list;
-    },
-    set_competition(state, competition) {
-      state.competition = competition;
-    }
-  }
-})
-
 const app = new Vue({
   components: {
-    'admin': AdminPanel
+    'admin': AdminPanel,
   },
   router,
   store,
