@@ -19,7 +19,6 @@
                   </div>
                   <p class="control">
                     <button class="button is-primary is-medium is-fullwidth" @click="next">
-                      <i class="fa fa-user"></i>
                       Next
                     </button>
                   </p>
@@ -137,9 +136,9 @@ export default {
 
 <style lang="css">
 #frame {
-    position:relative; 
+    position:relative;
     display: inline-block;
-    margin: 0 auto; 
+    margin: 0 auto;
     border: 1px solid black;
 }
 #frame canvas {
@@ -147,7 +146,7 @@ export default {
     z-index: 20;
 }
 #frame img {
-    position:absolute; 
+    position:absolute;
     top: 0px;
     left: 0px;
     z-index: 1;

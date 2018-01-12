@@ -82,11 +82,14 @@
           <strong>Missing Competition</strong>
         </div>
         <div class="" slot="body">
-          Unable to load current competition information. Please create a competition
-          or reload the page.
+          <div class="">
+            Please create a competition or <a class="" @click="reloadPage">reload the page</a>.
+          </div>
+          <div class="">
+            You may also <router-link class="" :to="{ name: 'index', params: {} }" exact>go back to the home page</router-link>.
+          </div>
         </div>
         <div class="missing-competition-modal" slot="footer">
-          <button class="button" @click="reloadPage">Reload Page</button>
           <router-link class="button is-primary" :to="{ name: 'create_competition', params: {} }">Create Competition</router-link>
         </div>
       </modal>
