@@ -21,6 +21,10 @@
 }
 
 .adminpanel-wrapper {
+  .adminpanel-content {
+    margin-top: 25px;
+  }
+
   .navbar {
     border-top: 4px solid $primary;
   }

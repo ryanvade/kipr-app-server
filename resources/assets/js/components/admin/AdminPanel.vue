@@ -21,16 +21,25 @@
           </div>
           <!-- Right side of Navbar -->
           <div class="navbar-right">
-            <div class="">
-              <div class="navbar-item">
-                  <button type="submit" name="logout" class="button is-text logout-button" @click="logout">logout</button>
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-active" @click="logout">
+                    <span class="icon">
+                      <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </span>
+                    <span>
+                      logout
+                    </span>
+                  </a>
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container adminpanel-content">
       <!-- Side Nav -->
       <div class="columns">
         <div class="column is-3 is-hidden-touch">
@@ -70,8 +79,7 @@
 
 <script>
 export default {
-  mounted() {
-  },
+  mounted() {},
   methods: {
     logout() {
       window.axios.post('/logout').then((response) => {
