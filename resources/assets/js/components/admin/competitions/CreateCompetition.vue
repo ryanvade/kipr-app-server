@@ -19,13 +19,13 @@
         <div class="field">
           <label class="label">Start Date</label>
           <div class="control">
-            <datetimepicker></datetimepicker>
+            <datetimepicker v-on:change="changeStartDate"></datetimepicker>
           </div>
         </div>
         <div class="field">
           <label class="label">End Date</label>
           <div class="control">
-            <datetimepicker></datetimepicker>
+            <datetimepicker v-on:change="changeEndDate"></datetimepicker>
           </div>
         </div>
         <div class="field is-grouped is-grouped-right">
@@ -63,7 +63,12 @@ export default {
     submit() {
 
     },
-
+    changeStartDate(date) {
+      this.start_date = date;
+    },
+    changeEndDate(date) {
+      this.end_date = date;
+    }
   },
   computed: {
 

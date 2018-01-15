@@ -5,7 +5,7 @@
     <div class="box date-time" v-show="boxDisplayed">
       <div class="date-wrapper">
         <span class="month-year">
-          <button>
+          <button @click="rotateLeft">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
           </button>
           <select class="month-selector" v-model="month">
@@ -14,7 +14,7 @@
           <select class="year-selector" v-model="year">
             <option v-for="year in years" :value="year">{{ year }}</option>
           </select>
-          <button>
+          <button @click="rotateRight">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
           </button>
           <button @click="toggleDisplay">
@@ -22,7 +22,7 @@
           </button>
         </span>
         <div class="date-table-wrapper">
-          <table class="table date-table">
+          <table class="table is-narrow date-table">
             <thead>
               <tr>
                 <th v-for="day in days" class="">{{ day }}</th>
@@ -30,7 +30,7 @@
             </thead>
             <tbody>
               <tr v-for="week in weeks">
-                <td v-for="day in week">{{ day }}</td>
+                <td v-for="day in week" :class="tableCellIsSelected(day)" @click="setDay(day)">{{ day }}</td>
               </tr>
             </tbody>
           </table>
@@ -57,6 +57,7 @@ export default {
       month: null,
       year: null,
       hour: 0,
+      day: 0,
       minute: 0,
       amPM: 'PM',
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -76,6 +77,7 @@ export default {
     this.hour = parseInt(moment().format('hh'));
     this.amPM = moment().format('A');
     this.year = moment().year();
+    this.day = parseInt(moment().format('D'));
     this.generateCalendar();
     document.body.addEventListener('click', (event) => {
       console.log(event);
@@ -124,9 +126,44 @@ export default {
         }
       }
     },
+    setDay(day) {
+      if(day != '') {
+        this.day = day;
+      }
+    },
     toggleDisplay() {
       console.log("Toggle Display");
       this.boxDisplayed = !this.boxDisplayed;
+    },
+    tableCellIsSelected(day) {
+      if(this.day == day) {
+        return 'calendar-cell-selected';
+      }
+      return 'calendar-cell';
+    },
+    rotateLeft() {
+      if(this.month == this.months[0] && this.year == this.years[0]) {
+        console.log("Cannot rotate left");
+      }else if(this.month == this.months[0]) {
+        // decrement year
+        this.year = this.years[this.years.indexOf(this.year) - 1];
+        this.month = this.months[11];
+      } else {
+        // decrement month in year
+        this.month = this.months[this.months.indexOf(this.month) - 1];
+      }
+    },
+    rotateRight() {
+      if(this.month == this.months[11] && this.year == this.years[9]) {
+        console.log("Cannot rotate right");
+      }else if(this.month == this.months[11]) {
+        // increment year
+        this.year = this.years[this.years.indexOf(this.year) + 1];
+        this.month = this.months[0];
+      } else {
+        // decrement month in year
+        this.month = this.months[this.months.indexOf(this.month) + 1];
+      }
     }
   },
   computed: {
@@ -144,7 +181,7 @@ export default {
     },
     date() {
       if(this.month && this.year && this.hour && this.minute && this.amPM) {
-        return moment(this.month + ' ' + this.year, 'MMMM YYYY').format('M/D/YYY ') + this.hour + ':' + this.minute + this.amPM;
+        return moment(this.month + ' ' + this.day + ' ' + this.year, 'MMMM D YYYY').format('M/D/YYYY ') + this.hour + ':' + this.minute + this.amPM;
       }
       return '';
     }
@@ -152,9 +189,27 @@ export default {
   watch: {
     month() {
       this.generateCalendar();
+      this.$emit('change', this.date);
     },
     year() {
       this.generateCalendar();
+      this.$emit('change', this.date);
+    },
+    day() {
+      this.generateCalendar();
+      this.$emit('change', this.date);
+    },
+    year() {
+      this.$emit('change', this.date);
+    },
+    hour() {
+      this.$emit('change', this.date);
+    },
+    minute() {
+      this.$emit('change', this.date);
+    },
+    amPM() {
+      this.$emit('change', this.date);
     }
   }
 }
@@ -169,5 +224,18 @@ export default {
   position: absolute;
   top: 45px;
   z-index: 800;
+}
+
+.calendar-cell {
+  cursor: pointer;
+}
+
+.calendar-cell:hover {
+  background-color: hsl(0, 0%, 98%);
+}
+
+.calendar-cell-selected {
+  cursor: pointer;
+  background-color: hsl(0, 0%, 96%);
 }
 </style>
