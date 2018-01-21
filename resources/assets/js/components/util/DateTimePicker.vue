@@ -127,7 +127,7 @@ export default {
       }
     },
     setDay(day) {
-      if(day != '') {
+      if (day != '') {
         this.day = day;
       }
     },
@@ -136,15 +136,15 @@ export default {
       this.boxDisplayed = !this.boxDisplayed;
     },
     tableCellIsSelected(day) {
-      if(this.day == day) {
+      if (this.day == day) {
         return 'calendar-cell-selected';
       }
       return 'calendar-cell';
     },
     rotateLeft() {
-      if(this.month == this.months[0] && this.year == this.years[0]) {
+      if (this.month == this.months[0] && this.year == this.years[0]) {
         console.log("Cannot rotate left");
-      }else if(this.month == this.months[0]) {
+      } else if (this.month == this.months[0]) {
         // decrement year
         this.year = this.years[this.years.indexOf(this.year) - 1];
         this.month = this.months[11];
@@ -154,9 +154,9 @@ export default {
       }
     },
     rotateRight() {
-      if(this.month == this.months[11] && this.year == this.years[9]) {
+      if (this.month == this.months[11] && this.year == this.years[9]) {
         console.log("Cannot rotate right");
-      }else if(this.month == this.months[11]) {
+      } else if (this.month == this.months[11]) {
         // increment year
         this.year = this.years[this.years.indexOf(this.year) + 1];
         this.month = this.months[0];
@@ -180,7 +180,8 @@ export default {
       }
     },
     date() {
-      if(this.month && this.year && this.hour && this.minute && this.amPM) {
+      let tz = moment.tz.zone(moment.tz.guess()).abbr(moment());
+      if (this.month != null && this.year != null && this.hour != null && this.minute != null && this.amPM != null) {
         return moment(this.month + ' ' + this.day + ' ' + this.year, 'MMMM D YYYY').format('M/D/YYYY ') + this.hour + ':' + this.minute + this.amPM;
       }
       return '';

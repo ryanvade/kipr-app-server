@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 Route::get('/user', 'UserController@current');
 Route::get('/team/count', 'TeamController@getTeamCount');
 Route::get('/match/count', 'MatchController@getMatchCount');
+Route::post('/competition', 'CompetitionController@create');
+Route::get('/competition/names', 'CompetitionController@getNames');
 Route::get('/competition/count', 'CompetitionController@getCompetitionCount');
 Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions');
 
