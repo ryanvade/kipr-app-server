@@ -92,7 +92,7 @@ export default {
       });
     },
     prettyDate(date) {
-      return moment(date).format("MM/D/YYYY H:m A");
+      return moment(date).format('M/D/YYYY h:mmA');;
     },
     submitDelete() {
       let id = this.competition.id;

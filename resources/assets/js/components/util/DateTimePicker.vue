@@ -73,7 +73,7 @@ export default {
   },
   mounted() {
     this.month = moment().format('MMMM');
-    this.minute = moment().minute();
+    this.minute = moment().format('mm');
     this.hour = parseInt(moment().format('hh'));
     this.amPM = moment().format('A');
     this.year = moment().year();
@@ -182,7 +182,8 @@ export default {
     date() {
       let tz = moment.tz.zone(moment.tz.guess()).abbr(moment());
       if (this.month != null && this.year != null && this.hour != null && this.minute != null && this.amPM != null) {
-        return moment(this.month + ' ' + this.day + ' ' + this.year, 'MMMM D YYYY').format('M/D/YYYY ') + this.hour + ':' + this.minute + this.amPM;
+        let str = '' + this.month + ' ' + this.day + ' ' + this.year + ' ' + this.hour + ':' + this.minute + this.amPM;
+        return moment(str, 'MMMM D YYYY h:mA').format('M/D/YYYY h:mmA');
       }
       return '';
     }

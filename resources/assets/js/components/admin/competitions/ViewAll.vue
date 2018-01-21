@@ -83,7 +83,7 @@ export default {
       })
     },
     prettyDate(date) {
-      return moment(date).format("MM/D/YYYY H:m A");
+      return moment(date).format('M/D/YYYY h:mmA');
     },
     goToCompetition(comp) {
       this.$router.push(`/admin/competitions/${comp.id}`);
