@@ -1,0 +1,36 @@
+{
+  "events":[
+     {
+      "min": 0,
+      "max": 10,
+      "title": "Red ball(s) in bucket",
+      "description": "Count all of the red ball(s) in bucket located in the highlighted area",
+      "imgA": "assets/imgs/bucket_blue.png",
+      "imgB": "assets/imgs/bucket_pink.png"
+    },
+    {
+      "min": 0,
+      "max": 10,
+      "title": "Blue ball(s) in bucket",
+      "description": "Count all of the red ball(s) in bucket located in the highlighted area",
+      "imgA": "assets/imgs/bucket_blue.png",
+      "imgB": "assets/imgs/bucket_pink.png"
+    },
+    {
+      "min": 0,
+      "max": 1,
+      "title": "Robot on Crater Slope",
+      "description": "A robot only scores if no part of it is touching outside of this region",
+      "imgA": "assets/imgs/slope_blue.png",
+      "imgB": "assets/imgs/slope_pink.png"
+    },
+    {
+      "min": 0,
+      "max": 2,
+      "title": "Robot on Terrace",
+      "description": "A robot only scores if no part of it is touching outside of the slope",
+      "imgA": "assets/imgs/terrace_blue.png",
+      "imgB": "assets/imgs/terrace_pink.png"
+    }
+  ]
+}
