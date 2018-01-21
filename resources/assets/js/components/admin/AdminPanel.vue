@@ -53,6 +53,15 @@
                 <router-link class="" :to="{ name: 'create_competition', params: {} }">Create Competition</router-link>
               </li>
             </ul>
+            <p class="menu-label has-text-weight-bold">Teams</p>
+            <ul class="menu-list">
+              <!-- <li>
+                <router-link class="" :to="{ name: 'view_all_competitions', params: {} }" exact>View All Competitions</router-link>
+              </li> -->
+              <li>
+                <router-link class="" :to="{ name: 'create_team', params: {} }">Create Team</router-link>
+              </li>
+            </ul>
             <p class="menu-label has-text-weight-bold">Rulesets</p>
             <ul class="menu-list">
               <li>

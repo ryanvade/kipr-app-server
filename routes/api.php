@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/user', 'UserController@current');
-Route::get('/team/count', 'TeamController@getTeamCount');
 Route::get('/match/count', 'MatchController@getMatchCount');
+// Competitions
 Route::post('/competition', 'CompetitionController@create');
 Route::get('/competition', 'CompetitionController@getAll');
 Route::get('/competition/names', 'CompetitionController@getNames');
 Route::get('/competition/count', 'CompetitionController@getCompetitionCount');
 Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions');
-
+// Teams
+Route::post('/team', 'TeamController@create');
+Route::get('/team/count', 'TeamController@getTeamCount');
 
 Route::patch('/match/{match}/score', 'MatchController@update');
 Route::get('/competition/{competition}', 'CompetitionController@get');

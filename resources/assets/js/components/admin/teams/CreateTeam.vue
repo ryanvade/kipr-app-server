@@ -9,21 +9,20 @@
           <div class="control">
             <input :class="nameInputClass" type="text" name="name" v-model="name" @blur="verifyName">
             <p class="help is-danger" v-if="badName != ''">{{ badName }}</p>
-            <p class="help is-success" v-if="validName">Name is available.</p>
           </div>
         </div>
         <div class="field">
-          <label class="label">Location</label>
+          <label class="label">Email</label>
           <div class="control">
-            <input :class="locationInputClass" type="text" name="location" v-model="location" @blur="verifyLocation">
-            <p class="help is-danger" v-if="badLocation != ''">{{ badLocation }}</p>
+            <input :class="emailInputClass" type="email" name="location" v-model="email" @blur="verifyEmail">
+            <p class="help is-danger" v-if="badEmail != ''">{{ badEmail }}</p>
           </div>
         </div>
         <div class="field">
           <label class="label">Code</label>
           <div class="control">
-            <input :class="codeInputClass" type="text" name="code" v-model="code" @blur="verifyLocation">
-            <p class="help is-danger" v-if="badLocation != ''">{{ badLocation }}</p>
+            <input :class="codeInputClass" type="text" name="code" v-model="code" @blur="verifyCode">
+            <p class="help is-danger" v-if="badCode != ''">{{ badCode }}</p>
           </div>
         </div>
         <div class="field is-grouped is-grouped-right">
@@ -44,8 +43,87 @@ export default {
     return {
       name: '',
       email: '',
-      code: ''
+      code: '',
+      badName: '',
+      badEmail: '',
+      badCode: '',
+      loading: true,
+      EMAIL_REGEX: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     };
+  },
+  mounted() {
+    this.loading = false;
+  },
+  methods: {
+    verifyName() {
+      this.badName = '';
+      if (this.name == '') {
+        this.badName = "The name cannot be empty.";
+        return false;
+      }
+      return true;
+    },
+    verifyCode() {
+      this.badCode = '';
+      if (this.code == '') {
+        this.badCode = "The code cannot be empty.";
+        return false;
+      }
+      return true;
+    },
+    verifyEmail() {
+      this.badEmail = '';
+      if (this.email == '') {
+        this.badEmail = "The email cannot be empty.";
+        return false;
+      } else if (!this.EMAIL_REGEX.test(this.email.toLowerCase())) {
+        this.badEmail = "Not a valid email address."
+        return false;
+      }
+      return true;
+    },
+    submit() {
+      if (!this.verifyName() || !this.verifyCode() || !this.verifyEmail()) {
+        return;
+      }
+      window.axios.post('/api/team', {
+        name: this.name,
+        email: this.email,
+        code: this.code
+      }).then((response) => {
+        console.log(response);
+        let id = response.data.team.id;
+        this.$router.push(`/admin/teams/${id}`);
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+  },
+  computed: {
+    nameInputClass() {
+      if (this.name != '' && this.badName == '') {
+        return 'input is-success';
+      } else if (this.badName != '') {
+        return 'input is-danger';
+      }
+      return 'input';
+    },
+    emailInputClass() {
+      if (this.email != '' && this.badEmail == '') {
+        return 'input is-success';
+      } else if (this.badEmail != '') {
+        return 'input is-danger';
+      }
+      return 'input';
+    },
+    codeInputClass() {
+      if (this.code != '' && this.badCode == '') {
+        return 'input is-success';
+      } else if (this.badCode != '') {
+        return 'input is-danger';
+      }
+      return 'input';
+    }
   }
 }
 </script>

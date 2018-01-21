@@ -93,6 +93,11 @@ const routes = [{
     path: '/admin/competitions/:id',
     name: 'view_competition',
     component: require('./components/admin/competitions/View.vue')
+  },
+  {
+    path: '/admin/teams/create',
+    name: 'create_team',
+    component: require('./components/admin/teams/CreateTeam.vue')
   }
 ];
 
