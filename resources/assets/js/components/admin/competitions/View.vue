@@ -23,7 +23,7 @@
       </footer>
     </div>
     <!-- Warning Modal -->
-    <div class="warning-modal">
+    <div class="delete-competition-modal-wrapper">
       <modal v-if="showWarning" v-on:close="showWarning = false">
         <div class="" slot="header">
           Delete Competition
@@ -108,8 +108,4 @@ export default {
 </script>
 
 <style lang="css">
-.missing-competition-modal, .modal-container {
-    width: 400px !important;
-  }
-
 </style>

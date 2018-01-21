@@ -1,15 +1,9 @@
 // Import Bulma Utility Variables
-@import "~bulma/sass/utilities/initial-variables";
-// Make Bumla Modifications here
-
+@import "~bulma/sass/utilities/initial-variables"; // Make Bumla Modifications here
 // import Bulma
-@import "~bulma";
+@import "~bulma"; // import Font Awesome
+@import "~font-awesome/scss/font-awesome"; // Admin Panel
 
-// import Font Awesome
-@import "~font-awesome/scss/font-awesome";
-
-
-// Admin Panel
 .adminpanelbody {
   background-color: #ECF0F3;
   min-height: 100vh;
@@ -29,39 +23,39 @@
     border-top: 4px solid $primary;
   }
 
-
   .brand-text:hover {
     color: #7a7a7a;
   }
+  @media screen and (max-width: 1023px) {
+    .admin-panel-content {
+      padding: 1.5rem;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .admin-panel-content {
+      padding: 1rem;
+    }
+  }
 
-    @media screen and (max-width: 1023px) {
-      .admin-panel-content {
-        padding: 1.5rem;
-      }
-    }
+  .index-content {
+    margin-top: 10px;
 
-    @media screen and (min-width: 1024px) {
-      .admin-panel-content {
-        padding: 1rem;
-      }
+    .box {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0;
+      padding: 0.75rem;
+      margin: 25px;
     }
+  }
 
-    .index-content {
-      margin-top: 10px;
-      .box {
-        flex-grow: 1;
-        flex-shrink: 1;
-        flex-basis: 0;
-        padding: 0.75rem;
-        margin: 25px;
-      }
-    }
-    .card:nth-child(n-2) {
-      margin-left: 15px;
-    }
-    .hero {
-      margin-top: 10px;
-    }
+  .card:nth-child(n-2) {
+    margin-left: 15px;
+  }
+
+  .hero {
+    margin-top: 10px;
+  }
 }
 
 .logout-button {
@@ -77,6 +71,7 @@
     color: $red;
   }
 }
+
 .qr-codes .card {
   max-width: 200px!important;
   float: left;
@@ -93,15 +88,14 @@
   max-width: 200px!important;
 }
 
-
 .qr-token:hover {
   filter: brightness(95%);
 }
 
 .token-modal-wrapper .modal-container {
-    width: 50vw;
-    height: 70vh;
-  }
+  width: 50vw;
+  height: 70vh;
+}
 
 .large-qr-code {
   display: block;
@@ -118,33 +112,50 @@
   min-width: 460px;
 }
 
-.missing-competition-modal .router-link-active{
+.missing-competition-modal .router-link-active {
   color: white !important;
 }
 
 .delete-button:hover {
   background-color: hsl(0, 0%, 96%);
 }
-
 // End Admin Panel
 // Spinner
+
 .loader {
   border: 2px solid $light;
   border-radius: 50%;
   border-top: 2px solid $primary;
   width: 120px;
   height: 120px;
-  -webkit-animation: spin 1s linear infinite; /* Safari */
+  -webkit-animation: spin 1s linear infinite;
+  /* Safari */
   animation: spin 1s linear infinite;
 }
-
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.delete-competition-modal-wrapper .modal-container {
+  width: 400px !important;
+}
+
+.missing-competition-modal .modal-container {
+  width: 400px !important;
 }
