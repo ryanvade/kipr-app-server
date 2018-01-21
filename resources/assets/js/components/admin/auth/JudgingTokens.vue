@@ -83,10 +83,10 @@
         </div>
         <div class="" slot="body">
           <div class="">
-            You may also <router-link class="" :to="{ name: 'index', params: {} }" exact>go back to the home page</router-link>.
+            Please create a competition or <a class="" @click="reloadPage">reload the page</a>.
           </div>
           <div class="">
-            Please create a competition or <a class="" @click="reloadPage">reload the page</a>.
+            You may also <router-link class="" :to="{ name: 'index', params: {} }" exact>go back to the home page</router-link>.
           </div>
         </div>
         <div class="missing-competition-modal" slot="footer">
@@ -170,6 +170,7 @@ export default {
       let id = this.competition.id;
       this.tokens = [];
       let self = this;
+      console.log("Getting competition tokens");
       window.axios.get(`/api/competition/${id}/tokens/judging`).then((result) => {
         console.log(result);
         result.data.tokens.forEach((token) => {
@@ -180,6 +181,13 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        // The current competition has been deleted for some reason...
+        if(error.response.status == 404) {
+          console.log("Response is 404, setting store competition to null");
+          self.$store.commit('set_competition', null);
+          // reloading page now...
+          this.$router.push('/admin/tokens/judging');
+        }
       });
     },
     getCurrentCompetition() {

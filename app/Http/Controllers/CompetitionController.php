@@ -22,12 +22,28 @@ class CompetitionController extends Controller
         ]);
     }
 
+    public function getAll() {
+      return Competition::paginate(20);
+    }
+
     public function getCompetitionCount()
     {
         $count = Competition::count();
         return response()->json([
         'status' => 'success',
         'competition_count' => $count
+      ]);
+    }
+
+    public function get(Competition $competition) {
+      return $competition;
+    }
+
+    public function delete(Competition $competition) {
+      $competition->delete();
+      return response()->json([
+        'status' => 'success',
+        'message' => $competition->id . ' deleted'
       ]);
     }
 

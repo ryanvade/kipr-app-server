@@ -80,9 +80,19 @@ const routes = [{
     component: require('./components/admin/auth/SignInTokens.vue')
   },
   {
+    path: '/admin/competitions',
+    name: 'view_all_competitions',
+    component: require('./components/admin/competitions/ViewAll.vue')
+  },
+  {
     path: '/admin/competitions/create',
     name: 'create_competition',
     component: require('./components/admin/competitions/CreateCompetition.vue')
+  },
+  {
+    path: '/admin/competitions/:id',
+    name: 'view_competition',
+    component: require('./components/admin/competitions/View.vue')
   }
 ];
 
