@@ -27,4 +27,20 @@ class TeamController extends Controller
         'team' => $team
       ]);
     }
+
+    public function getAll() {
+      return Team::paginate(20);
+    }
+
+    public function get(Team $team) {
+      return $team;
+    }
+
+    public function delete(Team $team) {
+      $team->delete();
+      return response()->json([
+        'status' => 'success',
+        'message' => $team->id . ' deleted'
+      ]);
+    }
 }

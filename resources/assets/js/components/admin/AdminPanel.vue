@@ -55,9 +55,9 @@
             </ul>
             <p class="menu-label has-text-weight-bold">Teams</p>
             <ul class="menu-list">
-              <!-- <li>
-                <router-link class="" :to="{ name: 'view_all_competitions', params: {} }" exact>View All Competitions</router-link>
-              </li> -->
+              <li>
+                <router-link class="" :to="{ name: 'view_all_teams', params: {} }" exact>View All Teams</router-link>
+              </li>
               <li>
                 <router-link class="" :to="{ name: 'create_team', params: {} }">Create Team</router-link>
               </li>

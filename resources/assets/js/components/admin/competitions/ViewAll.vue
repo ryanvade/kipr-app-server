@@ -3,7 +3,28 @@
     <div class="loader-wrapper" v-if="loading">
       <div class="loader"></div>
     </div>
-    <table class="table is-hoverable" v-if="!loading">
+
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <p class="subtitle is-5">
+            <strong>{{ competitions.length }}</strong> Competitions
+          </p>
+        </div>
+        <div class="level-item">
+          <p class="has-text-grey" v-if="competitions.length > 0">
+            Click on a competition for more options.
+          </p>
+        </div>
+      </div>
+      <div class="level-right">
+        <p class="level-item">
+          <router-link class="button is-primary" :to="{ name: 'create_competition', params: {} }">Create</router-link>
+        </p>
+      </div>
+    </nav>
+
+    <table class="table is-hoverable is-fullwidth" v-if="!loading">
       <thead>
         <tr>
           <th>ID</th>
