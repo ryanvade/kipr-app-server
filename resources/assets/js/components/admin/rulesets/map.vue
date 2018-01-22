@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-  <section class="hero is-fullheight" v-show="!showNoCompetitions">
+  <section class="hero is-fullheight">
         <div class="hero-body">
           <div class="container">
             <div class="columns is-centered">
@@ -28,25 +28,6 @@
           </div>
     </div>
   </section>
-  <!-- No Competition Modal -->
-  <div class="no-competition-modal-wrapper">
-    <modal v-if="showNoCompetitions">
-      <div class="" slot="header">
-        <strong>Missing Competition</strong>
-      </div>
-      <div class="" slot="body">
-        <div class="">
-          Please create a competition or <a class="" @click="reloadPage">reload the page</a>.
-        </div>
-        <div class="">
-          You may also <router-link class="" :to="{ name: 'index', params: {} }" exact>go back to the home page</router-link>.
-        </div>
-      </div>
-      <div class="missing-competition-modal" slot="footer">
-        <router-link class="button is-primary" :to="{ name: 'create_competition', params: {} }">Create Competition</router-link>
-      </div>
-    </modal>
-  </div>
 </div>
 </template>
 
@@ -58,12 +39,9 @@ export default {
   },
   data() {
     return {
-      showNoCompetitions: false,
-      competition: null,
     };
   },
   mounted() {
-    this.getCurrentCompetition();
   },
   methods: {
     submit() {
@@ -75,28 +53,7 @@ export default {
       this.$store.commit('update_map', url);
       console.log(this.$store);
       console.log(url);
-    },
-    getCurrentCompetition() {
-      let self = this;
-      window.axios.get('/api/competition/current').then((result) => {
-        console.log(result);
-        let comps = result.data.competitions;
-        if (comps.length == 1) {
-          self.competition = comps[0];
-          self.$store.commit('set_competition', self.competition);
-        } else if (comps.length > 1) {
-          // Display 'Choose Current Competition' modal
-        } else {
-          // Display 'No Competitions, please make one' modal
-          self.showNoCompetitions = true;
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-    },
-    reloadPage() {
-      window.location.href = window.location.href;
-    },
+    }
   }
 }
 </script>
