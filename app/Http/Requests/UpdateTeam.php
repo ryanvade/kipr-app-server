@@ -5,7 +5,7 @@ namespace KIPR\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCompetition extends FormRequest
+class UpdateTeam extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,14 @@ class UpdateCompetition extends FormRequest
     public function rules()
     {
         return [
-          'name' => [
+          'name' => 'bail|required|String',
+          'email' => 'bail|required|String',
+          'code' => [
             'bail',
             'required',
             'String',
-            Rule::unique('competitions')->ignore(request()->competition->id),
-        ],
-        'location' => 'bail|required|String',
-        'startDate' => 'bail|required|date',
-        'endDate' => 'bail|required|date'
-      ];
+            Rule::unique('teams')->ignore(request()->team->id),
+          ]
+        ];
     }
 }

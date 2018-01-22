@@ -5,6 +5,7 @@ namespace KIPR\Http\Controllers;
 use KIPR\Team;
 use Illuminate\Http\Request;
 use KIPR\Http\Requests\CreateTeam;
+use KIPR\Http\Requests\UpdateTeam;
 
 class TeamController extends Controller
 {
@@ -41,6 +42,18 @@ class TeamController extends Controller
       return response()->json([
         'status' => 'success',
         'message' => $team->id . ' deleted'
+      ]);
+    }
+
+    public function patch(Team $team, UpdateTeam $request) {
+      $team->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'code' => $request->code
+      ]);
+      return response()->json([
+        'status' => 'success',
+        'team' => $team
       ]);
     }
 }

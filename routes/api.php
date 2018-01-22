@@ -31,5 +31,6 @@ Route::delete('/competition/{competition}', 'CompetitionController@delete');
 Route::patch('/competition/{competition}', 'CompetitionController@patch');
 Route::get('/team/{team}', 'TeamController@get');
 Route::delete('/team/{team}', 'TeamController@delete');
+Route::patch('/team/{team}', 'TeamController@patch');
 Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTokensForJudging');
 Route::get('/competition/{competition}/tokens/signin', 'ApiController@getAuthTokensForSignIn');
