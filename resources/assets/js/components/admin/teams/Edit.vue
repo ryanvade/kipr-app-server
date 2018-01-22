@@ -27,7 +27,7 @@
         </div>
         <div class="field is-grouped is-grouped-right">
           <div class="control">
-            <router-link class="button is-warning" :to="{ name: 'index', params: {} }" exact>Cancel</router-link>
+            <a class="button is-warning" @click="$router.push('/admin/teams/' + team.id)">Cancel</a>
           </div>
           <div class="control">
             <button class="button is-primary" @click="submit">Submit</button>
