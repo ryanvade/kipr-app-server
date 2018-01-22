@@ -7,6 +7,7 @@ use KIPR\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use KIPR\Http\Requests\CreateCompetition;
+use KIPR\Http\Requests\UpdateCompetition;
 
 class CompetitionController extends Controller
 {
@@ -64,5 +65,24 @@ class CompetitionController extends Controller
     public function getNames()
     {
         return DB::table('competitions')->pluck('name');
+    }
+
+    public function patch(Competition $competition, UpdateCompetition $request) {
+      // $competition->name = $request->name;
+      // $competition->location = $request->location;
+      // $competition->start_date = Carbon::createFromFormat("m/d/Y h:mA", $request->startDate);
+      // $competition->end_date = Carbon::createFromFormat("m/d/Y h:mA", $request->endDate);
+      // $competition->updated_at = Carbon::now();
+      // $competition->save();
+      $competition->update([
+        'name' => $request->name,
+        'location' => $request->location,
+        'start_date' => Carbon::createFromFormat("m/d/Y h:mA", $request->startDate),
+        'end_date' => Carbon::createFromFormat("m/d/Y h:mA", $request->endDate)
+      ]);
+      return response()->json([
+        'status' => 'success',
+        'competition' => $competition
+      ]);
     }
 }

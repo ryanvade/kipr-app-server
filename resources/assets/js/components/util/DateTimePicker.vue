@@ -51,6 +51,7 @@
 <script>
 import moment from 'moment-timezone';
 export default {
+  props: ['initial'],
   data() {
     return {
       boxDisplayed: false,
@@ -72,12 +73,24 @@ export default {
     };
   },
   mounted() {
-    this.month = moment().format('MMMM');
-    this.minute = moment().format('mm');
-    this.hour = parseInt(moment().format('hh'));
-    this.amPM = moment().format('A');
-    this.year = moment().year();
-    this.day = parseInt(moment().format('D'));
+    console.log(this.initial);
+    if(this.initial != null)
+    {
+      let init = moment(this.initial);
+      this.month = init.format('MMMM');
+      this.minute = init.format('mm');
+      this.hour = parseInt(init.format('hh'));
+      this.amPM = init.format('A');
+      this.year = init.year();
+      this.day = parseInt(init.format('D'));
+    }else {
+      this.month = moment().format('MMMM');
+      this.minute = moment().format('mm');
+      this.hour = parseInt(moment().format('hh'));
+      this.amPM = moment().format('A');
+      this.year = moment().year();
+      this.day = parseInt(moment().format('D'));
+    }
     this.generateCalendar();
     document.body.addEventListener('click', (event) => {
       console.log(event);

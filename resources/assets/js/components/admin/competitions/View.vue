@@ -18,7 +18,7 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a class="card-footer-item">Edit</a>
+        <a class="card-footer-item" @click="$router.push('/admin/competitions/1/edit')">Edit</a>
         <a class="card-footer-item is-danger" @click="showWarning = true">Delete</a>
       </footer>
     </div>
