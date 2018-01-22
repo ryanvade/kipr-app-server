@@ -1,7 +1,7 @@
 <template lang="html">
-  <section class="hero is-fullheight is-medium">
+  <section class="hero is-medium">
         <div class="hero-body">
-          <div class="container">
+          <div class="">
             <div class="columns is-centered">
               <article class="card is-rounded">
                 <div class="card-content">

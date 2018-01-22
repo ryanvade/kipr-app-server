@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
-  <section class="hero is-fullheight">
+  <section class="hero">
         <div class="hero-body">
-          <div class="container">
+          <div class="">
             <div class="columns is-centered">
               <article class="card is-rounded">
                 <div class="card-content">
@@ -14,7 +14,7 @@
 					<img id="preview"/>
 					<div class="dropbox">
 						<!--<input name="myFile" type="file" accept="image/*"/>-->
-						<input type="file" @change="update_image($event.target.name, $event.target.files)">
+						<input type="file" @change="update_image($event.target.name, $event.target.files)" required>
 					</div>
 				  </form>
                   <p class="control">
@@ -38,11 +38,9 @@ export default {
     'modal': Modal,
   },
   data() {
-    return {
-    };
+    return {};
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     submit() {
       this.$router.push('/admin/ruleset/zones');
