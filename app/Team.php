@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
+    protected $fillable = ['name', 'email', 'code'];
     public function competitions()
     {
       return $this->belongsToMany(Competition::class, 'competition_teams');

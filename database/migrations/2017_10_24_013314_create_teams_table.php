@@ -18,6 +18,8 @@ class CreateTeamsTable extends Migration
             $table->timestamps();
 
             $table->string('name');
+            $table->string('email');
+            $table->string('code')->unique();
         });
     }
 

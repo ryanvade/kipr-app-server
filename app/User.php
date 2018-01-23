@@ -27,4 +27,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Function used by Passport to find users for authentication.
+     *
+     * @param string $identifier
+     * @return User 
+     */
+    public function findForPassport($identifier)
+    {
+        return $this->orWhere('email', $identifier)->orWhere('name', $identifier)->first();
+    }
 }
