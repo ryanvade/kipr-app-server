@@ -56,4 +56,34 @@ class TeamController extends Controller
         'team' => $team
       ]);
     }
+
+    public function massUpload(Request $request) {
+      $request->validate([
+        'file' => 'required|file'
+      ]);
+      $file = $request->file;
+      $count = 0;
+      $invalid = 0;
+      foreach(file($file) as $line) {
+        $values = explode(",", $line);
+        if(count($values) == 3) {
+          if(Team::where('code', $values[0])->count() > 0)
+          {
+            $invalid++;
+          }else {
+            Team::create([
+              'code' => $values[0],
+              'name' => $values[1],
+              'email' => $values[2]
+            ]);
+            $count++;
+          }
+        }
+      }
+      return response()->json([
+        'status' => 'success',
+        'message' => $count . ' teams added',
+        'ignored' => $invalid . ' teams ignored'
+      ]);
+    }
 }

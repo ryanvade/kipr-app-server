@@ -105,6 +105,11 @@ const routes = [{
     component: require('./components/admin/teams/ViewAll.vue')
   },
   {
+    path: '/admin/teams/upload',
+    name: 'upload_teams',
+    component: require('./components/admin/teams/MassUpload.vue')
+  },
+  {
     path: '/admin/teams/:id',
     name: 'view_team',
     component: require('./components/admin/teams/View.vue')

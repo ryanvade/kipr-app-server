@@ -23,6 +23,7 @@ Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions
 // Teams
 Route::post('/team', 'TeamController@create');
 Route::get('/team', 'TeamController@getAll');
+Route::post('/team/file', 'TeamController@massUpload');
 Route::get('/team/count', 'TeamController@getTeamCount');
 
 Route::patch('/match/{match}/score', 'MatchController@update');

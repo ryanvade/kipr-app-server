@@ -61,6 +61,9 @@
               <li>
                 <router-link class="" :to="{ name: 'create_team', params: {} }">Create Team</router-link>
               </li>
+              <li>
+                <router-link class="" :to="{ name: 'upload_teams', params: {} }">Upload Teams</router-link>
+              </li>
             </ul>
             <p class="menu-label has-text-weight-bold">Rulesets</p>
             <ul class="menu-list">
