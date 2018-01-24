@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Match extends Model
 {
     protected $fillable = [
+      'match_type',
       'match_time',
       'competition_id',
       'results',

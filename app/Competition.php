@@ -31,6 +31,19 @@ class Competition extends Model
       'ruleset'
     ];
 
+    public function generateMatches()
+    {
+        // Generate 3 seeding matches for all teams
+        $teams = $this->teams()->get();
+        foreach ($teams as $team) {
+            for($n = 0; $n < 3; $n++) {
+                $this->matches()->create([
+                    'team_A' => $team->id,
+                    'match_type' => "seeding $n"
+                ]);
+            }
+        }
+    }
 
     public function teams()
     {
