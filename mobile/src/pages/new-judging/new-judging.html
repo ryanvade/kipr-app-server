@@ -34,7 +34,7 @@
           <ion-row justify-content-center>
             {{rule.title}}
           </ion-row>
-          <ion-row>
+          <ion-row padding-bottom>
             <img src="{{rule.img}}" class="slide-image" style="width:200px!important;height:200px!important;margin:0px auto;">
           </ion-row>
           <ion-row justify-content-center>
@@ -54,6 +54,14 @@
           </ion-row>
           <ion-row justify-content-center align-items-center padding-bottom>
             {{rule.description}}
+          </ion-row>
+          <ion-row justify-content-center padding-bottom>
+            <button ion-button color="danger" (click)="dq()">
+              DQ
+            </button>
+            <button ion-button color="default" (click)="noScore()">
+              No Score
+            </button>
           </ion-row>
         </ion-slide>
         <ion-slide justify-content-center align-items-center>

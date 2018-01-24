@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Slides } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { MatchesPage } from '../matches/matches';
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
@@ -29,7 +30,7 @@ export class NewJudgingPage {
   judgedOpponent: boolean;
   jsonRules = [];
 
-  constructor(private remoteService:RemoteServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl:AlertController,private remoteService:RemoteServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
     this.rules=[];
 
     this.remoteService.getRules().subscribe(data=>{
@@ -103,6 +104,36 @@ export class NewJudgingPage {
       item.value = item.value - 1;
       console.log('subtract 1 to' + item);
     }
+  }
+
+  dq(){
+    let length = this.slides.length();
+    this.slides.slideTo(length);
+  }
+
+  noScore(){
+    //let length = this.slides.length();
+    //this.slides.slideTo(length);
+    let alert = this.alertCtrl.create({
+      title: 'Confirm No Score',
+      message: 'Are you sure this team scored no points?',
+      buttons:[
+        {
+          text:'No',
+          role:'cancel',
+          handler: () => {
+            console.log('No Score Canceled');
+          }
+        },
+        {
+          text:'Yes',
+          handler: () => {
+            console.log('No Score Confirmed');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   matches(){
