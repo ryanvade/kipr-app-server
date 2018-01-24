@@ -81,17 +81,6 @@ export class NewJudgingPage {
     console.log('Current index is', currentIndex);
   }
 
-  nextClicked(name,match){
-    //need to push to self
-    this.navCtrl.push(NewJudgingPage,
-      {
-        name: name,
-        match: match,
-        judgedOpponent: true
-      }
-    );
-  }
-
   increment(item){
     if(item.value < item.max){
       item.value = item.value + 1;
@@ -107,13 +96,35 @@ export class NewJudgingPage {
   }
 
   dq(){
-    let length = this.slides.length();
-    this.slides.slideTo(length);
+    let alert = this.alertCtrl.create({
+      title: 'Confirm No Score',
+      message: 'Are you sure this team is disqualified?',
+      buttons:[
+        {
+          text:'No',
+          role:'cancel',
+          handler: () => {
+            console.log('No Score Canceled');
+          }
+        },
+        {
+          text:'Yes',
+          handler: () => {
+            for(var _i; _i < this.rules.length; _i++){
+                this.rules[_i].value = 0;
+            }
+
+            let length = this.slides.length();
+            this.slides.slideTo(length);
+            console.log('No Score Confirmed');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   noScore(){
-    //let length = this.slides.length();
-    //this.slides.slideTo(length);
     let alert = this.alertCtrl.create({
       title: 'Confirm No Score',
       message: 'Are you sure this team scored no points?',
@@ -128,6 +139,12 @@ export class NewJudgingPage {
         {
           text:'Yes',
           handler: () => {
+            for(var _i; _i < this.rules.length; _i++){
+                this.rules[_i].value = 0;
+            }
+
+            let length = this.slides.length();
+            this.slides.slideTo(length);
             console.log('No Score Confirmed');
           }
         }
@@ -136,7 +153,21 @@ export class NewJudgingPage {
     alert.present();
   }
 
+  nextClicked(name,match){
+    //need to send score to JSON before judging next team
+    //push to self
+    this.navCtrl.push(NewJudgingPage,
+      {
+        name: name,
+        match: match,
+        judgedOpponent: true
+      }
+    );
+  }
+
   matches(){
+    //need to send score to JSON before leaving page
+    this.navCtrl.popAll();
     this.navCtrl.push(MatchesPage,{})
   }
 

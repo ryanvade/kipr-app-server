@@ -29,6 +29,14 @@
           Tutorial
             <br>Judges, swipe left to access scoring.
             <br>Increment or decrement score by pushing +/- buttons accordingly.
+            <div padding>
+              <button ion-button color="danger" (click)="dq()">
+                DQ
+              </button>
+              <button ion-button color="default" (click)="noScore()">
+                No Score
+              </button>
+            </div>
         </ion-slide>
         <ion-slide padding-vertical *ngFor="let rule of rules">
           <ion-row justify-content-center>
