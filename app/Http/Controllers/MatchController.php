@@ -7,6 +7,7 @@ use KIPR\Ruleset;
 use KIPR\Competition;
 use KIPR\Judging\Tabulator;
 use Illuminate\Http\Request;
+use KIPR\Exceptions\InvalidResultException;
 
 class MatchController extends Controller
 {
@@ -37,14 +38,15 @@ class MatchController extends Controller
             ], 412);
         }
 
-        if(!Tabulator::isValid($competition->ruleset, json_decode($request->results, true))) {
+        try {
+          $results = Tabulator::scoreMatch($competition->ruleset, json_decode($request->results, true));
+        } catch (InvalidResultException $e) {
           return response()->json([
             'status' => 'error',
             'message' => 'results array is not valid'
           ], 400);
         }
 
-        $results = Tabulator::scoreMatch($competition->ruleset, json_decode($request->results, true));
         $match->setResults($results);
         return response()->json([
         'status' => 'success',

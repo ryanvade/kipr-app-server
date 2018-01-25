@@ -18,7 +18,37 @@ class ScoreEndpointTest extends TestCase
 
     public function testInvalidRequest()
     {
-        $response = $this->get('/match/score');
+        // Setup the ruleset in the db
+        $ruleset = new Ruleset;
+        $ruleset->events = json_decode('{"event_1":{"min": 0, "max": 5}, "event_2":{"min": 0, "max": 5}}');
+        $ruleset->rules=[];
+        $ruleset->save();
+
+        // Get a Competition
+        $competition = factory(Competition::class)->create();
+        $competition->setRuleset($ruleset)->save();
+
+        // Get Two Teams
+        $teamA = factory(Team::class)->create();
+        $teamB = factory(Team::class)->create();
+
+        // Setup a Match
+        $match = Match::create([
+          'match_time' => Carbon::Now(),
+          'competition_id' => $competition->id,
+          'team_A' => $teamA->id,
+          'team_B' => $teamB->id
+        ]);
+        // Setup Authentication
+        Passport::actingAs(factory(User::class)->create(), ['judging']);
+
+        // Setup invalid results
+        $results = '{"A":{"event_3": 1, "event_2": 2}, "B": {"5": 2, "event_2": 1}}';
+        // Run test
+        $url = '/api/competition/' . $competition->id . '/match/' . $match->id . '/score';
+        $response = $this->json('POST', $url, [
+          'results' => $results
+        ]);
         $response->assertStatus(400);
     }
 
@@ -32,8 +62,7 @@ class ScoreEndpointTest extends TestCase
 
         // Get a Competition
         $competition = factory(Competition::class)->create();
-        $competition->ruleset_id = $ruleset->id;
-        $competition->save();
+        $competition->setRuleset($ruleset)->save();
 
         // Get Two Teams
         $teamA = factory(Team::class)->create();
@@ -57,10 +86,9 @@ class ScoreEndpointTest extends TestCase
         $response = $this->json('POST', $url, [
           'results' => $results
         ]);
-        // $response = $this->post('/api/competition/' . $competition->id . '/match/' . $match->id . '/score', ['results' => $results]);
+
         $expected = json_decode('{"A": {"event_1": 1, "event_2": 2, "total": 3}, "B": {"event_1": 2, "event_2": 1, "total": 3}}', true);
 
-        dd($response);
         $response->assertStatus(200);
         $response->assertJson([
           'status' => 'success',
