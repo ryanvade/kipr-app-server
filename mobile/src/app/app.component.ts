@@ -56,6 +56,22 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
+  checkForJudging(page) {
+    if(page.title != 'NewJudgingPage') {
+      return true;
+    }
+  
+    if(this.judgingAuthenticated()) {
+      return true;
+    }
+  
+    return false;
+  }
+  
+ judgingAuthenticated() {
+   // some logic to check for authentication...
+  }
+
   firstTimeUse() {
     console.log('First Time Use');
     this.settings.setDefaults();

@@ -36,6 +36,8 @@ async scanForAuthToken(){
     if(valid) {
       this.authToken = barcodeData.text;
       this.settingsProvider.setAuthToken(barcodeData.text);
+     // insert(insertIndex, page)
+     //this.nav.push(NewJudgingPage);
     }else {
       this.authToken = '';
       this.settingsProvider.setAuthToken('');
