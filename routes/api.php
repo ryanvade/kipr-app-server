@@ -21,12 +21,12 @@ Route::get('/competition/names', 'CompetitionController@getNames');
 Route::get('/competition/count', 'CompetitionController@getCompetitionCount');
 Route::get('/competition/current', 'CompetitionController@getCurrentCompetitions');
 Route::get('/competition/{competition}', 'CompetitionController@get');
-Route::post('/competition/{competition}/match/{match}/score', 'MatchController@score');
 Route::delete('/competition/{competition}', 'CompetitionController@delete');
 Route::patch('/competition/{competition}', 'CompetitionController@patch');
 Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTokensForJudging');
 Route::get('/competition/{competition}/tokens/signin', 'ApiController@getAuthTokensForSignIn');
 Route::post('/competition/{competition}/team/{team}/signin', 'TeamController@signin');
+Route::post('/competition/{competition}/match/{match}/score', 'MatchController@score');
 // Teams
 Route::post('/team', 'TeamController@create');
 Route::get('/team', 'TeamController@getAll');
