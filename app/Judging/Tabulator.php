@@ -64,10 +64,8 @@ class Tabulator
     public static function score(Ruleset $ruleset, $results)
     {
         // Validate the match
-        foreach (array_keys($results) as $event) {
-            if (!array_key_exists($event, $ruleset->events)) {
-                throw new InvalidResultException("Unknown event: $event\n");
-            }
+        if(!self::isValid($ruleset, $results)) {
+          throw new InvalidResultException("Unknown event: $event\n");
         }
 
         // Score the match
@@ -79,5 +77,15 @@ class Tabulator
         }
         $results["total"] = $sum;
         return $results;
+    }
+
+    public static function isValid(Ruleset $ruleset, $results) {
+      // Validate the match
+      foreach (array_keys($results) as $event) {
+          if (!array_key_exists($event, $ruleset->events)) {
+              return false;
+          }
+      }
+      return true;
     }
 }

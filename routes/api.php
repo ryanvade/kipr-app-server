@@ -26,8 +26,8 @@ Route::get('/team', 'TeamController@getAll');
 Route::post('/team/file', 'TeamController@massUpload');
 Route::get('/team/count', 'TeamController@getTeamCount');
 
-Route::patch('/match/{match}/score', 'MatchController@update');
 Route::get('/competition/{competition}', 'CompetitionController@get');
+Route::post('/competition/{competition}/match/{match}/score', 'MatchController@score');
 Route::delete('/competition/{competition}', 'CompetitionController@delete');
 Route::patch('/competition/{competition}', 'CompetitionController@patch');
 Route::get('/team/{team}', 'TeamController@get');
