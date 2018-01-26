@@ -18,8 +18,8 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a class="card-footer-item" @click="$router.push('/admin/competitions/' + competition.id + '/edit')">Edit</a>
-        <a class="card-footer-item is-danger" @click="showWarning = true">Delete</a>
+        <a class="card-footer-item" id="edit" @click="$router.push('/admin/competitions/' + competition.id + '/edit')">Edit</a>
+        <a class="card-footer-item is-danger" id="delete" @click="showWarning = true">Delete</a>
       </footer>
     </div>
     <!-- Warning Modal -->

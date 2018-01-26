@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="datetime-wrapper">
-    <input type="text" class="input" name="start_date" v-model="date" @focus="toggleDisplay">
+    <input type="text" class="input" :name="compName" v-model="date" @focus="toggleDisplay">
     <!-- Date Time Picker -->
-    <div class="box date-time" v-show="boxDisplayed">
+    <div class="box date-time" v-if="boxDisplayed">
       <div class="date-wrapper">
         <span class="month-year">
           <button @click="rotateLeft">
@@ -51,7 +51,7 @@
 <script>
 import moment from 'moment-timezone';
 export default {
-  props: ['initial'],
+  props: ['initial', 'name'],
   data() {
     return {
       boxDisplayed: false,
@@ -197,6 +197,12 @@ export default {
       if (this.month != null && this.year != null && this.hour != null && this.minute != null && this.amPM != null) {
         let str = '' + this.month + ' ' + this.day + ' ' + this.year + ' ' + this.hour + ':' + this.minute + this.amPM;
         return moment(str, 'MMMM D YYYY h:mA').format('M/D/YYYY h:mmA');
+      }
+      return '';
+    },
+    compName() {
+      if(this.name) {
+        return this.name;
       }
       return '';
     }
