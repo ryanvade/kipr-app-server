@@ -9,6 +9,5 @@ $factory->define(KIPR\Competition::class, function (Faker $faker) {
       'location' => $faker->address . " " . $faker->city . ", " . $faker->state . " " . $faker->postcode,
       'start_date' => $faker->dateTime,
       'end_date' => $faker->dateTime,
-      'ruleset_id' => 0
     ];
 });
