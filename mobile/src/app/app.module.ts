@@ -7,7 +7,6 @@ import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { JudgingPage } from '../pages/judging/judging';
 import { NewJudgingPage } from '../pages/new-judging/new-judging';
 import { MatchesPage } from '../pages/matches/matches';
@@ -27,7 +26,6 @@ import { StatusProvider } from '../providers/status/status';
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
@@ -44,7 +42,6 @@ import { StatusProvider } from '../providers/status/status';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
