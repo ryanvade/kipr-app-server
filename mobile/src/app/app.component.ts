@@ -77,7 +77,6 @@ export class MyApp {
      console.log('Judge Authenticated');
      return true;
    //}
-
    //return false;
   }
 
