@@ -21,6 +21,7 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
 import { SettingsProvider } from '../providers/settings/settings';
 import { CompetitionProvider } from '../providers/competition/competition';
 import { StatusProvider } from '../providers/status/status';
+import { TeamProvider } from '../providers/team/team';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { StatusProvider } from '../providers/status/status';
     RemoteServiceProvider,
     SettingsProvider,
     CompetitionProvider,
-    StatusProvider
+    StatusProvider,
+    TeamProvider
   ]
 })
 export class AppModule {}
