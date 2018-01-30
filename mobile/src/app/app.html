@@ -9,16 +9,14 @@
 
   <ion-content>
     <ion-list>
-      <div *ngIf="checkForJudging()">
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+      <!--<div *ngIf="!checkForJudging()">
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           {{p.title}}
         </button>
-      </div>
-      <div *ngIf="!checkForJudging()">
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </div>
+      </div>-->
     </ion-list>
   </ion-content>
 

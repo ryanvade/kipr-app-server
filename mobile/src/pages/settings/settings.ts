@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { StatusProvider } from '../../providers/status/status';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';//, NavController, NavParams
 import { SettingsProvider } from '../../providers/settings/settings';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';//, BarcodeScannerOptions
 /**
  * Generated class for the JudgingPage page.
  *
@@ -36,7 +36,7 @@ async scanForAuthToken(){
     if(valid) {
       this.authToken = barcodeData.text;
       this.settingsProvider.setAuthToken(barcodeData.text);
- 
+
 
     }else {
       this.authToken = '';

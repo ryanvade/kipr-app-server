@@ -56,8 +56,10 @@ export class MyApp {
   }
 
   checkForJudging(page?) {
-    if(page.title != 'NewJudgingPage') {
-      return true;
+    if(page != null){
+      if(page.title != 'NewJudgingPage') {
+        return true;
+      }
     }
 
     if(this.judgingAuthenticated()) {
@@ -69,14 +71,12 @@ export class MyApp {
 
  judgingAuthenticated() {
    // some logic to check for authentication...
-   let token = this.settings.getAuthToken().then(val => {
-   
-    });
-   if(true){//check text? add judging page to menu
+   //let token = this.settings.getAuthToken().then(val => {});
+   //if(true){//check text? add judging page to menu
      this.pages.push({title: 'Judging', component: NewJudgingPage});
-     console.log('Judged Authenticated');
+     console.log('Judge Authenticated');
      return true;
-   }
+   //}
 
    //return false;
   }
