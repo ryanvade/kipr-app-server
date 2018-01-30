@@ -11,12 +11,14 @@
   <ion-list>
     <ion-row *ngFor="let team of teams;let i = index;" justify-content align-items-center>
       <ion-col col-auto padding>
-        <label>{{team}}</label>
+        <h6>{{team}}</h6>
       </ion-col>
       <ion-col col-auto>
-        <button ion-button color="light">
-          <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
-        </button>
+        <ion-item item-right>
+            <button ion-button item-right color="light">
+                <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+              </button>
+        </ion-item>
       </ion-col>
     </ion-row>
 </ion-list>

@@ -12,7 +12,7 @@ export class SignInPage {
 teams: string[];
 
 constructor(public navCtrl: NavController, public navParams:NavParams){
-  this.teams = ['Team A','Team B','Team C','Team D','Team E','Team F'];
+  this.teams = ['Team Name 1','Team Name 2','Team Name 3','Team Name 4','Team Name 5','Team Name 6'];
 }
 
 ionViewDidLoad() {
