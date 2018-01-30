@@ -28,6 +28,14 @@ export class HomePage {
     }
     this.loading = false;
   }
+  InstructionsAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Instructions',
+      subTitle: 'Judges, click the menu toggle and select Settings.',
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
 
   ionViewDidEnter() {
     this.connected = this.network.onConnect().subscribe(data => {
