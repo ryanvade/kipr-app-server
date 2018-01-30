@@ -34,7 +34,7 @@ export class MyApp {
     ];
 
   }
-
+ 
   initializeApp() {
     this.platform.ready().then(() => {
       // App Startup
