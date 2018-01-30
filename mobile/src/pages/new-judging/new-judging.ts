@@ -97,7 +97,7 @@ export class NewJudgingPage {
 
   dq(){
     let alert = this.alertCtrl.create({
-      title: 'Confirm No Score',
+      title: 'Confirm DQ',
       message: 'Are you sure this team is disqualified?',
       buttons:[
         {
