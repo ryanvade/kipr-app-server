@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage,NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { TeamProvider } from '../../providers/team/team';
+
 
 @IonicPage()
 @Component({
@@ -13,7 +15,7 @@ export class SignInPage {
 teams: string[];
 teamName: string;
 
-constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController){
+constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController, private TeamPrvdr: TeamProvider){
   this.teams = ['Team Name 1','Team Name 2','Team Name 3','Team Name 4','Team Name 5','Team Name 6'];
 }
 
@@ -24,7 +26,7 @@ teamSignedIn(name){
     buttons: [
       {
         text: 'Ok',
-        handler: () => {
+        handler: (getTeamSignIn) => {
         console.log('Sign in confirmed');
         }
       },
