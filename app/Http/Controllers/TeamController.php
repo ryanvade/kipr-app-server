@@ -11,6 +11,23 @@ use KIPR\Http\Requests\UpdateTeam;
 
 class TeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', [
+          'except' => [
+            'getTeamCount',
+            'getAll',
+            'get',
+            'signIn'
+          ]
+        ]);
+
+        $this->middleware('auth:api', [
+          'only' => [
+            'signIn'
+          ]
+        ]);
+    }
     /**
      * Sign In - Sign in a team to a competition
      * @param  Competition $competition Competition to sign the team into
@@ -21,8 +38,8 @@ class TeamController extends Controller
     public function signIn(Competition $competition, Team $team, Request $request)
     {
         $teamPivot = $competition->teams()->where('team_id', $team->id)->first();
-        if($teamPivot == null) {
-          return response()->json([
+        if ($teamPivot == null) {
+            return response()->json([
             'status' => 'error',
             'message' => 'the team is not registered with the competition'
           ], 409);
@@ -30,8 +47,8 @@ class TeamController extends Controller
 
         if ($teamPivot->pivot->signed_in != true) {
             $teamPivot->pivot->signed_in = true;
-            $teamPivot->pivot->sign_in_at = Carbon::now();
-            $teamPivot->save();
+            $teamPivot->pivot->sign_in_time = Carbon::now();
+            $teamPivot->pivot->save();
         }
         return response()->json([
         'team_id' => $team->id,
