@@ -36,7 +36,7 @@ class LoginTest extends DuskTestCase
               ->assertSee('Login')
               ->type('email', 'admin@foo.foo')
               ->type('password', 'password123')
-              ->click('.btn')
+              ->click('.button')
               ->assertPathIs('/admin')
               ->assertDontSee('Sorry, the page you are looking for could not be found.');
         });
