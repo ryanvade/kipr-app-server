@@ -20,19 +20,26 @@ class TeamController extends Controller
      */
     public function signIn(Competition $competition, Team $team, Request $request)
     {
-        $team = $competition->teams()->where('team_id', $team->id)->firstOrFail();
-        if ($team->pivot->signed_in != true) {
-            $team->pivot->signed_in = true;
-            $team->pivot->sign_in_at = Carbon::now();
-            $team->save();
+        $teamPivot = $competition->teams()->where('team_id', $team->id)->first();
+        if($teamPivot == null) {
+          return response()->json([
+            'status' => 'error',
+            'message' => 'the team is not registered with the competition'
+          ], 409);
+        }
+
+        if ($teamPivot->pivot->signed_in != true) {
+            $teamPivot->pivot->signed_in = true;
+            $teamPivot->pivot->sign_in_at = Carbon::now();
+            $teamPivot->save();
         }
         return response()->json([
         'team_id' => $team->id,
         'competition_id' => $competition->id,
-        'sign_in_time' => $team->pivot->sign_in_at
+        'sign_in_time' => $teamPivot->pivot->sign_in_at
       ]);
     }
-    
+
     public function getTeamCount()
     {
         $count = Team::count();
