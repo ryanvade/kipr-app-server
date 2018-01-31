@@ -21,7 +21,10 @@ export class HomePage {
   private alert: any = null;
   private loading: Boolean = true;
 
+  hpbuttons: string[];
+
   constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform, private alertCtrl: AlertController, private openNativeSettings: OpenNativeSettings) {
+    this.hpbuttons = ['Judging Sign In','Team Sign In', 'Tournament Bracket', 'Competition Documents', 'Scores', 'Table Times'];
     this.noNetwork = !this.hasNetwork();
     if (!this.noNetwork) {
       this.getData();

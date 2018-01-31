@@ -30,5 +30,15 @@
     <ion-spinner></ion-spinner>
   </div>
 
-  <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
+  <ion-list>
+      <ion-row *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
+        <ion-col col-auto padding>
+        </ion-col>
+        <ion-col col-auto>
+          <button ion-button color="light">
+            {{button}}
+          </button>
+        </ion-col>
+      </ion-row>
+  </ion-list>
 </ion-content>
