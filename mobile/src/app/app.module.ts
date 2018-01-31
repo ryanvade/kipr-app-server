@@ -8,7 +8,6 @@ import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { JudgingPage } from '../pages/judging/judging';
-import { NewJudgingPage } from '../pages/new-judging/new-judging';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
@@ -27,7 +26,6 @@ import { StatusProvider } from '../providers/status/status';
     MyApp,
     HomePage,
     JudgingPage,
-    NewJudgingPage,
     MatchesPage,
     SettingsPage,
     SignInPage
@@ -43,7 +41,6 @@ import { StatusProvider } from '../providers/status/status';
     MyApp,
     HomePage,
     JudgingPage,
-    NewJudgingPage,
     MatchesPage,
     SettingsPage,
     SignInPage
