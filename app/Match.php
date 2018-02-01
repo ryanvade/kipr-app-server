@@ -11,11 +11,14 @@ class Match extends Model
 {
     protected $fillable = [
       'match_type',
+      'round',
       'match_time',
       'competition_id',
       'results',
       'team_A',
-      'team_B'
+      'team_B',
+      'match_A',
+      'match_B',
     ];
 
     /**
@@ -41,6 +44,16 @@ class Match extends Model
     public function teamB()
     {
         return $this->belongsTo(Team::class, 'team_B');
+    }
+
+    public function matchA()
+    {
+        return $this->belongsTo(Match::class, 'match_A');
+    }
+
+    public function matchB()
+    {
+        return $this->belongsTo(Match::class, 'match_B');
     }
 
     public function competition()

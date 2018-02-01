@@ -7,6 +7,8 @@ use KIPR\Rule;
 use KIPR\Match;
 use KIPR\CompetitionTeam;
 use KIPR\Events\CompetitionCreated;
+use KIPR\Scheduling\DoubleElim;
+use KIPR\Scheduling\Seeding;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model
@@ -33,16 +35,13 @@ class Competition extends Model
 
     public function generateMatches()
     {
-        // Generate 3 seeding matches for all teams
         $teams = $this->teams()->get();
-        foreach ($teams as $team) {
-            for($n = 0; $n < 3; $n++) {
-                $this->matches()->create([
-                    'team_A' => $team->id,
-                    'match_type' => "seeding $n"
-                ]);
-            }
-        }
+
+        $seeding = new Seeding();
+        $seeding->createMatches($this, $teams);
+
+        $bracket = new DoubleElim();
+        $bracket->createMatches($this, $teams);
     }
 
     public function teams()

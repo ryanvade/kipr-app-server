@@ -16,18 +16,28 @@ class MatchCreationTest extends TestCase
 
     public function test_seeding_match_correct()
     {
-        # get the match
+        $TEAMS = 22;
         $competition = factory(Competition::class)->create();
         $teamFactory = factory(Team::class);
 
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < $TEAMS; $i++) {
             $competition->teams()->attach($teamFactory->create());
         }
-        $this->assertEquals(10, count($competition->teams()->get()));
+        $this->assertEquals($TEAMS, count($competition->teams()->get()));
 
         $competition->generateMatches();
+        $competition->scheduleMatches();
 
-        $matches = $competition->matches()->get();
-        $this->assertEquals(3*count($competition->teams()->get()), count($matches));
+        $this->assertEquals($TEAMS*3, count($competition->matches()->where('match_type', '=', 'seeding')->get()));
+        $this->assertEquals(16, count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '0']])->get()));
+        $this->assertEquals(8 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '1']])->get()));
+        $this->assertEquals(4 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '2']])->get()));
+        $this->assertEquals(2 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '3']])->get()));
+        $this->assertEquals(1 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '4']])->get()));
+        $this->assertEquals(8 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '1']])->get()));
+        $this->assertEquals(4 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '2']])->get()));
+        $this->assertEquals(2 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '3']])->get()));
+        $this->assertEquals(1 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '4']])->get()));
+        $this->assertEquals(1 , count($competition->matches()->where('match_type', '=', 'double_elim_finals')->get()));
     }
 }
