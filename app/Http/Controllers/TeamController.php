@@ -11,6 +11,24 @@ use KIPR\Http\Requests\UpdateTeam;
 
 class TeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', [
+          'except' => [
+            'getTeamsAtCompetition',
+            'getTeamCount',
+            'getAll',
+            'get',
+            'signIn'
+          ]
+        ]);
+
+        $this->middleware('auth:api', [
+          'only' => [
+            'signIn'
+          ]
+        ]);
+    }
     /**
      * Sign In - Sign in a team to a competition
      * @param  Competition $competition Competition to sign the team into
@@ -32,7 +50,7 @@ class TeamController extends Controller
         'sign_in_time' => $team->pivot->sign_in_at
       ]);
     }
-    
+
     public function getTeamCount()
     {
         $count = Team::count();
@@ -63,6 +81,21 @@ class TeamController extends Controller
     public function get(Team $team)
     {
         return $team;
+    }
+
+    public function getTeamsAtCompetition(Competition $competition, Request $request)
+    {
+        // Validate the request
+        $requestData = $request->validate([
+          'signed_in' => 'boolean'
+        ]);
+        // Filter by signed in
+        if(array_has($requestData, 'signed_in')) {
+          $signed_in = array_get($requestData, 'signed_in');
+          return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in == false)->get();
+        }
+        // No Filtering, return all registered teams
+        return $competition->teams()->get();
     }
 
     public function delete(Team $team)
