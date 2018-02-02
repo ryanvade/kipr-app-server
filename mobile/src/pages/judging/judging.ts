@@ -167,8 +167,8 @@ export class JudgingPage {
 
   matches(){
     //need to send score to JSON before leaving page
-    this.navCtrl.popAll();
-    this.navCtrl.push(MatchesPage,{})
+
+    this.navCtrl.setRoot(MatchesPage);
   }
 
   ionViewDidLoad() {
