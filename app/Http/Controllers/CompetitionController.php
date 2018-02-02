@@ -37,6 +37,7 @@ class CompetitionController extends Controller
     }
 
     public function get(Competition $competition) {
+      $competition->teams = $competition->teams()->get();
       return $competition;
     }
 

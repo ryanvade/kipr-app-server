@@ -4,7 +4,48 @@
     <div class="loader"></div>
   </div>
   <div class="" v-if="!loading">
-    <div class="card">
+    <nav class="level">
+      <div class="level-left">
+        <p class="subtitle has-text-centered">
+          <strong>{{ competition.name }}</strong>
+        </p>
+      </div>
+      <div class="level-right">
+        <p class="level-item">
+          <a class="card-footer-item" id="edit" @click="$router.push('/admin/competitions/' + competition.id + '/edit')">Edit</a>
+        </p>
+        <p class="level-item">
+          <a class="card-footer-item is-danger" id="delete" @click="showWarning = true">Delete</a>
+        </p>
+      </div>
+    </nav>
+
+    <div class="box">
+      <p class="is-size-5 is-grey">
+        <strong>Start Date:</strong> {{ prettyDate(competition.start_date) }}
+        <strong>End Date:</strong> {{ prettyDate(competition.end_date) }}
+      </p>
+      <h3>Registered Teams:</h3>
+      <table class="table is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="team in competition.teams">
+            <td>{{ team.code }}</td>
+            <td>{{ team.name }}</td>
+            <td>{{ team.email }}</td>
+            <td><button type="button" class="button is-danger">Un-Register</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div class="card">
       <header class="card-header">
         <p class="card-header-title">
           {{ competition.name }}
@@ -21,7 +62,7 @@
         <a class="card-footer-item" id="edit" @click="$router.push('/admin/competitions/' + competition.id + '/edit')">Edit</a>
         <a class="card-footer-item is-danger" id="delete" @click="showWarning = true">Delete</a>
       </footer>
-    </div>
+    </div> -->
     <!-- Warning Modal -->
     <div class="delete-competition-modal-wrapper">
       <modal v-if="showWarning" v-on:close="showWarning = false">

@@ -32,7 +32,7 @@ class TeamController extends Controller
         'sign_in_time' => $team->pivot->sign_in_at
       ]);
     }
-    
+
     public function getTeamCount()
     {
         $count = Team::count();
@@ -63,6 +63,11 @@ class TeamController extends Controller
     public function get(Team $team)
     {
         return $team;
+    }
+
+    public function getTeamsAtCompetition(Competition $competition)
+    {
+        return $competition->teams()->get();
     }
 
     public function delete(Team $team)
