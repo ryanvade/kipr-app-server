@@ -6,6 +6,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
+import { CompetitionsPage } from '../pages/competitions/competitions';
 import { HomePage } from '../pages/home/home';
 import { JudgingPage } from '../pages/judging/judging';
 import { NewJudgingPage } from '../pages/new-judging/new-judging';
@@ -27,6 +28,7 @@ import { TeamProvider } from '../providers/team/team';
   declarations: [
     MyApp,
     HomePage,
+    CompetitionsPage,
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
@@ -42,6 +44,7 @@ import { TeamProvider } from '../providers/team/team';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    CompetitionsPage,
     HomePage,
     JudgingPage,
     NewJudgingPage,

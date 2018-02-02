@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SettingsProvider } from '../providers/settings/settings';
 
+import { CompetitionsPage } from '../pages/competitions/competitions';
 import { HomePage } from '../pages/home/home';
 import { NewJudgingPage } from '../pages/new-judging/new-judging'
 import { MatchesPage } from '../pages/matches/matches';
@@ -27,13 +28,14 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
+      { title: 'Competitions', component: CompetitionsPage},
       { title: 'Matches', component: MatchesPage },
       { title: 'Settings', component: SettingsPage },
       { title: 'Sign In', component: SignInPage }
     ];
 
   }
- 
+
   initializeApp() {
     this.platform.ready().then(() => {
       // App Startup

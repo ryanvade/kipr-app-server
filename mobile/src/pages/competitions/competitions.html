@@ -12,7 +12,11 @@
 
 </ion-header>
 
-
 <ion-content padding>
-
+  <ion-searchbar (ionInput)="getCompetitions($event)"></ion-searchbar><!--[(ngModel)]="myInput"[showCancelButton]="shouldShowCancel"(ionCancel)="onCancel($event)"-->
+  <ion-list>
+    <ion-item *ngFor="let competition of competitions">
+      {{ competition }}
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -15,7 +15,31 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CompetitionsPage {
 
+  competitions: string[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.listCompetitions();
+  }
+
+  listCompetitions(){
+    //get list from provider
+    this.competitions = [
+      'Region 1',
+      'Region 2',
+      'Region 3'
+    ];
+  }
+
+  getCompetitions(event){
+
+
+    var val = event.target.value;
+
+    if(val && val.trim() != ''){
+      this.competitions = this.competitions.filter((competition) => {
+        return (competition.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 
   ionViewDidLoad() {
