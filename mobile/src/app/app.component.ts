@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SettingsProvider } from '../providers/settings/settings';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { NewJudgingPage } from '../pages/new-judging/new-judging'
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
@@ -27,14 +27,13 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
       { title: 'Matches', component: MatchesPage },
       { title: 'Settings', component: SettingsPage },
       { title: 'Sign In', component: SignInPage }
     ];
 
   }
-
+ 
   initializeApp() {
     this.platform.ready().then(() => {
       // App Startup
@@ -54,6 +53,31 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  checkForJudging(page?) {
+    if(page != null){
+      if(page.title != 'NewJudgingPage') {
+        return true;
+      }
+    }
+
+    if(this.judgingAuthenticated()) {
+      return true;
+    }
+
+    return false;
+  }
+
+ judgingAuthenticated() {
+   // some logic to check for authentication...
+   //let token = this.settings.getAuthToken().then(val => {});
+   //if(true){//check text? add judging page to menu
+     this.pages.push({title: 'Judging', component: NewJudgingPage});
+     console.log('Judge Authenticated');
+     return true;
+   //}
+   //return false;
   }
 
   firstTimeUse() {

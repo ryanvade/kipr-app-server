@@ -7,7 +7,6 @@ import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { JudgingPage } from '../pages/judging/judging';
 import { NewJudgingPage } from '../pages/new-judging/new-judging';
 import { MatchesPage } from '../pages/matches/matches';
@@ -22,12 +21,12 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
 import { SettingsProvider } from '../providers/settings/settings';
 import { CompetitionProvider } from '../providers/competition/competition';
 import { StatusProvider } from '../providers/status/status';
+import { TeamProvider } from '../providers/team/team';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
@@ -44,7 +43,6 @@ import { StatusProvider } from '../providers/status/status';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     JudgingPage,
     NewJudgingPage,
     MatchesPage,
@@ -61,7 +59,8 @@ import { StatusProvider } from '../providers/status/status';
     RemoteServiceProvider,
     SettingsProvider,
     CompetitionProvider,
-    StatusProvider
+    StatusProvider,
+    TeamProvider
   ]
 })
 export class AppModule {}
