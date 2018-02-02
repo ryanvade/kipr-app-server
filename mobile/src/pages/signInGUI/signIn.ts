@@ -19,9 +19,11 @@ competitionID: number;
 private displayNoResults: Boolean;
 private loading: Boolean = true;
 
+//get list of teams in competition 
 constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController, private TeamPrvdr: TeamProvider, private settingsPrvdr: SettingsProvider){
   this.competitionID = settingsPrvdr.getCompetitionID();
   TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
+    console.log(val);
     this.teams = val;
     if (this.teams.length <= 0) {
       this.displayNoResults = true;
@@ -29,28 +31,28 @@ constructor(public navCtrl: NavController, public navParams:NavParams, private a
     this.loading = false;
   }).catch(err => {console.error(err);});
 }
-
-
-teamSignedIn(name){
-  let alert = this.alertCtrl.create({
-    title: 'Confirmation',
-    subTitle: 'You are signed in!',
-    buttons: [
-      {
-        text: 'Ok',
-        handler: (getTeamSignIn) => {
-        console.log('Sign in confirmed');
+//sign team in to be added to competition bracket
+teamSignedIn(team){
+  this.TeamPrvdr.getTeamSignIn(team.id, this.competitionID).then(() => {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmation',
+      subTitle: 'You are signed in!',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: (getTeamSignIn) => {
+          console.log('Sign in confirmed');
+          }
+        },
+        {
+          text: 'Exit',
+          handler: () => {
+            console.log('Canceled')
+          }
         }
-      },
-      {
-        text: 'Exit',
-        handler: () => {
-          console.log('Canceled')
-        }
-      }
-    ]
-  });
-  alert.present();
+      ]
+    }); alert.present();
+  }).catch((error)=> {console.error(error);});
 }
 
 

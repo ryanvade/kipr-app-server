@@ -15,6 +15,7 @@ class TeamController extends Controller
     {
         $this->middleware('auth', [
           'except' => [
+            'getTeamsAtCompetition',
             'getTeamCount',
             'getAll',
             'get',
@@ -89,8 +90,18 @@ class TeamController extends Controller
         return $team;
     }
 
-    public function getTeamsAtCompetition(Competition $competition)
+    public function getTeamsAtCompetition(Competition $competition, Request $request)
     {
+        // Validate the request
+        $requestData = $request->validate([
+          'signed_in' => 'boolean'
+        ]);
+        // Filter by signed in
+        if(array_has($requestData, 'signed_in')) {
+          $signed_in = array_get($requestData, 'signed_in');
+          return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in == false)->get();
+        }
+        // No Filtering, return all registered teams
         return $competition->teams()->get();
     }
 
