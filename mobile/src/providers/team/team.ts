@@ -33,7 +33,7 @@ export class TeamProvider {
     if (serverName == null) {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
-    return this.http.get(serverName + "/api/competition/" + compID + "/team")
+    return this.http.get(serverName + "/api/competition/" + compID + "/team?signed_in=0")
     .map(res => res.json())
     .toPromise();
   }
