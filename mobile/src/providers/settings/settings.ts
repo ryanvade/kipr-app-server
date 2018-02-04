@@ -27,7 +27,7 @@ export class SettingsProvider {
   async getAuthToken() {
     return await this.storage.get('auth:token');
   }
-  
+  //get the competitionID and return 1 for testing purposes
   getCompetitionID() {
     return 1;
   }
