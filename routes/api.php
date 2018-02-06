@@ -44,6 +44,7 @@ Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTo
 Route::get('/competition/{competition}/tokens/signin', 'ApiController@getAuthTokensForSignIn');
 Route::post('/competition/{competition}/team/{team}/signin', 'TeamController@signin');
 Route::get('/competition/{competition}/schedule', 'ScheduleController@getSchedule');
+Route::post('/competition/{competition}/updateSchedule', 'ScheduleController@updateSchedule');
 
 // Matches
 Route::get('/match', 'MatchController@getAll');
