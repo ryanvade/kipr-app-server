@@ -33,17 +33,6 @@ class Competition extends Model
       'ruleset'
     ];
 
-    public function generateMatches()
-    {
-        $teams = $this->teams()->get();
-
-        $seeding = new Seeding();
-        $seeding->createMatches($this, $teams);
-
-        $bracket = new DoubleElim();
-        $bracket->createMatches($this, $teams);
-    }
-
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'competition_teams')->using(CompetitionTeam::class);

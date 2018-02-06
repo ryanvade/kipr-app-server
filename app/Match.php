@@ -13,8 +13,10 @@ class Match extends Model
       'match_type',
       'round',
       'match_time',
+      'match_table',
       'competition_id',
       'results',
+      'winner',
       'team_A',
       'team_B',
       'match_A',
@@ -44,6 +46,11 @@ class Match extends Model
     public function teamB()
     {
         return $this->belongsTo(Team::class, 'team_B');
+    }
+
+    public function winner()
+    {
+        return $this->belongsTo(Team::class, 'winner');
     }
 
     public function matchA()
