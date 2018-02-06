@@ -40,6 +40,10 @@ Route::get('/team/count', 'TeamController@getTeamCount');
 Route::get('/team/{team}', 'TeamController@get');
 Route::delete('/team/{team}', 'TeamController@delete');
 Route::patch('/team/{team}', 'TeamController@patch');
+Route::get('/competition/{competition}/tokens/judging', 'ApiController@getAuthTokensForJudging');
+Route::get('/competition/{competition}/tokens/signin', 'ApiController@getAuthTokensForSignIn');
+Route::post('/competition/{competition}/team/{team}/signin', 'TeamController@signin');
+Route::get('/competition/{competition}/schedule', 'ScheduleController@getSchedule');
 
 // Matches
 Route::get('/match', 'MatchController@getAll');

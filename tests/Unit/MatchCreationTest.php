@@ -7,6 +7,7 @@ use KIPR\Match;
 use Carbon\Carbon;
 use Tests\TestCase;
 use KIPR\Competition;
+use KIPR\Http\Controllers\ScheduleController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MatchCreationTest extends TestCase
@@ -21,23 +22,24 @@ class MatchCreationTest extends TestCase
         $teamFactory = factory(Team::class);
 
         for($i = 0; $i < $TEAMS; $i++) {
-            $competition->teams()->attach($teamFactory->create());
+            $competition->teams()->attach($teamFactory->create(), ["signed_in" => true]);
         }
         $this->assertEquals($TEAMS, count($competition->teams()->get()));
+        $this->assertEquals($TEAMS, count($competition->teams()->withPivot("signed_in")->where("signed_in", true)->get()));
 
-        $competition->generateMatches();
-        $competition->scheduleMatches();
+        $controller = new ScheduleController();
+        $schedule = $controller->schedule($competition);
 
-        $this->assertEquals($TEAMS*3, count($competition->matches()->where('match_type', '=', 'seeding')->get()));
-        $this->assertEquals(16, count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '0']])->get()));
-        $this->assertEquals(8 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '1']])->get()));
-        $this->assertEquals(4 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '2']])->get()));
-        $this->assertEquals(2 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '3']])->get()));
-        $this->assertEquals(1 , count($competition->matches()->where([['match_type', '=', 'double_elim_win'], ['round', '=', '4']])->get()));
-        $this->assertEquals(8 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '1']])->get()));
-        $this->assertEquals(4 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '2']])->get()));
-        $this->assertEquals(2 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '3']])->get()));
-        $this->assertEquals(1 , count($competition->matches()->where([['match_type', '=', 'double_elim_lose'], ['round', '=', '4']])->get()));
-        $this->assertEquals(1 , count($competition->matches()->where('match_type', '=', 'double_elim_finals')->get()));
+        $this->assertEquals($TEAMS*3, count($schedule["seeding"]));
+        $this->assertEquals(16, count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '0')));
+        $this->assertEquals(8 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '1')));
+        $this->assertEquals(4 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '2')));
+        $this->assertEquals(2 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '3')));
+        $this->assertEquals(1 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '4')));
+        $this->assertEquals(8 , count($schedule["elimination"]->where('match_type', 'double_elim_lose')->where('round', '1')));
+        $this->assertEquals(4 , count($schedule["elimination"]->where('match_type', 'double_elim_lose')->where('round', '2')));
+        $this->assertEquals(2 , count($schedule["elimination"]->where('match_type', 'double_elim_lose')->where('round', '3')));
+        $this->assertEquals(1 , count($schedule["elimination"]->where('match_type', 'double_elim_lose')->where('round', '4')));
+        $this->assertEquals(1 , count($schedule["elimination"]->where('match_type', 'double_elim_finals')));
     }
 }
