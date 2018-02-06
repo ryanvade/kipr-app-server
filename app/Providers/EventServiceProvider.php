@@ -18,6 +18,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\MatchScored' => [
             'App\Listeners\UpdateBracket',
+            'App\Listeners\PushMatchToJudge',
         ],
         'App\Events\MatchReady' => [],
     ];
