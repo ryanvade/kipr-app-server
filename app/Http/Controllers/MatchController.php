@@ -8,6 +8,9 @@ use KIPR\Match;
 use KIPR\Ruleset;
 use KIPR\Competition;
 use KIPR\Judging\Tabulator;
+use KIPR\Judging\Score;
+use KIPR\Juding\Tabulator;
+use KIPR\Events\MatchScored;
 use Illuminate\Http\Request;
 use KIPR\Filters\MatchFilter;
 use KIPR\Exceptions\InvalidResultException;
@@ -67,6 +70,7 @@ class MatchController extends Controller
         }
 
         $match->setResults($results);
+        event(new MatchScored($match));
         return response()->json([
         'status' => 'success',
         'message' => 'match scored',
