@@ -99,7 +99,7 @@ class TeamController extends Controller
         // Filter by signed in
         if(array_has($requestData, 'signed_in')) {
           $signed_in = array_get($requestData, 'signed_in');
-          return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in == false)->get();
+          return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in)->get();
         }
         // No Filtering, return all registered teams
         return $competition->teams()->get();
