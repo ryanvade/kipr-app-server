@@ -11,11 +11,6 @@ use Illuminate\Http\Request;
 class ScheduleController extends Controller
 {
 
-    public function __construct()
-    {
-      $this->middleware('auth:api');
-    }
-
     public function schedule(Competition $competition) {
         $teams = $competition->teams()->withPivot("signed_in")->where("signed_in", true)->get();
         assert($teams->count() > 0);
