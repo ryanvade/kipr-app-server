@@ -15,9 +15,12 @@ class CreateMatchesTable extends Migration
     {
         Schema::create('matches', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
 
+            // Scheduling information
+            $table->timestamps();
             $table->dateTimeTz('match_time')->nullable();
+            $table->unsignedInteger('match_table')->nullable();
+
             $table->unsignedInteger('match_type');
             $table->unsignedInteger('round');
             $table->unsignedInteger('competition_id');

@@ -14,7 +14,7 @@ class Seeding extends Bracket {
         // Flatten the matches into a single list ordered by round number
         $matchesFlat = collect();
         for($r = 0; $r < $rounds; $r++) {
-            $matchesFlat = $matchesFlat->union($matches->where('match_type', 'seeding')->where('round', '$r'));
+            $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'seeding')->where('round', $r));
         }
 
         // Assign matches to table in a round robin fashion

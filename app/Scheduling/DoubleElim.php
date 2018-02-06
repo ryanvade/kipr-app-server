@@ -14,10 +14,10 @@ class DoubleElim extends Bracket {
         // Flatten the matches into a single list ordered by round number
         $matchesFlat = collect();
         for($r = 0; $r < $rounds; $r++) {
-            $matchesFlat = $matchesFlat->union($matches->where('match_type', 'double_elim_win')->where('round', '$r'));
-            $matchesFlat = $matchesFlat->union($matches->where('match_type', 'double_elim_lose')->where('round', '$r'));
+            $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'double_elim_win')->where('round', $r));
+            $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'double_elim_lose')->where('round', $r));
         }
-        $matchesFlat = $matchesFlat->union($matches->where('match_type', 'double_elim_finals'));
+        $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'double_elim_finals'));
 
         // Assign matches to table in a round robin fashion
         $timeslot = 0;
@@ -25,6 +25,12 @@ class DoubleElim extends Bracket {
         while($match->valid()) {
             for($t = 0; $t < $tables; $t++) {
                 if(!$match->valid()) break;
+
+                // We can't schedule matches at the same time as their dependents
+                if($match->current()->matchA && $match->current()->matchA->match_time >= $timeslot ||
+                        $match->current()->matchB && $match->current()->matchB->match_time >= $timeslot)
+                    continue;
+
                 $match->current()->match_table = $t;
                 $match->current()->match_time = $timeslot;
                 $match->next();
@@ -95,8 +101,8 @@ class DoubleElim extends Bracket {
             $winner_matches->push(collect([]));
             for($m = 0; $m < 1 << ($rounds - $r); $m+=2) {
                 $newMatch = new Match();
-                $newMatch->match_A = $winner_matches[$r-1][$m]->id;
-                $newMatch->match_B = $winner_matches[$r-1][$m+1]->id;
+                $newMatch->matchA()->associate($winner_matches[$r-1][$m]);
+                $newMatch->matchB()->associate($winner_matches[$r-1][$m+1]);
                 $newMatch->team_A = "Pending";
                 $newMatch->team_B = "Pending";
 
@@ -115,8 +121,8 @@ class DoubleElim extends Bracket {
             $loser_matches->push(collect([]));
             for($m = 0; $m < 1 << ($rounds - $r); $m+=2) {
                 $newMatch = new Match();
-                $newMatch->match_A = $winner_matches[$r-1][$m]->id;
-                $newMatch->match_B = $winner_matches[$r-1][$m+1]->id;
+                $newMatch->matchA()->associate($winner_matches[$r-1][$m]);
+                $newMatch->matchB()->associate($winner_matches[$r-1][$m+1]);
                 $newMatch->team_A = "Pending";
                 $newMatch->team_B = "Pending";
 
@@ -134,8 +140,8 @@ class DoubleElim extends Bracket {
 
         // Generate the first round of the finals match
         $newMatch = new Match();
-        $newMatch->match_A = $winner_matches[$rounds - 1][0]->id;
-        $newMatch->match_B = $loser_matches[$rounds-1][0]->id;
+        $newMatch->matchA()->associate($winner_matches[$rounds-1][0]);
+        $newMatch->matchB()->associate($loser_matches[$rounds-1][0]);
         $newMatch->team_A = "Pending";
         $newMatch->team_B = "Pending";
         $newMatch->match_type = "double_elim_finals";
