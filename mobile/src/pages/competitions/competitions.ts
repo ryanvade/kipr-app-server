@@ -26,7 +26,11 @@ export class CompetitionsPage {
     this.competitions = [
       'Region 1',
       'Region 2',
-      'Region 3'
+      'Region 3',
+      'Red',
+      'Blue',
+      'Sky',
+      'Hello'
     ];
   }
 
