@@ -29,7 +29,12 @@ class Competition extends Model
 
     public function ruleset()
     {
-        return $this->hasOne(Ruleset::class);
+        return $this->belongsTo(Ruleset::class);
+    }
+
+    public function setRuleset(Ruleset $ruleset) {
+      $this->ruleset()->associate($ruleset);
+      return $this;
     }
 
     public function competitionTeams() {

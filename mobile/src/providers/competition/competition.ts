@@ -22,9 +22,10 @@ export class CompetitionProvider {
     if (serverName == null) {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
-    return this.http.get(serverName + "/api/competitions")
-      .map(res => res.json())
+    return this.http.get(serverName + "/api/competition")
+      .map(res => res.json().data)
       .toPromise();
   }
+  
 
 }

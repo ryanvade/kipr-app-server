@@ -16,6 +16,5 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/match/score', 'MatchController@score');
-Route::get('/judgeGUI', function(){return view('judgeGUI');});
+
+Route::get('/admin{any}', 'AdminPanelController@index')->where('any', '.*');

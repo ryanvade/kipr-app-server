@@ -21,6 +21,8 @@ class CreateCompetitionTeamsTable extends Migration
 
             $table->unsignedInteger('competition_id');
             $table->unsignedInteger('team_id');
+
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 

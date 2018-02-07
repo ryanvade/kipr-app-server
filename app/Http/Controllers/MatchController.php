@@ -4,54 +4,54 @@ namespace KIPR\Http\Controllers;
 
 use KIPR\Match;
 use KIPR\Ruleset;
-use KIPR\Judging\Score;
-use KIPR\Juding\Tabulator;
+use KIPR\Competition;
+use KIPR\Judging\Tabulator;
 use Illuminate\Http\Request;
+use KIPR\Exceptions\InvalidResultException;
 
 class MatchController extends Controller
 {
-
     public function __construct()
     {
-      $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
-    /**
-      * Update the specified resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @param  \KIPR\Match  $match
-      * @return \Illuminate\Http\Response
-      */
-    public function update(Match $match, Request $request)
+
+    public function getMatchCount()
     {
-        # check if the PATCH is valid
-        $isValid = $request->validate([
-          'results' => 'required|json'
-        ]);
-        # save the match results
-        $match->setResults($request->results);
-        # get the score from the match
-        $score = $match->score();
-        # return the results
+        $count = Match::count();
         return response()->json([
-          'status' => 'scored',
-          'score' => $score
-        ]);
+        'status' => 'success',
+        'match_count' => $count
+      ]);
     }
 
-    public function score(Request $request) {
-        if(!$request->has("results"))
-            abort(400, "Missing results field");
+    public function score(Competition $competition, Match $match, Request $request)
+    {
+        $request->validate([
+          'results' => 'bail|required|json'
+        ]);
 
-        if(!$request->has("ruleset_id"))
-            abort(400, "Missing ruleset_id field");
+        if ($competition->ruleset()->first() == null) {
+            return response()->json([
+              'status' => 'error',
+              'message' => 'competition does not have a ruleset'
+            ], 412);
+        }
 
-        $json = $request->input("results");
-        $results = json_decode($json, true);
+        try {
+          $results = Tabulator::scoreMatch($competition->ruleset, json_decode($request->results, true));
+        } catch (InvalidResultException $e) {
+          return response()->json([
+            'status' => 'error',
+            'message' => 'results array is not valid'
+          ], 400);
+        }
 
-        $ruleset = Ruleset::findOrFail($request->input("ruleset_id"));
-        $results = Tabulator::scoreMatch($ruleset, $results);
-
-        return response()->json($results);
+        $match->setResults($results);
+        return response()->json([
+        'status' => 'success',
+        'message' => 'match scored',
+        'results' => $results
+      ]);
     }
 }
