@@ -19,6 +19,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';//, BarcodeScanne
 export class SettingsPage {
   serverName: String = '';
   authToken: String = '';
+  signInAuthToken: String = '';
 
 constructor(private settingsProvider: SettingsProvider, private status: StatusProvider, private barcodeScanner: BarcodeScanner, private alertCtrl: AlertController){
     this.getSettings();
@@ -59,6 +60,37 @@ async scanForAuthToken(){
   });
 }
 
+async scanForSignInAuthToken(){
+  this.barcodeScanner.scan().then(async (barcodeData) => {
+    console.log(barcodeData.text);
+    let valid = await this.status.validateAuthToken(barcodeData.text, this.serverName);
+    let splitArray = barcodeData.text.split("|");
+
+    if(valid) {
+      this.authToken = splitArray[0];
+      this.settingsProvider.setSignInAuthToken(splitArray[0]);
+      this.settingsProvider.setSignInCompetitionID(splitArray[1]);
+    }else {
+      this.signInAuthToken = '';
+      this.settingsProvider.setSignInAuthToken('');
+      this.settingsProvider.setSignInCompetitionID('');
+      let alert = this.alertCtrl.create({
+        title: 'Authorization Error',
+        subTitle: 'Unable to authenticate with the server. Please try again.',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+  }, (err) => {
+    let alert = this.alertCtrl.create({
+      title: 'Authorization Error',
+      subTitle: 'Unable to read the QR code. Please try again.',
+      buttons: ['OK']
+    });
+    alert.present();
+    console.log(err);
+  });
+}
   ionViewDidLoad() {
     console.log('Loaded');
   }

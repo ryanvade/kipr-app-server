@@ -22,8 +22,13 @@ private loading: Boolean = true;
 //get list of teams in competition 
 constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController, 
   private TeamPrvdr: TeamProvider, private settingsPrvdr: SettingsProvider){
-  this.competitionID = settingsPrvdr.getCompetitionID();
-  TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
+    this.getTeamsSignedin();
+}
+
+async getTeamsSignedin()
+{
+  this.competitionID = await this.settingsPrvdr.getSignInCompetitionID();
+  this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
     console.log(val);
     this.teams = val;
     if (this.teams.length <= 0) {
@@ -34,6 +39,7 @@ constructor(public navCtrl: NavController, public navParams:NavParams, private a
 }
 //sign team in to be added to competition bracket
 teamSignedIn(team){
+  this.teams.splice(this.teams.indexOf(team), 1);
   this.TeamPrvdr.getTeamSignIn(team.id, this.competitionID).then(() => {
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
