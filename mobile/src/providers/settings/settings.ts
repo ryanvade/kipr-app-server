@@ -27,6 +27,10 @@ export class SettingsProvider {
   async getAuthToken() {
     return await this.storage.get('auth:token');
   }
+  
+  getCompetitionID() {
+    return 1;
+  }
 
   setDefaults() {
     console.log("Setting Default Values");

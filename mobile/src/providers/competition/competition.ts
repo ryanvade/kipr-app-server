@@ -26,5 +26,6 @@ export class CompetitionProvider {
       .map(res => res.json().data)
       .toPromise();
   }
+  
 
 }

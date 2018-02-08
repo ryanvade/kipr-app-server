@@ -8,7 +8,7 @@
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-            <strong>{{ competitions.length }}</strong> Competitions
+            <strong>{{ total }}</strong> Competitions
           </p>
         </div>
         <div class="level-item">
@@ -46,10 +46,10 @@
     </table>
     <nav class="level" v-if="showPagination">
       <div class="level-left">
-        <button class="" v-show="showPreviousPagination" @click="currentPage--">Previous Page</button>
+        <button class="buton previous-page-button" v-show="showPreviousPagination" @click="currentPage--">Previous Page</button>
       </div>
       <div class="level-right">
-        <button class="" v-show="showNextPagination" @click="currentPage++">Next Page</button>
+        <button class="buton next-page-button" v-show="showNextPagination" @click="currentPage++">Next Page</button>
       </div>
     </nav>
   </div>
@@ -64,6 +64,7 @@ export default {
       competitions: [],
       currentPage: 0,
       totalPages: null,
+      total: 0
     };
   },
   computed: {
@@ -93,10 +94,10 @@ export default {
         console.log(response);
         this.competitions = response.data.data;
         this.currentPage = response.data.current_page;
+        this.total = response.data.total;
         if(response.data.last_page != 1) {
-          let total = response.data.total;
           let perPage = response.data.per_page;
-          this.totalPages = Math.ceil(total / perPage);
+          this.totalPages = Math.ceil(this.total / perPage);
         }
         this.loading = false;
       }).catch((error) => {

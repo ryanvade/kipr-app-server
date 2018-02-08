@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { NewJudgingPage } from '../new-judging/new-judging';
-//import { JudgingPage } from '../judging/judging'
+import { JudgingPage } from '../judging/judging';
+
 /**
  * Generated class for the MatchesPage page.
  *
@@ -27,7 +27,7 @@ export class MatchesPage {
   }
 
   teamTapped(name,match){
-    this.navCtrl.push(NewJudgingPage,
+    this.navCtrl.push(JudgingPage,
       {
         name: name,
         match: match,

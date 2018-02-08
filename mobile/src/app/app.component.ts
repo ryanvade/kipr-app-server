@@ -7,7 +7,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 
 import { CompetitionsPage } from '../pages/competitions/competitions';
 import { HomePage } from '../pages/home/home';
-import { NewJudgingPage } from '../pages/new-judging/new-judging'
+import { JudgingPage } from '../pages/judging/judging'
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
@@ -59,7 +59,7 @@ export class MyApp {
 
   checkForJudging(page?) {
     if(page != null){
-      if(page.title != 'NewJudgingPage') {
+      if(page.title != 'JudgingPage') {
         return true;
       }
     }
@@ -75,7 +75,7 @@ export class MyApp {
    // some logic to check for authentication...
    //let token = this.settings.getAuthToken().then(val => {});
    //if(true){//check text? add judging page to menu
-     this.pages.push({title: 'Judging', component: NewJudgingPage});
+     this.pages.push({title: 'Judging', component: JudgingPage});
      console.log('Judge Authenticated');
      return true;
    //}
