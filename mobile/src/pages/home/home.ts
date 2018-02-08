@@ -23,31 +23,27 @@ export class HomePage {
   private alert: any = null;
   private loading: Boolean = true;
 
-  hpbuttons: string[];
-
-  hpbuttonss: Array<{title:string, Judgepg:string, SignIn:string}>;
+  hpbuttons: Array<{title: string, link: any}>;
  
   constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform, 
     private alertCtrl: AlertController, private openNativeSettings: OpenNativeSettings, public navCtrl: NavController) {
-    this.hpbuttons = ['Judging Sign In','Team Sign In', 'Tournament Bracket', 'Competition Documents', 'Scores', 'Table Times'];
+    this.hpbuttons = [{title: 'Judging Sign In', link: SettingsPage}, 
+    {title: 'Tournament Bracket', link: SettingsPage}, 
+    {title: 'Competition Documents', link: SettingsPage}, 
+    {title: 'Scores', link: SettingsPage},
+    {title: 'Table Times', link: SettingsPage}];
+
     this.noNetwork = !this.hasNetwork();
     if (!this.noNetwork) {
       this.getData();
     }
     this.loading = false;
-    this.hpbuttonss = [
-      {title:'JudgePg',Judgepg:'..\src\pages\settings\settings.html', SignIn:'..\src\pages\signInGUI\signIn.html'}
-    ];
   }
 
-  buttonSelected(link){
-    this.navCtrl.push(SettingsPage,
-      {
-        Judgepg: link,
-      }
-    );
+  buttonSelected(page){
+    this.navCtrl.push(page.link);
   }
-  
+
   ionViewDidEnter() {
     this.connected = this.network.onConnect().subscribe(data => {
       console.log(data);

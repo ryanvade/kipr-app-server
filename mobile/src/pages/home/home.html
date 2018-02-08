@@ -31,15 +31,11 @@
   </div>
 
   <ion-list>
-      <ion-row *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
-        <ion-col col-auto padding>
-        </ion-col>
-        <ion-col justify-content-center align-items-center>
-          <button ion-button full color="light" text-center>
+      <p *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
+          <button ion-button full color="our-grey" text-center (click)="buttonSelected(button)">
             {{button}}
           </button>
-        </ion-col>
-      </ion-row>
+        </p>
   </ion-list>
   <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
 </ion-content>
