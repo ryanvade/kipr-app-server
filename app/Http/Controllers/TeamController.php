@@ -19,7 +19,6 @@ class TeamController extends Controller
             'getTeamCount',
             'getAll',
             'get',
-            'signIn'
           ]
         ]);
 

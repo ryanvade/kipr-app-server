@@ -12,6 +12,7 @@ class ApiController extends Controller
     {
         $this->middleware('auth:api');
     }
+    
     /**
       * Get a Auth Tokens for judging.
       *

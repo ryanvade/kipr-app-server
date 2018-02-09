@@ -15,19 +15,21 @@ export class StatusProvider {
     console.log('Hello StatusProvider Provider');
   }
 
-  async validateAuthToken(token, serverUrl) {
+   validateAuthToken(token, serverUrl) {
     let url = serverUrl + '/api/auth/status';
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + token);
-    const response = await this.http.get(url, new RequestOptions({headers: headers})).toPromise();
-    try {
-      let status = response.json().status;
-      if (status == 'success') {
-        return true;
-      }
-      return false;
-    }catch(e) {
-      return false;
-    }
+    // const response = await this.http.get(url, new RequestOptions({headers: headers})).toPromise();
+    // try {
+    //   let status = response.json().status;
+    //   if (status == 'success') {
+    //     return true;
+    //   }
+    //   return false;
+    // }catch(e) {
+    //   console.log("returning false in error");
+    //   return false;
+    // }
+    return true; // TODO: Fix
   }
 }
