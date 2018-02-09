@@ -38,4 +38,18 @@ export class TeamProvider {
     .map(res => res.json())
     .toPromise();
   }
+
+  async unRegisterATeam(teamID, compID) {
+    let serverName = await this.settings.getServerName();
+    if (serverName == null) {
+      serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
+    }
+    let headers = new Headers();
+    let token = await this.settings.getSignInAuthToken();
+    headers.append('Authorization', 'Bearer ' + token);
+    let url = serverName + "/api/competition/" + compID + "/team/" + teamID + "/signin";
+    return await this.http.delete(url,  {headers : headers})
+      .map(res => res.json().data)
+      .toPromise();
+  }
 }

@@ -39,7 +39,6 @@ async getTeamsSignedin()
 }
 //sign team in to be added to competition bracket
 teamSignedIn(team){
-  this.teams.splice(this.teams.indexOf(team), 1);
   this.TeamPrvdr.getTeamSignIn(team.id, this.competitionID).then(() => {
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
@@ -48,18 +47,24 @@ teamSignedIn(team){
         {
           text: 'Ok',
           handler: (getTeamSignIn) => {
+          this.teams.splice(this.teams.indexOf(team), 1);  
           console.log('Sign in confirmed');
           }
         },
         {
-          text: 'Exit',
+          text: 'Cancel',
           handler: () => {
+            this.cancelSignIn(team);
             console.log('Canceled')
           }
         }
       ]
     }); alert.present();
   }).catch((error)=> {console.error(error);});
+}
+
+async cancelSignIn(team) {
+  await this.TeamPrvdr.unRegisterATeam(team.id, this.competitionID);
 }
 
 

@@ -36,7 +36,7 @@ export class SettingsProvider {
     return await this.storage.get('signInAuth:competitionID');
   }
   //get the competitionID and return 1 for testing purposes
-  
+
 
   setDefaults() {
     console.log("Setting Default Values");

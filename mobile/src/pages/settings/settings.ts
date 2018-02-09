@@ -67,7 +67,7 @@ disableJudging() {
 async scanForAuthToken(){
   this.barcodeScanner.scan().then(async (barcodeData) => {
     console.log(barcodeData.text);
-    let valid = this.status.validateAuthToken(barcodeData.text, this.serverName);
+    let valid = this.status.validateJudgingAuthToken(barcodeData.text, this.serverName);
     if(valid) {
       this.judgingAuthToken = barcodeData.text;
       this.settingsProvider.setAuthToken(barcodeData.text);
@@ -75,6 +75,7 @@ async scanForAuthToken(){
       this.events.publish('authentication:judging', true);
     }else {
       this.judgingAuthToken = '';
+      this.judgingEnabled = false;
       this.settingsProvider.setAuthToken('');
       let alert = this.alertCtrl.create({
         title: 'Authorization Error',
@@ -99,7 +100,7 @@ async scanForAuthToken(){
 async scanForSignInAuthToken(){
   this.barcodeScanner.scan().then(async (barcodeData) => {
     console.log(barcodeData.text);
-    let valid = this.status.validateAuthToken(barcodeData.text, this.serverName);
+    let valid = this.status.validateSignInAuthToken(barcodeData.text, this.serverName);
     let splitArray = barcodeData.text.split("|");
 
     if(valid) {
@@ -110,6 +111,7 @@ async scanForSignInAuthToken(){
       this.events.publish('authentication:signin', true);
     }else {
       this.signInAuthToken = '';
+      this.signInEnabled = false;
       this.settingsProvider.setSignInAuthToken('');
       this.settingsProvider.setSignInCompetitionID('');
       let alert = this.alertCtrl.create({
