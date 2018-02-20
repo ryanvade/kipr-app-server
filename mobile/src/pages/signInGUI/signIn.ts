@@ -13,7 +13,7 @@ import { SettingsProvider } from '../../providers/settings/settings';
 
 export class SignInPage {
 
-teams: string[];
+teams: Object[];
 teamName: string;
 competitionID: number;
 private displayNoResults: Boolean;
@@ -29,12 +29,8 @@ async getTeamsSignedin()
 {
   this.competitionID = await this.settingsPrvdr.getSignInCompetitionID();
   this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
-    console.log(val);
-    
-    let teams = val;
     const map = new Map();
-
-    teams.forEach((team) => {
+    val.forEach((team) => {
       const key = team.name;
       const collection = map.get(key);
       if(!collection){
@@ -44,10 +40,8 @@ async getTeamsSignedin()
         collection.push(team);
       }
     });
-
-    let teamGroupArr = Array.from(map);
-    this.teams = val;
-
+    
+    this.teams = Array.from(map);
     if (this.teams.length <= 0) {
       this.displayNoResults = true;
     }
