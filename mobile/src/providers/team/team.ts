@@ -22,12 +22,8 @@ export class TeamProvider {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
     let headers = new Headers();
-<<<<<<< HEAD
     let token = await this.settings.getSignInAuthToken();
     headers.append('Authorization', 'Bearer ' + token);
-=======
-    headers.append('Authorization', 'Bearer a3dfd282b21de6549f195f901a585b226941a38debe24e4a3b9aeded932165edc03e65d097c1f0bc');
->>>>>>> 4df4213e9ebb2f4b8add0e01e6eb33d8c7d27f13
     return this.http.post(serverName + "/api/competition/" + compID + " /team/" + teamID + "/signin", '', {headers : headers})
       .map(res => res.json().data)
       .toPromise();
@@ -38,7 +34,6 @@ export class TeamProvider {
     if (serverName == null) {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
-<<<<<<< HEAD
     return this.http.get(serverName + "/api/competition/" + compID + "/team?signed_in=0")
     .map(res => res.json())
     .toPromise();
@@ -57,10 +52,4 @@ export class TeamProvider {
       .map(res => res.json().data)
       .toPromise();
   }
-=======
-    return this.http.get(serverName + "/api/competition/" + compID + "/team")
-    .map(res => res.json())
-    .toPromise();
-  }
->>>>>>> 4df4213e9ebb2f4b8add0e01e6eb33d8c7d27f13
 }
