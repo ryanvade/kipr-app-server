@@ -1,6 +1,6 @@
 <?php
 
-namespace KIPR\Events\App\Events;
+namespace KIPR\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
