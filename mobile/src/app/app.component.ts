@@ -7,11 +7,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 
 import { CompetitionsPage } from '../pages/competitions/competitions';
 import { HomePage } from '../pages/home/home';
-<<<<<<< HEAD
 import { JudgingPage } from '../pages/judging/judging'
-=======
-import { NewJudgingPage } from '../pages/new-judging/new-judging';
->>>>>>> signIn_gui
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
@@ -42,9 +38,9 @@ export class MyApp {
 
     events.subscribe('authentication:judging', (enabled) => {
       if(enabled) {
-        this.pages.push({ title: 'Judging', component: NewJudgingPage });
+        this.pages.push({ title: 'Judging', component: JudgingPage });
       }else {
-        let index = this.pages.indexOf({ title: 'Judging', component: NewJudgingPage });
+        let index = this.pages.indexOf({ title: 'Judging', component: JudgingPage });
         if(index) {
           this.pages.splice(index, 1);
         }
@@ -63,22 +59,6 @@ export class MyApp {
     })
   }
 
-<<<<<<< HEAD
-=======
-  async maybeAddAuthenticatedPages() {
-    let signInToken = await this.settings.getSignInAuthToken();
-    let judgingToken = await this.settings.getAuthToken();
-
-    if(signInToken != null && signInToken != "") {
-      this.pages.push({ title: 'Team Sign In', component: SignInPage });
-    }
-
-    if(judgingToken != null && judgingToken != "") {
-      this.pages.push({ title: 'Judging', component: NewJudgingPage });
-    }
-  }
-
->>>>>>> signIn_gui
   initializeApp() {
     this.platform.ready().then(() => {
       // App Startup
