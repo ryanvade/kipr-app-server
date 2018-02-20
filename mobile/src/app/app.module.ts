@@ -9,7 +9,6 @@ import { MyApp } from './app.component';
 import { CompetitionsPage } from '../pages/competitions/competitions';
 import { HomePage } from '../pages/home/home';
 import { JudgingPage } from '../pages/judging/judging';
-import { NewJudgingPage } from '../pages/new-judging/new-judging';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
@@ -30,7 +29,6 @@ import { TeamProvider } from '../providers/team/team';
     HomePage,
     CompetitionsPage,
     JudgingPage,
-    NewJudgingPage,
     MatchesPage,
     SettingsPage,
     SignInPage
@@ -47,7 +45,6 @@ import { TeamProvider } from '../providers/team/team';
     CompetitionsPage,
     HomePage,
     JudgingPage,
-    NewJudgingPage,
     MatchesPage,
     SettingsPage,
     SignInPage

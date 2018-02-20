@@ -7,10 +7,15 @@ import { SettingsProvider } from '../providers/settings/settings';
 
 import { CompetitionsPage } from '../pages/competitions/competitions';
 import { HomePage } from '../pages/home/home';
-import { NewJudgingPage } from '../pages/new-judging/new-judging'
+<<<<<<< HEAD
+import { JudgingPage } from '../pages/judging/judging'
+=======
+import { NewJudgingPage } from '../pages/new-judging/new-judging';
+>>>>>>> signIn_gui
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
+import { Events } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,7 +27,7 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public settings: SettingsProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public settings: SettingsProvider, public events: Events) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -30,12 +35,50 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Competitions', component: CompetitionsPage},
       { title: 'Matches', component: MatchesPage },
-      { title: 'Settings', component: SettingsPage },
-      { title: 'Sign In', component: SignInPage }
+      { title: 'Settings', component: SettingsPage }
     ];
 
+    this.maybeAddAuthenticatedPages();
+
+    events.subscribe('authentication:judging', (enabled) => {
+      if(enabled) {
+        this.pages.push({ title: 'Judging', component: NewJudgingPage });
+      }else {
+        let index = this.pages.indexOf({ title: 'Judging', component: NewJudgingPage });
+        if(index) {
+          this.pages.splice(index, 1);
+        }
+      }
+    });
+
+    events.subscribe('authentication:signin', (enabled) => {
+      if(enabled) {
+        this.pages.push({ title: 'Team Sign In', component: SignInPage });
+      }else {
+        let index = this.pages.indexOf({ title: 'Team Sign In', component: SignInPage });
+        if(index) {
+          this.pages.splice(index, 1);
+        }
+      }
+    })
   }
 
+<<<<<<< HEAD
+=======
+  async maybeAddAuthenticatedPages() {
+    let signInToken = await this.settings.getSignInAuthToken();
+    let judgingToken = await this.settings.getAuthToken();
+
+    if(signInToken != null && signInToken != "") {
+      this.pages.push({ title: 'Team Sign In', component: SignInPage });
+    }
+
+    if(judgingToken != null && judgingToken != "") {
+      this.pages.push({ title: 'Judging', component: NewJudgingPage });
+    }
+  }
+
+>>>>>>> signIn_gui
   initializeApp() {
     this.platform.ready().then(() => {
       // App Startup
@@ -59,7 +102,7 @@ export class MyApp {
 
   checkForJudging(page?) {
     if(page != null){
-      if(page.title != 'NewJudgingPage') {
+      if(page.title != 'JudgingPage') {
         return true;
       }
     }
@@ -75,7 +118,7 @@ export class MyApp {
    // some logic to check for authentication...
    //let token = this.settings.getAuthToken().then(val => {});
    //if(true){//check text? add judging page to menu
-     this.pages.push({title: 'Judging', component: NewJudgingPage});
+     this.pages.push({title: 'Judging', component: JudgingPage});
      console.log('Judge Authenticated');
      return true;
    //}

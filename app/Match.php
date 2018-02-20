@@ -31,12 +31,16 @@ class Match extends Model
         return $this->belongsTo(Competition::class);
     }
 
-    public function setFinalScore(Score $score) {
+    public function setFinalScore(Score $score)
+    {
         $this->results = score;
     }
 
     public function setResults($results)
     {
+        if (is_array($results)) {
+            $results = json_encode($results);
+        }
         $this->update([
         'results' => $results
       ]);

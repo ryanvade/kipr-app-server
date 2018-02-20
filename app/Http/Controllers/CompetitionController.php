@@ -11,6 +11,18 @@ use KIPR\Http\Requests\UpdateCompetition;
 
 class CompetitionController extends Controller
 {
+
+  public function __construct() {
+    $this->middleware('auth', [
+      'except' => [
+        'getAll',
+        'getCurrentCompetitions',
+        'getCompetitionCount',
+        'get',
+        'getNames'
+      ]
+    ]);
+  }
     public function getCurrentCompetitions()
     {
         $today = Carbon::now();
@@ -37,6 +49,7 @@ class CompetitionController extends Controller
     }
 
     public function get(Competition $competition) {
+      $competition->teams = $competition->teams()->get();
       return $competition;
     }
 
@@ -53,8 +66,8 @@ class CompetitionController extends Controller
         $comp = Competition::create([
         'name' => $request->name,
         'location' => $request->location,
-        'start_date' => Carbon::createFromFormat("m/d/Y h:mA", $request->startDate),
-        'end_date' => Carbon::createFromFormat("m/d/Y h:mA", $request->endDate)
+        'start_date' => Carbon::createFromFormat("m/d/Y h:iA", $request->startDate),
+        'end_date' => Carbon::createFromFormat("m/d/Y h:iA", $request->endDate)
       ]);
         return response()->json([
         'status' => 'success',
@@ -68,12 +81,6 @@ class CompetitionController extends Controller
     }
 
     public function patch(Competition $competition, UpdateCompetition $request) {
-      // $competition->name = $request->name;
-      // $competition->location = $request->location;
-      // $competition->start_date = Carbon::createFromFormat("m/d/Y h:mA", $request->startDate);
-      // $competition->end_date = Carbon::createFromFormat("m/d/Y h:mA", $request->endDate);
-      // $competition->updated_at = Carbon::now();
-      // $competition->save();
       $competition->update([
         'name' => $request->name,
         'location' => $request->location,
