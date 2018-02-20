@@ -33,7 +33,7 @@
   <ion-list>
       <p *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
           <button ion-button full color="our-grey" text-center (click)="buttonSelected(button)">
-            {{button}}
+            {{button.title}}
           </button>
         </p>
   </ion-list>
