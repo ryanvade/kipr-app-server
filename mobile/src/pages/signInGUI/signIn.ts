@@ -30,7 +30,24 @@ async getTeamsSignedin()
   this.competitionID = await this.settingsPrvdr.getSignInCompetitionID();
   this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
     console.log(val);
+    
+    let teams = val;
+    const map = new Map();
+
+    teams.forEach((team) => {
+      const key = team.name;
+      const collection = map.get(key);
+      if(!collection){
+        map.set(key, [team]);
+      }
+      else {
+        collection.push(team);
+      }
+    });
+
+    let teamGroupArr = Array.from(map);
     this.teams = val;
+
     if (this.teams.length <= 0) {
       this.displayNoResults = true;
     }
