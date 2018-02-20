@@ -22,6 +22,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { CompetitionProvider } from '../providers/competition/competition';
 import { StatusProvider } from '../providers/status/status';
 import { TeamProvider } from '../providers/team/team';
+import { TeamSignInPickerPage } from '../pages/team-sign-in-picker/team-sign-in-picker';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TeamProvider } from '../providers/team/team';
     NewJudgingPage,
     MatchesPage,
     SettingsPage,
-    SignInPage
+    SignInPage,
+    TeamSignInPickerPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import { TeamProvider } from '../providers/team/team';
     NewJudgingPage,
     MatchesPage,
     SettingsPage,
-    SignInPage
+    SignInPage,
+    TeamSignInPickerPage
   ],
   providers: [
     StatusBar,
