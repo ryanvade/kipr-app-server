@@ -47,7 +47,6 @@ teamSignedIn(team){
         {
           text: 'Ok',
           handler: (getTeamSignIn) => {
-          this.teams.splice(this.teams.indexOf(team), 1);  
           console.log('Sign in confirmed');
           }
         },
@@ -60,6 +59,7 @@ teamSignedIn(team){
         }
       ]
     }); alert.present();
+    this.teams.splice(this.teams.indexOf(team), 1);  
   }).catch((error)=> {console.error(error);});
 }
 
