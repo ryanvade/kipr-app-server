@@ -12,6 +12,9 @@
       </div>
       <div class="level-right">
         <p class="level-item">
+          <a class="card-footer-item" id="edit" @click="$router.push('/admin/competitions/' + competition.id + '/teams/register')">Register Teams</a>
+        </p>
+        <p class="level-item">
           <a class="card-footer-item" id="edit" @click="$router.push('/admin/competitions/' + competition.id + '/edit')">Edit</a>
         </p>
         <p class="level-item">
@@ -40,7 +43,7 @@
             <td>{{ team.code }}</td>
             <td>{{ team.name }}</td>
             <td>{{ team.email }}</td>
-            <td><button type="button" class="button is-danger">Un-Register</button></td>
+            <td><button type="button" class="button is-danger" @click="deregister(team)">Un-Register</button></td>
           </tr>
         </tbody>
       </table>
@@ -134,6 +137,16 @@ export default {
     },
     prettyDate(date) {
       return moment(date).format('M/D/YYYY h:mmA');;
+    },
+    deregister(team) {
+      let self = this;
+      let compid = this.competition.id;
+      let teamid = team.id;
+      window.axios.post(`/api/competition/${compid}/team/${teamid}/deregister`).then((response) => {
+        self.competition.teams.splice(self.competition.teams.indexOf(team), 1);
+      }).catch((error) => {
+        console.error(error);
+      });
     },
     submitDelete() {
       let id = this.competition.id;

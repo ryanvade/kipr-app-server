@@ -19,7 +19,7 @@ class TeamSeeder extends Seeder
           'code' => '18-001'
         ]);
         $competition = Competition::first();
-        $competiton->teams()->attach($team);
+        $competition->teams()->attach($team);
         if($competition == null) {
           $competition = factory(Competition::class)->create();
         }
