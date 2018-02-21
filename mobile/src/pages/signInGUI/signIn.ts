@@ -30,7 +30,11 @@ constructor(public navCtrl: NavController, public navParams:NavParams,
 async getTeamsSignedin()
 {
   this.competitionID = await this.settingsPrvdr.getSignInCompetitionID();
-  this.competitionID = 1; // TODO: Change back
+  if(this.competitionID == null) {
+    this.teams = [];
+    this.loading = false;
+    return;
+  }
   this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
     const map = new Map();
     val.forEach((team) => {
