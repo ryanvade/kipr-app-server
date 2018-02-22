@@ -75,6 +75,19 @@ export class MyApp {
     });
   }
 
+  async maybeAddAuthenticatedPages() {
+    let signInToken = await this.settings.getSignInAuthToken();
+    let judgingToken = await this.settings.getAuthToken();
+
+    if(signInToken != null && signInToken != "") {
+      this.pages.push({ title: 'Team Sign In', component: SignInPage });
+    }
+
+    if(judgingToken != null && judgingToken != "") {
+      this.pages.push({ title: 'Judging', component: NewJudgingPage });
+    }
+  }
+
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
