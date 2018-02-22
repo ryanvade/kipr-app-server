@@ -84,7 +84,7 @@ export class MyApp {
     }
 
     if(judgingToken != null && judgingToken != "") {
-      this.pages.push({ title: 'Judging', component: NewJudgingPage });
+      this.pages.push({ title: 'Judging', component: JudgingPage });
     }
   }
 
