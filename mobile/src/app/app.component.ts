@@ -13,6 +13,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
 import { Events } from 'ionic-angular';
 
+
 @Component({
   templateUrl: 'app.html'
 })
