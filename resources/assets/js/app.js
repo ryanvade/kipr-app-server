@@ -120,6 +120,11 @@ const routes = [{
     component: require('./components/admin/teams/View.vue')
   },
   {
+    path: '/admin/teams/:id/competitions/register',
+    name: 'register_competition',
+    component: require('./components/admin/teams/RegisterCompetitions.vue')
+  },
+  {
     path: '/admin/teams/:id/edit',
     name: 'edit_team',
     component: require('./components/admin/teams/Edit.vue')

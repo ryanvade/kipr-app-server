@@ -4,24 +4,56 @@
     <div class="loader"></div>
   </div>
   <div class="" v-if="!loading">
-    <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          {{ team.name }}
+
+    <nav class="level">
+      <div class="level-left">
+        <p class="subtitle has-text-centered">
+          <strong>{{ team.name }}</strong> {{ team.code }}
         </p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          <p>Created On: {{ prettyDate(team.created_at) }}</p>
-          <p>Email: {{ team.email }}</p>
-          <p>Code: {{ team.code }}</p>
-        </div>
       </div>
-      <footer class="card-footer">
-        <a class="card-footer-item" @click="$router.push('/admin/teams/' + team.id + '/edit')">Edit</a>
-        <a class="card-footer-item is-danger" @click="showWarning = true">Delete</a>
-      </footer>
+      <div class="level-right">
+        <p class="level-item">
+          <a class="card-footer-item" id="edit" @click="$router.push('/admin/teams/' + team.id + '/competitions/register')">Register with Competitions</a>
+        </p>
+        <p class="level-item">
+          <a class="card-footer-item" id="edit" @click="$router.push('/admin/teams/' + team.id + '/edit')">Edit</a>
+        </p>
+        <p class="level-item">
+          <a class="card-footer-item is-danger" id="delete" @click="showWarning = true">Delete</a>
+        </p>
+      </div>
+    </nav>
+
+    <div class="box">
+      <p class="is-size-5 is-grey">
+        <strong>Created On:</strong> {{ prettyDate(team.created_at) }}
+        <strong>Email:</strong> {{ team.email }}
+      </p>
+      <h3>Registered Competitions:</h3>
+      <table class="table is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Locatin</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="comp in competitions">
+            <td>{{ comp.competition_id }}</td>
+            <td>{{ comp.name }}</td>
+            <td>{{ comp.location }}</td>
+            <td>{{ prettyDate(comp.start_date) }}</td>
+            <td>{{ prettyDate(comp.end_date) }}</td>
+            <td><button type="button" class="button is-danger" @click="deregister(comp)">Un-Register</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
     <!-- Warning Modal -->
     <div class="delete-team-modal-wrapper">
       <modal v-if="showWarning" v-on:close="showWarning = false">
@@ -70,6 +102,7 @@ export default {
     return {
       team: null,
       loading: true,
+      competitions: [],
       showWarning: false,
       showMissingTeam: false,
     };
@@ -77,6 +110,7 @@ export default {
   mounted() {
     let id = this.$route.params.id;
     this.getTeam(id);
+    this.getRegisteredCompetitions(id);
   },
   methods: {
     getTeam(id) {
@@ -91,8 +125,28 @@ export default {
         }
       });
     },
+    getRegisteredCompetitions(id) {
+      window.axios.get(`/api/competition?registered=${id},1`).then((response) => {
+        console.log(response);
+        this.competitions = response.data.data;
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
     prettyDate(date) {
       return moment(date).format('M/D/YYYY h:mmA');;
+    },
+    deregister(competition) {
+      let self = this;
+      let compid = competition.competition_id;
+      let teamid = this.team.id;
+      window.axios.post(`/api/competition/${compid}/team/deregister`, {
+        'team_ids': [teamid]
+      }).then((response) => {
+        self.getRegisteredCompetitions(teamid);
+      }).catch((error) => {
+        console.error(error, compid, teamid);
+      });
     },
     submitDelete() {
       let id = this.team.id;

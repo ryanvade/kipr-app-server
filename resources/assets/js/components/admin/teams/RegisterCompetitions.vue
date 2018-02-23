@@ -7,12 +7,12 @@
       <nav class="level">
         <div class="level-left">
           <p class="subtitle has-text-centered">
-            Register teams for <strong>{{ competition.name }}</strong>
+            Register competitions for <strong>{{ team.name }}</strong>
           </p>
         </div>
         <div class="level-right">
           <p class="level-item">
-            click the checkbox to add a team
+            click the checkbox to add the team to the competition
           </p>
         </div>
       </nav>
@@ -22,19 +22,22 @@
             <table class="table is-hoverable is-fullwidth">
               <thead>
                 <tr>
-                  <th>Code</th>
+                  <th>ID</th>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Register</th>
+                  <th>Location</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="team in teams">
-                  <td>{{ team.code }}</td>
-                  <td>{{ team.name }}</td>
-                  <td>{{ team.email }}</td>
+                <tr v-for="comp in competitions">
+                  <td>{{ comp.id }}</td>
+                  <td>{{ comp.name }}</td>
+                  <td>{{ comp.location }}</td>
+                  <td>{{ prettyDate(comp.start_date) }}</td>
+                  <td>{{ prettyDate(comp.end_date) }}</td>
                   <td>
-                    <input type="checkbox" :value="team.id" v-model="teamids" >
+                    <input type="checkbox" :value="comp.id" v-model="compids" >
                   </td>
                 </tr>
               </tbody>
@@ -58,24 +61,24 @@
 export default {
   data() {
     return {
-      competition: null,
+      team: null,
       loading: true,
-      teams: [],
-      teamids: [],
-      compId: 0
+      competitions: [],
+      compids: [],
+      teamId: 0
     };
   },
   mounted() {
     let id = this.$route.params.id;
-    this.compId = id;
-    this.getCompetition(id);
-    this.getUnregisteredTeams(id);
+    this.teamdId = id;
+    this.getTeam(id);
+    this.getUnregisteredCompetitions(id);
   },
   methods: {
-    getCompetition(id) {
-      window.axios.get(`/api/competition/${id}`).then((response) => {
+    getTeam(id) {
+      window.axios.get(`/api/team/${id}`).then((response) => {
         console.log(response);
-        this.competition = response.data;
+        this.team = response.data;
         this.loading = false;
       }).catch((error) => {
         console.error(error);
@@ -84,32 +87,39 @@ export default {
         }
       });
     },
-    getUnregisteredTeams(id) {
-      window.axios.get(`/api/team?registered=${id},0`).then((response) => {
+    prettyDate(date) {
+      return moment(date).format('M/D/YYYY h:mmA');;
+    },
+    getUnregisteredCompetitions(id) {
+      window.axios.get(`/api/competition?registered=${id},0`).then((response) => {
         console.log(response);
-        this.teams = response.data.data;
+        this.competitions = response.data.data;
       }).catch((error) => {
         console.error(error);
       });
     },
     cancel() {
-      let id = this.compId;
-      this.$router.push(`/admin/competitions/${id}`);
+      let id = this.team.id;
+      this.$router.push(`/admin/teams/${id}`);
     },
     submit() {
-      if(this.teamids.length > 0) {
+      if(this.compids.length > 0) {
         let id = this.compId;
         this.loading = true;
-        window.axios.post(`/api/competition/${id}/team/register`, {
-          'team_ids': this.teamids
-        }).then((response) => {
-          console.log(response);
-          this.getUnregisteredTeams(this.compId);
-          this.loading = false;
-        }).catch((error) => {
-          console.error(error);
-          this.loading = false;
+        this.compids.forEach((compid) => {
+          console.log(compid);
+          window.axios.post(`/api/competition/${compid}/team/register`, {
+            'team_ids': [this.team.id]
+          }).then((response) => {
+            console.log(response);
+
+          }).catch((error) => {
+            console.error(error);
+          });
         });
+        this.getUnregisteredCompetitions(this.team.id);
+        this.loading = false;
+
       }else {
         // flash warning
         console.error("No Teams Selected");

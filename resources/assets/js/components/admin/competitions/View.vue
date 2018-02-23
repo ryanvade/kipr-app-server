@@ -39,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="team in competition.teams">
+          <tr v-for="team in teams">
             <td>{{ team.code }}</td>
             <td>{{ team.name }}</td>
             <td>{{ team.email }}</td>
@@ -48,25 +48,6 @@
         </tbody>
       </table>
     </div>
-    <!-- <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          {{ competition.name }}
-        </p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          <p>Location: {{ competition.location }}</p>
-          <p>Start Date: {{ prettyDate(competition.start_date) }}</p>
-          <p>End Date: {{ prettyDate(competition.end_date) }}</p>
-        </div>
-      </div>
-      <footer class="card-footer">
-        <a class="card-footer-item" id="edit" @click="$router.push('/admin/competitions/' + competition.id + '/edit')">Edit</a>
-        <a class="card-footer-item is-danger" id="delete" @click="showWarning = true">Delete</a>
-      </footer>
-    </div> -->
-    <!-- Warning Modal -->
     <div class="delete-competition-modal-wrapper">
       <modal v-if="showWarning" v-on:close="showWarning = false">
         <div class="" slot="header">
@@ -113,6 +94,7 @@ export default {
   data() {
     return {
       competition: null,
+      teams: [],
       loading: true,
       showWarning: false,
       showMissingCompetition: false,
@@ -121,6 +103,7 @@ export default {
   mounted() {
     let id = this.$route.params.id;
     this.getCompetition(id);
+    this.getRegisteredTeams(id);
   },
   methods: {
     getCompetition(id) {
@@ -135,6 +118,14 @@ export default {
         }
       });
     },
+    getRegisteredTeams(id) {
+      window.axios.get(`/api/team?registered=${id},1`).then((response) => {
+        console.log(response);
+        this.teams = response.data.data;
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
     prettyDate(date) {
       return moment(date).format('M/D/YYYY h:mmA');;
     },
@@ -142,8 +133,10 @@ export default {
       let self = this;
       let compid = this.competition.id;
       let teamid = team.id;
-      window.axios.post(`/api/competition/${compid}/team/${teamid}/deregister`).then((response) => {
-        self.competition.teams.splice(self.competition.teams.indexOf(team), 1);
+      window.axios.post(`/api/competition/${compid}/team/deregister`, {
+        'team_ids': [teamid]
+      }).then((response) => {
+        self.getRegisteredTeams(compid);
       }).catch((error) => {
         console.error(error);
       });

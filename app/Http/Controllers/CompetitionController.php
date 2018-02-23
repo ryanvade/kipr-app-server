@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use KIPR\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use KIPR\Filters\CompetitionFilter;
 use KIPR\Http\Requests\CreateCompetition;
 use KIPR\Http\Requests\UpdateCompetition;
 
@@ -35,8 +36,10 @@ class CompetitionController extends Controller
         ]);
     }
 
-    public function getAll() {
-      return Competition::paginate(20);
+    public function getAll(Request $request) {
+      $filter = new CompetitionFilter($request);
+      $teams = $filter->apply(DB::table('competitions'));
+      return $teams->paginate(20);
     }
 
     public function getCompetitionCount()
