@@ -2,9 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use KIPR\User;
+use Tests\TestCase;
 use KIPR\Competition;
+use Laravel\Passport\Passport;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -20,9 +21,10 @@ class CreateTeamsTest extends TestCase
       $email = 'testemail@foo.foo';
       $code = "18-001";
 
+      // Acting as the user
+      Passport::actingAs($user);
       # create the team
-      $response = $this->actingAs($user)
-                       ->json('POST', '/api/team', [
+      $response = $this->json('POST', '/api/team', [
                          'name' => $name,
                          'email' => $email,
                          'code' => $code

@@ -74,6 +74,8 @@ class TeamSigninTest extends TestCase
         $competition = factory(Competition::class)->create();
         # and a team
         $team = factory(Team::class)->create();
+        # register the team with the competition
+        $competition->teams()->attach($team);
         # signin the team
         $response = $this->json('POST', "/api/competition/1/team/1/signin");
         # check the response

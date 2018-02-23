@@ -2,9 +2,11 @@
 
 namespace KIPR\Http\Controllers;
 
+use DB;
 use KIPR\Team;
 use Carbon\Carbon;
 use KIPR\Competition;
+use KIPR\Filters\TeamFilter;
 use Illuminate\Http\Request;
 use KIPR\Http\Requests\CreateTeam;
 use KIPR\Http\Requests\UpdateTeam;
@@ -13,12 +15,14 @@ class TeamController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('auth:api')->only([
-        'patch',
-        'create',
-        'delete',
-        'signIn',
-        'massUpload'
+      $this->middleware('auth:api', [
+        'except' => [
+          'getTeamsAtCompetition',
+          'getTeamCount',
+          'getAll',
+          'get',
+
+        ]
       ]);
     }
     /**
@@ -72,9 +76,11 @@ class TeamController extends Controller
       ]);
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return Team::paginate(20);
+        $filter = new TeamFilter($request);
+        $teams = $filter->apply(DB::table('teams'));
+        return $teams->paginate(20);
     }
 
     public function get(Team $team)
@@ -89,9 +95,9 @@ class TeamController extends Controller
           'signed_in' => 'boolean'
         ]);
         // Filter by signed in
-        if(array_has($requestData, 'signed_in')) {
-          $signed_in = array_get($requestData, 'signed_in');
-          return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in)->get();
+        if (array_has($requestData, 'signed_in')) {
+            $signed_in = array_get($requestData, 'signed_in');
+            return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in)->get();
         }
         // No Filtering, return all registered teams
         return $competition->teams()->get();

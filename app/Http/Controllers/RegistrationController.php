@@ -8,29 +8,30 @@ use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
-    public function __construct() {
-      $this->middleware('auth:api');
+    public function __construct()
+    {
+        $this->middleware('auth:api');
     }
 
-    public function register(Competition $competition, Team $team, Request $request) {
-      $competition->teams()->attach($team);
-      return response()->json([
-        'status' => 'success',
-        'message' => 'team registered'
+    public function register(Competition $competition, Request $request)
+    {
+        $request->validate([
+          'team_ids' => 'required|array|exists:teams,id'
+        ]);
+        $competition->teams()->syncWithoutDetaching($request->get('team_ids'));
+        return response()->json([
+          'teams' => $competition->teams()->get()
+        ]);
+    }
+
+    public function deregister(Competition $competition, Request $request)
+    {
+      $request->validate([
+        'team_ids' => 'required|array|exists:teams,id'
       ]);
-    }
-
-    public function deregister(Competition $competition, Team $team, Request $request) {
-      $competition->teams()->detach($team);
+      $competition->teams()->detach($request->get('team_ids'));
       return response()->json([
-        'status' => 'success',
-        'message' => 'team deregistered'
+        'teams' => $competition->teams()->get()
       ]);
-    }
-
-    public function teamsNotRegisteredWithATeam(Competition $competition) {
-      return Team::whereNotIn('id', function($query) use($competition) {
-        $query->select('team_id')->from('competition_teams')->where('competition_id', $competition->id);
-      })->get();
     }
 }

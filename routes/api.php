@@ -28,8 +28,9 @@ Route::get('/competition/{competition}/tokens/signin', 'ApiController@getAuthTok
 Route::get('/competition/{competition}/team', 'TeamController@getTeamsAtCompetition');
 Route::post('/competition/{competition}/team/{team}/signin', 'TeamController@signin');
 Route::post('/competition/{competition}/match/{match}/score', 'MatchController@score');
-Route::post('/competition/{competition}/team/{team}/register', 'RegistrationController@register');
-Route::post('/competition/{competition}/team/{team}/deregister', 'RegistrationController@deregister');
+
+Route::post('/competition/{competition}/team/register', 'RegistrationController@register');
+Route::post('/competition/{competition}/team/deregister', 'RegistrationController@deregister');
 Route::get('/competition/{competition}/team/notregistered', 'RegistrationController@teamsNotRegisteredWithATeam');
 // Teams
 Route::post('/team', 'TeamController@create');
