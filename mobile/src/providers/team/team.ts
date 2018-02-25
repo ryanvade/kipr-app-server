@@ -22,7 +22,8 @@ export class TeamProvider {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
     let headers = new Headers();
-    headers.append('Authorization', 'Bearer a3dfd282b21de6549f195f901a585b226941a38debe24e4a3b9aeded932165edc03e65d097c1f0bc');
+    let token = await this.settings.getSignInAuthToken();
+    headers.append('Authorization', 'Bearer ' + token);
     return this.http.post(serverName + "/api/competition/" + compID + " /team/" + teamID + "/signin", '', {headers : headers})
       .map(res => res.json().data)
       .toPromise();
@@ -33,8 +34,22 @@ export class TeamProvider {
     if (serverName == null) {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
-    return this.http.get(serverName + "/api/competition/" + compID + "/team")
+    return this.http.get(serverName + "/api/competition/" + compID + "/team?signed_in=0")
     .map(res => res.json())
     .toPromise();
+  }
+
+  async unRegisterATeam(teamID, compID) {
+    let serverName = await this.settings.getServerName();
+    if (serverName == null) {
+      serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
+    }
+    let headers = new Headers();
+    let token = await this.settings.getSignInAuthToken();
+    headers.append('Authorization', 'Bearer ' + token);
+    let url = serverName + "/api/competition/" + compID + "/team/" + teamID + "/signin";
+    return await this.http.delete(url,  {headers : headers})
+      .map(res => res.json().data)
+      .toPromise();
   }
 }

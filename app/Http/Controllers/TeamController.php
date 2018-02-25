@@ -13,20 +13,15 @@ class TeamController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', [
-          'except' => [
-            'getTeamsAtCompetition',
-            'getTeamCount',
-            'getAll',
-            'get',
-            'signIn'
-          ]
+        $this->middleware('auth')->only([
+          'create',
+          'delete',
+          'patch',
+          'massUpload'
         ]);
 
-        $this->middleware('auth:api', [
-          'only' => [
-            'signIn'
-          ]
+        $this->middleware('auth:api')->only([
+          'signIn'
         ]);
     }
     /**

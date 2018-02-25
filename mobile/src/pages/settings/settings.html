@@ -8,8 +8,34 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-label text-center item-center>Scan QR code here</ion-label>
-  <button ion-button (click)="scanForAuthToken()">Scan
-  </button>
-  <div>{{ authToken }}</div>
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider color="light">
+        Authentication
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Judging Competitions</ion-label>
+        <!-- <ion-toggle [(ngModel)]="judgingEnabled" (click)="handleJudgingChange()"></ion-toggle> -->
+      </ion-item>
+      <ion-item *ngIf="!judgingEnabled">
+        <button ion-button (click)="scanForAuthToken()">Tap to enable Judging</button>
+      </ion-item>
+
+      <ion-item *ngIf="judgingEnabled">
+        <button ion-button (click)="disableJudging()">Tap to disable Judging</button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Sign In Teams</ion-label>
+        <!-- <ion-toggle [(ngModel)]="signInEnabled" (click)="handleSignInChange()"></ion-toggle> -->
+      </ion-item>
+      <ion-item *ngIf="!signInEnabled">
+        <button ion-button (click)="scanForSignInAuthToken()">Tap to enable Sign In</button>
+      </ion-item>
+      <ion-item *ngIf="signInEnabled">
+        <button ion-button (click)="disableSignIn()">Tap to disable Sign In</button>
+      </ion-item>
+
+    </ion-item-group>
+  </ion-list>
 </ion-content>
