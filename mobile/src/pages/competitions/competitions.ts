@@ -35,8 +35,6 @@ export class CompetitionsPage {
   }
 
   getCompetitions(event){
-
-
     var val = event.target.value;
 
     if(val && val.trim() != ''){
@@ -44,6 +42,8 @@ export class CompetitionsPage {
         return (competition.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
+
+    this.ionViewDidLoad();
   }
 
   ionViewDidLoad() {
