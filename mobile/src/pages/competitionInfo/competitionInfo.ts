@@ -19,18 +19,19 @@ competitionID: number;
 private displayNoResults: Boolean;
 private loading: Boolean = true;
 
-constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController, 
+constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController,
     private TeamPrvdr: TeamProvider, private settingsPrvdr: SettingsProvider, private compPrvdr: CompetitionProvider){
       this.getTeamList();
     }
 
 async getTeamList(){
-  this.teamName = await this.compPrvdr.getRegisteredTeamsInComp(compID);
+  this.teamName = await this.compPrvdr.getRegisteredTeamsInComp(this.competitionID);
   this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
-   teamName = val;
+   this.teamName = val;
     if (this.teams.length <= 0) {
       this.displayNoResults = true;
     }
     this.loading = false;
     }).catch(err => {console.error(err);});
-}}
+}
+}

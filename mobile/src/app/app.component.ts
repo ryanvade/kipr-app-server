@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SettingsProvider } from '../providers/settings/settings';
 
 import { CompetitionsPage } from '../pages/competitions/competitions';
+import { CompetitionInfoPage } from '../pages/competitionInfo/competitionInfo';
 import { HomePage } from '../pages/home/home';
 import { JudgingPage } from '../pages/judging/judging'
 import { MatchesPage } from '../pages/matches/matches';
