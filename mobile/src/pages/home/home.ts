@@ -7,6 +7,7 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { CompetitionProvider } from '../../providers/competition/competition';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
+import { CompetitionsPage } from '../competitions/competitions';
 
 @Component({
   selector: 'page-home',
@@ -28,7 +29,7 @@ export class HomePage {
   constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform, 
     private alertCtrl: AlertController, private openNativeSettings: OpenNativeSettings, public navCtrl: NavController) {
     this.hpbuttons = [{title: 'Judging Sign In', link: SettingsPage}, 
-    {title: 'Tournament Bracket', link: SettingsPage}, 
+    {title: 'Tournament Bracket', link: CompetitionsPage}, 
     {title: 'Competition Documents', link: SettingsPage}, 
     {title: 'Scores', link: SettingsPage},
     {title: 'Table Times', link: SettingsPage}];
