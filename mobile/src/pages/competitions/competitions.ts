@@ -26,7 +26,7 @@ export class CompetitionsPage {
 
   async listCompetitions(){
     //get list from provider
-    /*this.competitionNames = [
+    /*this.names = [
       'Region 1',
       'Region 2',
       'Region 3',
@@ -36,12 +36,12 @@ export class CompetitionsPage {
       'Hello'
     ];*/
 
-    //shouldn't need competitionNames[]. Need to get "name" from JSONObject
+    //shouldn't need names[]. Need to get "name" from JSONObject
     this.competitions = await this.competitionProvider.getCompetitions();
-    this.competitionNames = [];
+    this.names = [];
     for(var i = 0; i < this.competitions.length; i++){
       let comp = this.competitions[i];
-      this.competitionNames.push((comp as any).name);
+      this.names.push((comp as any).name);
     }
     this.competitionProvider.getCompetitions().then(data=>{
       this.competitions = data;
@@ -52,13 +52,13 @@ export class CompetitionsPage {
     var val = event.target.value;
 
     if(val && val.trim() != ''){
-      this.competitionNames = this.competitionNames.filter((competition) => {
+      this.names = this.names.filter((competition) => {
         return (competition.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
     }else {
-      this.competitionNames = [];
+      this.names = [];
       this.competitions.forEach((comp) => {
-        this.competitionNames.push((comp as any).name);
+        this.names.push((comp as any).name);
       });
       this.competitions = this.competitions.filter((competition) => {
         return (competition.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
@@ -72,7 +72,7 @@ export class CompetitionsPage {
     //this.competitionId = get "id" from competitions[];
     this.navCtrl.push(CompetitionInfoPage,
     {
-        competitionID: competition
+        competitionID: competition.id
     });
   }
 
