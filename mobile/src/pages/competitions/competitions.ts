@@ -38,8 +38,10 @@ export class CompetitionsPage {
 
     //shouldn't need competitionNames[]. Need to get "name" from JSONObject
     this.competitions = await this.competitionProvider.getCompetitions();
+    this.competitionNames = [];
     for(var i = 0; i < this.competitions.length; i++){
-      this.competitionNames[i] = this.competitions.toString();
+      let comp = this.competitions[i];
+      this.competitionNames.push((comp as any).name);
     }
   }
 
@@ -49,7 +51,12 @@ export class CompetitionsPage {
     if(val && val.trim() != ''){
       this.competitionNames = this.competitionNames.filter((competition) => {
         return (competition.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+      });
+    }else {
+      this.competitionNames = [];
+      this.competitions.forEach((comp) => {
+        this.competitionNames.push((comp as any).name);
+      });
     }
 
     this.ionViewDidLoad();
@@ -59,7 +66,7 @@ export class CompetitionsPage {
     //this.competitionId = get "id" from competitions[];
     this.navCtrl.push(CompetitionInfoPage,
     {
-        competitionID: this.competitionId
+        competitionID: competition
     });
   }
 

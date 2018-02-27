@@ -16,7 +16,7 @@
 <ion-content padding>
   <ion-searchbar (ionInput)="getCompetitions($event)"></ion-searchbar><!--[(ngModel)]="myInput"[showCancelButton]="shouldShowCancel"(ionCancel)="onCancel($event)"-->
   <ion-list inset>
-    <button ion-item *ngFor="let competition of competitionNames" (ionInput)="getCompetitions($event)" (click)="competitionClicked()">
+    <button ion-item *ngFor="let competition of competitionNames" (ionInput)="getCompetitions($event)" (click)="competitionClicked(competition)">
       {{ competition }}
     </button>
   </ion-list>
