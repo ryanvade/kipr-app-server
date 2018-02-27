@@ -120,6 +120,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
         if(error.response.status == 404) {
           this.showMissingTeam = true;
         }
@@ -131,6 +132,7 @@ export default {
         this.competitions = response.data.data;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     prettyDate(date) {
@@ -143,18 +145,21 @@ export default {
       window.axios.post(`/api/competition/${compid}/team/deregister`, {
         'team_ids': [teamid]
       }).then((response) => {
+        window.notification("success", "Team Unregistered");
         self.getRegisteredCompetitions(teamid);
       }).catch((error) => {
         console.error(error, compid, teamid);
+        window.notification("danger", error.message);
       });
     },
     submitDelete() {
       let id = this.team.id;
       window.axios.delete(`/api/team/${id}`).then((response) => {
+        window.notification("success", "Team Deleted");
         this.$router.push('/admin/teams');
       }).catch((error) => {
         console.error(error);
-        this.$router.push('/admin/teams');
+        window.notification("danger", error.message);
       });
     }
   }

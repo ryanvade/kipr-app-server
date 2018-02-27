@@ -113,6 +113,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
         if(error.response.status == 404) {
           this.showMissingCompetition = true;
         }
@@ -123,6 +124,7 @@ export default {
         console.log(response);
         this.teams = response.data.data;
       }).catch((error) => {
+        window.notification("danger", error.message);
         console.error(error);
       });
     },
@@ -136,17 +138,21 @@ export default {
       window.axios.post(`/api/competition/${compid}/team/deregister`, {
         'team_ids': [teamid]
       }).then((response) => {
+        window.notification("success", "Team Unregistered");
         self.getRegisteredTeams(compid);
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     submitDelete() {
       let id = this.competition.id;
       window.axios.delete(`/api/competition/${id}`).then((response) => {
+        window.notification("success", "Competition Deleted");
         this.$router.push('/admin/competitions');
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
         this.$router.push('/admin/competitions');
       });
     }

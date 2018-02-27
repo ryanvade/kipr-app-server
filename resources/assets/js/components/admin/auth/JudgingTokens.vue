@@ -141,8 +141,10 @@ export default {
         console.log(response);
         this.loading = true;
         this.getTokens();
+        window.notification("success", "Authentication Token Created");
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     deleteToken(token) {
@@ -153,8 +155,10 @@ export default {
         console.log(response);
         self.loading = true;
         self.getTokens();
+        window.notification("success", "Authentication Token Deleted");
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     reloadPage() {

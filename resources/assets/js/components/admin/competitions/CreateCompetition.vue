@@ -83,8 +83,10 @@ export default {
         endDate: this.end_date
       }).then((response) => {
         console.log(response);
+        window.notification("success", "Competition Created");
         this.$router.push('/admin/competitions/' + response.data.competition.id);
       }).catch((error) => {
+        window.notification("danger", error.message);
         if (error.response.status == 422) {
           let self = this;
           error.response.data.errors.name.forEach((error) => {

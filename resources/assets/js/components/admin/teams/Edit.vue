@@ -67,6 +67,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
         if (error.response.status == 404) {
           this.showMissingTeam = true;
         }
@@ -109,11 +110,13 @@ export default {
         email: this.email,
         code: this.code
       }).then((response) => {
+        window.notification("success", "Team Updated");
         console.log(response);
         let id = response.data.team.id;
         this.$router.push(`/admin/teams/${id}`);
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     }
   },

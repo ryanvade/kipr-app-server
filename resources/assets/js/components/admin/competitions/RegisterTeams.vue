@@ -79,6 +79,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
         if(error.response.status == 404) {
           this.showMissingCompetition = true;
         }
@@ -89,6 +90,7 @@ export default {
         console.log(response);
         this.teams = response.data.data;
       }).catch((error) => {
+        window.notification("danger", error.message);
         console.error(error);
       });
     },
@@ -106,13 +108,15 @@ export default {
           console.log(response);
           this.getUnregisteredTeams(this.compId);
           this.loading = false;
+          window.notification("success", "Teams Registered");
         }).catch((error) => {
           console.error(error);
+          window.notification("danger", error.message);
           this.loading = false;
         });
       }else {
-        // flash warning
         console.error("No Teams Selected");
+        window.notification("warning", "No Teams Selected");
       }
     }
   }

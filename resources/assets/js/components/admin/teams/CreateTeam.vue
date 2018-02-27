@@ -94,8 +94,10 @@ export default {
         console.log(response);
         let id = response.data.team.id;
         this.$router.push(`/admin/teams/${id}`);
+        window.notification('success', "Team Created");
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     }
   },

@@ -101,6 +101,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       })
     },
     prettyDate(date) {

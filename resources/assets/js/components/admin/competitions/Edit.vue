@@ -86,8 +86,10 @@ export default {
         endDate: this.end_date
       }).then((response) => {
         console.log(response);
+        window.notification("success", "Competition Updated");
         this.$router.push('/admin/competitions/' + response.data.competition.id);
       }).catch((error) => {
+        window.notification("danger", error.message);
         if (error.response.status == 422) {
           let self = this;
           error.response.data.errors.name.forEach((error) => {
@@ -172,6 +174,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
         if(error.response.status == 404) {
           this.showMissingCompetition = true;
         }

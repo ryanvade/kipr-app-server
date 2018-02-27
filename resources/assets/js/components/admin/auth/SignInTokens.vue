@@ -141,7 +141,9 @@ export default {
         console.log(response);
         this.loading = true;
         this.getTokens();
+        window.notification("success", "Authentication Token Created");
       }).catch((error) => {
+        window.notification("danger", error.message);
         console.error(error);
       });
     },
@@ -153,8 +155,10 @@ export default {
         console.log(response);
         self.loading = true;
         self.getTokens();
+        window.notification("success", "Authentication Token Deleted");
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     reloadPage() {
@@ -180,6 +184,7 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     getCurrentCompetition() {
@@ -198,6 +203,7 @@ export default {
         }
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     },
     displayToken(token) {
