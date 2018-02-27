@@ -21,13 +21,15 @@ private loading: Boolean = true;
 
 constructor(public navCtrl: NavController, public navParams:NavParams, private alertCtrl: AlertController,
     private TeamPrvdr: TeamProvider, private settingsPrvdr: SettingsProvider, private compPrvdr: CompetitionProvider){
+      console.log(navParams);
+      this.competitionID = navParams.get('competitionID');
       this.getTeamList();
     }
 
-async getTeamList(){
+async getTeamList() {
   this.teamName = await this.compPrvdr.getRegisteredTeamsInComp(this.competitionID);
   this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
-   this.teamName = val;
+   this.teams = val;
     if (this.teams.length <= 0) {
       this.displayNoResults = true;
     }
