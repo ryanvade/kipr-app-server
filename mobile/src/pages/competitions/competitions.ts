@@ -16,8 +16,8 @@ import { CompetitionProvider } from '../../providers/competition/competition';
 })
 export class CompetitionsPage {
 
-  competitions: Object[];
-  competitionNames: String[];
+  competitions:Array<{id:number,created_at:String,updated_at:String,name:String,location:String,start_date:String,end_date:String,ruleset_id:String}> = [];
+  names:Array<String> = [];
   competitionId: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private competitionProvider: CompetitionProvider) {
@@ -43,6 +43,9 @@ export class CompetitionsPage {
       let comp = this.competitions[i];
       this.competitionNames.push((comp as any).name);
     }
+    this.competitionProvider.getCompetitions().then(data=>{
+      this.competitions = data;
+    });
   }
 
   getCompetitions(event){
@@ -57,6 +60,9 @@ export class CompetitionsPage {
       this.competitions.forEach((comp) => {
         this.competitionNames.push((comp as any).name);
       });
+      this.competitions = this.competitions.filter((competition) => {
+        return (competition.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
     }
 
     this.ionViewDidLoad();
