@@ -29,12 +29,12 @@ export class TeamProvider {
       .toPromise();
   }
 //list all teams in a competition
-  async getRegisteredTeamsInComp(compID){
+  async getRegisteredTeamsInComp(compID, page = 1){
     let serverName = await this.settings.getServerName();
     if (serverName == null) {
       serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
     }
-    return this.http.get(serverName + "/api/competition/" + compID + "/team?signed_in=0")
+    return this.http.get(serverName + "/api/competition/" + compID + "/team?signed_in=0&page=" + page)
     .map(res => res.json())
     .toPromise();
   }
