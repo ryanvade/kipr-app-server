@@ -16,6 +16,7 @@ export class CompetitionInfoPage {
   teams: Object[];
   teamName: string;
   page: number;
+  maxPages: number;
   competitionID: number;
   private displayNoResults: Boolean;
   private loading: Boolean = true;
@@ -32,7 +33,10 @@ export class CompetitionInfoPage {
   async getTeamList() {
     this.teamName = await this.compPrvdr.getRegisteredTeamsInComp(this.competitionID, this.page);
     this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
-      this.teams.concat(val.data);
+      console.log(val);
+      this.teams = this.teams.concat(val.data);
+      this.maxPages = val.last_page;
+      console.log(this.teams);
       if (this.teams.length <= 0) {
         this.displayNoResults = true;
       }
@@ -42,8 +46,12 @@ export class CompetitionInfoPage {
 
   doInfinite(event) {
     setTimeout(() => {
-      this.page++;
-      this.getTeamList();
+      if(this.page < this.maxPages) {
+        this.page++;
+        this.getTeamList();
+      }else {
+        event.enable(false);
+      }
       event.complete();
     }, 500);
 
