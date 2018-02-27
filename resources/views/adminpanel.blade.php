@@ -23,7 +23,11 @@
   <div id="app">
     <admin></admin>
   </div>
+  <div id="notification">
+    <notification></notification>
+  </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/notification.js') }}"></script>
 </body>
 </html>
