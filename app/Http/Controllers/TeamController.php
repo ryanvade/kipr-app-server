@@ -11,6 +11,19 @@ use KIPR\Http\Requests\UpdateTeam;
 
 class TeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only([
+          'create',
+          'delete',
+          'patch',
+          'massUpload'
+        ]);
+
+        $this->middleware('auth:api')->only([
+          'signIn'
+        ]);
+    }
     /**
      * Sign In - Sign in a team to a competition
      * @param  Competition $competition Competition to sign the team into
@@ -20,19 +33,26 @@ class TeamController extends Controller
      */
     public function signIn(Competition $competition, Team $team, Request $request)
     {
-        $team = $competition->teams()->where('team_id', $team->id)->firstOrFail();
-        if ($team->pivot->signed_in != true) {
-            $team->pivot->signed_in = true;
-            $team->pivot->sign_in_at = Carbon::now();
-            $team->save();
+        $teamPivot = $competition->teams()->where('team_id', $team->id)->first();
+        if ($teamPivot == null) {
+            return response()->json([
+            'status' => 'error',
+            'message' => 'the team is not registered with the competition'
+          ], 409);
+        }
+
+        if ($teamPivot->pivot->signed_in != true) {
+            $teamPivot->pivot->signed_in = true;
+            $teamPivot->pivot->sign_in_time = Carbon::now();
+            $teamPivot->pivot->save();
         }
         return response()->json([
         'team_id' => $team->id,
         'competition_id' => $competition->id,
-        'sign_in_time' => $team->pivot->sign_in_at
+        'sign_in_time' => $teamPivot->pivot->sign_in_at
       ]);
     }
-    
+
     public function getTeamCount()
     {
         $count = Team::count();
@@ -63,6 +83,21 @@ class TeamController extends Controller
     public function get(Team $team)
     {
         return $team;
+    }
+
+    public function getTeamsAtCompetition(Competition $competition, Request $request)
+    {
+        // Validate the request
+        $requestData = $request->validate([
+          'signed_in' => 'boolean'
+        ]);
+        // Filter by signed in
+        if(array_has($requestData, 'signed_in')) {
+          $signed_in = array_get($requestData, 'signed_in');
+          return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in)->paginate(20);
+        }
+        // No Filtering, return all registered teams
+        return $competition->teams()->paginate(20);
     }
 
     public function delete(Team $team)

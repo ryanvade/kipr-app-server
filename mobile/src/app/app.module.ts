@@ -6,10 +6,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
+import { CompetitionsPage } from '../pages/competitions/competitions';
+import { CompetitionInfoPage } from '../pages/competitionInfo/competitionInfo';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { JudgingPage } from '../pages/judging/judging';
-import { NewJudgingPage } from '../pages/new-judging/new-judging';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
@@ -22,14 +22,15 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
 import { SettingsProvider } from '../providers/settings/settings';
 import { CompetitionProvider } from '../providers/competition/competition';
 import { StatusProvider } from '../providers/status/status';
+import { TeamProvider } from '../providers/team/team';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
+    CompetitionsPage,
+    CompetitionInfoPage,
     JudgingPage,
-    NewJudgingPage,
     MatchesPage,
     SettingsPage,
     SignInPage
@@ -43,10 +44,10 @@ import { StatusProvider } from '../providers/status/status';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    CompetitionsPage,
+    CompetitionInfoPage,
     HomePage,
-    ListPage,
     JudgingPage,
-    NewJudgingPage,
     MatchesPage,
     SettingsPage,
     SignInPage
@@ -61,7 +62,8 @@ import { StatusProvider } from '../providers/status/status';
     RemoteServiceProvider,
     SettingsProvider,
     CompetitionProvider,
-    StatusProvider
+    StatusProvider,
+    TeamProvider
   ]
 })
 export class AppModule {}

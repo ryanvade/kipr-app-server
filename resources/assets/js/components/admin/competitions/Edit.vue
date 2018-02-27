@@ -22,14 +22,14 @@
         <div class="field">
           <label class="label">Start Date</label>
           <div class="control">
-            <datetimepicker v-on:change="changeStartDate" :initial="start_date"></datetimepicker>
+            <datetimepicker v-on:change="changeStartDate" :initial="start_date" name="start_date"></datetimepicker>
             <p class="help is-danger" v-if="badStartDate != ''">{{ badStartDate }}</p>
           </div>
         </div>
         <div class="field">
           <label class="label">End Date</label>
           <div class="control">
-            <datetimepicker v-on:change="changeEndDate" :initial="end_date"></datetimepicker>
+            <datetimepicker v-on:change="changeEndDate" :initial="end_date" name="end_date"></datetimepicker>
             <p class="help is-danger" v-if="badEndDate != ''">{{ badEndDate }}</p>
           </div>
         </div>

@@ -27,6 +27,20 @@ export class SettingsProvider {
   async getAuthToken() {
     return await this.storage.get('auth:token');
   }
+  
+  getCompetitionID() {
+    return 1;
+  }
+
+  async getSignInAuthToken(){
+    return await this.storage.get('signInAuth:token');
+  }
+
+  async getSignInCompetitionID(){
+    return await this.storage.get('signInAuth:competitionID');
+  }
+  //get the competitionID and return 1 for testing purposes
+
 
   setDefaults() {
     console.log("Setting Default Values");
@@ -48,4 +62,11 @@ export class SettingsProvider {
     this.storage.set('auth:token', token);
   }
 
+  setSignInAuthToken(token){
+    this.storage.set('signInAuth:token', token);
+  }
+
+  setSignInCompetitionID(id){
+    this.storage.set('signInAuth:competitionID', id);
+  }
 }

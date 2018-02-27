@@ -6,17 +6,19 @@
       <ion-title>Sign In</ion-title>
     </ion-navbar>
   </ion-header>
-
+<!--Show list of teams and allow them to sign in through the checkmark button -->
 <ion-content padding>
   <ion-list>
-    <ion-row *ngFor="let team of teams;let i = index;" justify-content-center align-items-center>
+    <ion-row *ngFor="let team of teams;let i = index;" justify-content align-items-center>
       <ion-col col-auto padding>
-        <label>{{team}}</label>
+        <h6>{{team.name}}</h6>
       </ion-col>
-      <ion-col col-auto>
-        <button ion-button color="light">
-          <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
-        </button>
+      <ion-col col-right>
+        <ion-item item-right>
+            <button ion-button item-right color="light" (click)="teamSignedIn(team)">
+                <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+              </button>
+        </ion-item>
       </ion-col>
     </ion-row>
 </ion-list>
