@@ -10,7 +10,8 @@ class TeamFilter extends Filter {
 
 
   protected $filters = [
-    'registered'
+    'registered',
+    'code'
   ];
 
   protected function registered($registered) {
@@ -32,5 +33,9 @@ class TeamFilter extends Filter {
       $ids = $comp->teams()->pluck('teams.id');
       return $this->builder->whereNotIn('teams.id', $ids);
     }
+  }
+
+  protected function code($code) {
+    return $this->builder->where('teams.code', $code);
   }
 }

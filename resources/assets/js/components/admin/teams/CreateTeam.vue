@@ -63,13 +63,23 @@ export default {
       }
       return true;
     },
-    verifyCode() {
+    async verifyCode() {
       this.badCode = '';
       if (this.code == '') {
         this.badCode = "The code cannot be empty.";
         return false;
       }
-      return true;
+      return await window.axios.get('/api/team/?code=' + this.code).then((data) => {
+        if(data.data.data.length > 0) {
+          this.badCode = "The code is taken.";
+          return false;
+        }
+        return true;
+      }).catch((error) => {
+        console.error(error);
+        window.notification("danger", error.message);
+        return false;
+      });
     },
     verifyEmail() {
       this.badEmail = '';

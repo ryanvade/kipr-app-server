@@ -26,7 +26,7 @@ class CreateTeam extends FormRequest
         return [
             'name' => 'bail|required|String',
             'email' => 'bail|required|String',
-            'code' => 'bail|required|String'
+            'code' => 'bail|required|String|unique:teams,code'
         ];
     }
 }
