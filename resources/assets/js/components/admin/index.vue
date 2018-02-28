@@ -86,14 +86,21 @@
               <div class="content">
                 <div class="control has-icons-left field has-addons">
                   <div class="control">
-                    <input class="input is-medium" placeholder="team name" type="text">
+                    <input class="input is-medium" placeholder="team name" type="text" v-model="teamname" @keyup="teamSearch" @blur="clearSearch">
                     <span class="icon is-medium is-left">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
                   <div class="control">
-                  <button class="button is-primary is-medium" style="margin:0px;">Search</button>
+                  <button class="button is-primary is-medium" style="margin:0px;" @click="goToTeamSearch">Search</button>
                 </div>
+                </div>
+                <div class="dropdown is-active" v-if="teams.length > 0">
+                  <div class="dropdown-menu">
+                    <div class="dropdown-content">
+                      <a v-for="team in teams" class="dropdown-item" @click="goToTeam(team)">{{ team.name }}</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -106,14 +113,21 @@
               <div class="content">
                 <div class="control has-icons-left field has-addons">
                   <div class="control">
-                    <input class="input is-medium" placeholder="competition name" type="text">
+                    <input class="input is-medium" placeholder="competition name" type="text" v-model="competitionname" @keyup="competitionSearch" @blur="clearSearch">
                     <span class="icon is-medium is-left">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
                   <div class="control">
-                  <button class="button is-primary is-medium" style="margin:0px;">Search</button>
+                  <button class="button is-primary is-medium" style="margin:0px;" @click="goToCompetitionSearch">Search</button>
                 </div>
+                </div>
+                <div class="dropdown is-active" v-if="competitions.length > 0">
+                  <div class="dropdown-menu">
+                    <div class="dropdown-content">
+                      <a v-for="comp in competitions" class="dropdown-item" @click="goToCompetition(comp)">{{ comp.name }}</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,7 +149,11 @@ export default {
       competitionsLoading: true,
       matchesLoading: true,
       teamsLoading: true,
-      eventsLoading: true
+      eventsLoading: true,
+      teams: [],
+      teamname: "",
+      competitions: [],
+      competitionname: ""
     };
   },
   mounted() {
@@ -195,6 +213,68 @@ export default {
           window.location.href = "/login";
         }
       });
+    },
+    teamSearch() {
+      this.teams = [];
+      if(this.teamname.length > 0) {
+        window.axios.get("/api/team?name=" + this.teamname).then((response) => {
+          this.teams = response.data.data;
+        }).catch((error) => {
+          console.error(error);
+          if (error.response.status == 401) {
+            // redirect to login page
+            window.notification("warning", "You have been logged out due to inactivity.");
+            document.cookie = "notification=danger|You have been logged out due to inactivity";
+            window.location.href = "/login";
+          }
+          window.notification("danger", error.message);
+        });
+      }
+    },
+    goToTeam(team) {
+      let id = team.id;
+      this.$router.push(`/admin/teams/${id}`);
+    },
+    competitionSearch() {
+      this.competitions = [];
+      if(this.competitionname.length > 0) {
+        window.axios.get("/api/competition?name=" + this.competitionname).then((response) => {
+          this.competitions = response.data.data;
+        }).catch((error) => {
+          console.error(error);
+          if (error.response.status == 401) {
+            // redirect to login page
+            window.notification("warning", "You have been logged out due to inactivity.");
+            document.cookie = "notification=danger|You have been logged out due to inactivity";
+            window.location.href = "/login";
+          }
+          window.notification("danger", error.message);
+        });
+      }
+    },
+    goToCompetition(comp) {
+      let id = comp.id;
+      this.$router.push(`/admin/competitions/${id}`);
+    },
+    clearSearch() {
+      setTimeout(() => {
+        this.competitionname = "";
+        this.teamname = "";
+        this.competitions = [];
+        this.teams = [];
+      }, 300);
+    },
+    goToTeamSearch() {
+      if(this.teamname.length > 0)
+      {
+        this.$router.push(`/admin/teams/search?search=${this.teamname}`);
+      }
+    },
+    goToCompetitionSearch() {
+      if(this.competitionname.length > 0)
+      {
+        this.$router.push(`/admin/competitions/search?search=${this.competitionname}`);
+      }
     }
   },
   computed: {

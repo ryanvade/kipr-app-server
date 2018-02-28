@@ -10,7 +10,8 @@ class CompetitionFilter extends Filter {
 
 
   protected $filters = [
-    'registered'
+    'registered',
+    'name'
   ];
 
   protected function registered($registered) {
@@ -32,5 +33,9 @@ class CompetitionFilter extends Filter {
       $ids = $team->competitions()->pluck('competitions.id');
       return $this->builder->whereNotIn('competitions.id', $ids);
     }
+  }
+
+  protected function name($name) {
+    return $this->builder->where("competitions.name", "like", $name . "%");
   }
 }

@@ -11,7 +11,8 @@ class TeamFilter extends Filter {
 
   protected $filters = [
     'registered',
-    'code'
+    'code',
+    'name'
   ];
 
   protected function registered($registered) {
@@ -37,5 +38,9 @@ class TeamFilter extends Filter {
 
   protected function code($code) {
     return $this->builder->where('teams.code', $code);
+  }
+
+  protected function name($name) {
+    return $this->builder->where("teams.name", "like", $name . "%");
   }
 }
