@@ -12,26 +12,28 @@ export default {
   props: ["region"],
   data() {
     return {
-        zoneName: "",
-        editing: true
+      zoneName: "",
+      editing: true
     };
   },
   mounted() {
-      this.edit();
+    this.edit();
   },
   methods: {
-      edit() {
-          this.editing = true;
-          this.$refs.name.focus();
-      },
-      setName() {
-          this.$refs.name.blur();
-          this.editing = false;
-      },
-      hover() {
-          this.$emit("preview", {name: this.zoneName, region: this.region});
-      }
+    edit() {
+      this.editing = true;
+      this.$refs.name.focus();
+    },
+    setName() {
+      this.$refs.name.blur();
+      this.editing = false;
+    },
+    hover() {
+      this.$emit("preview", {
+        name: this.zoneName,
+        region: this.region
+      });
+    }
   },
 }
 </script>
-

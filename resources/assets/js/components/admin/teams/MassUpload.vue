@@ -66,11 +66,11 @@ export default {
       let validTypes = [
         'text/plain',
       ];
-      if(this.file == null) {
+      if (this.file == null) {
         return false;
       }
 
-      if(!validTypes.includes(this.file.type)) {
+      if (!validTypes.includes(this.file.type)) {
         console.log("invalid file type");
         this.file = null;
         this.fileName = '';
@@ -80,7 +80,7 @@ export default {
       return true;
     },
     submit() {
-      if(!this.validateFile()) {
+      if (!this.validateFile()) {
         return;
       }
       this.processing = true;
@@ -89,15 +89,21 @@ export default {
       let self = this;
       var config = {
         onUploadProgress: function(progressEvent) {
-          self.percentProcessing = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
-          console.log(Math.round( (progressEvent.loaded * 100) / progressEvent.total ));
+          self.percentProcessing = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          console.log(Math.round((progressEvent.loaded * 100) / progressEvent.total));
         }
       };
-      window.axios.post('/api/team/file',data, config).then((response) => {
+      window.axios.post('/api/team/file', data, config).then((response) => {
         console.log(response);
         // this.processing = false;
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
       });
     }
   }

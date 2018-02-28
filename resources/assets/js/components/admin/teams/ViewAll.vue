@@ -101,6 +101,12 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         window.notification("danger", error.message);
       })
     },

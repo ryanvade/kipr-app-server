@@ -70,13 +70,19 @@ export default {
         return false;
       }
       return await window.axios.get('/api/team/?code=' + this.code).then((data) => {
-        if(data.data.data.length > 0) {
+        if (data.data.data.length > 0) {
           this.badCode = "The code is taken.";
           return false;
         }
         return true;
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         window.notification("danger", error.message);
         return false;
       });
@@ -107,6 +113,12 @@ export default {
         window.notification('success', "Team Created");
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         window.notification("danger", error.message);
       });
     }

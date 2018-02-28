@@ -61,8 +61,7 @@ export default {
     this.client_secret = document.head.querySelector('meta[name="client_secret"]').content;
   },
   methods: {
-    login()
-    {
+    login() {
       axios.post('/oauth/token', {
         'grant_type': 'password',
         'client_id': this.client_id,
@@ -80,6 +79,12 @@ export default {
     },
     showError(error) {
       console.error(error);
+      if (error.response.status == 401) {
+        // redirect to login page
+        window.notification("warning", "You have been logged out due to inactivity.");
+        document.cookie = "notification=danger|You have been logged out due to inactivity";
+        window.location.href = "/login";
+      }
     }
   }
 }

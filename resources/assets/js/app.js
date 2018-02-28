@@ -153,3 +153,15 @@ const app = new Vue({
   created() {},
   methods: {}
 }).$mount('#app');
+
+window.setInterval(() => {
+  window.axios.get('/oauth/personal-access-tokens').then((response) => {
+    console.log(response);
+  }).catch((error) => {
+    console.error(error);
+    if (error.response.status == 401 || error.response.status == 404) {
+      document.cookie = "notification=danger|You have been logged out due to inactivity";
+      window.location.href = "/login";
+    }
+  });
+}, 300000);

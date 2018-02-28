@@ -144,6 +144,12 @@ export default {
         window.notification("success", "Authentication Token Created");
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         window.notification("danger", error.message);
       });
     },
@@ -158,6 +164,12 @@ export default {
         window.notification("success", "Authentication Token Deleted");
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         window.notification("danger", error.message);
       });
     },
@@ -185,8 +197,14 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         // The current competition has been deleted for some reason...
-        if(error.response.status == 404) {
+        if (error.response.status == 404) {
           console.log("Response is 404, setting store competition to null");
           self.$store.commit('set_competition', null);
           // reloading page now...
@@ -209,6 +227,12 @@ export default {
           self.showNoCompetitions = true;
         }
       }).catch((error) => {
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         console.error(error);
       });
     },

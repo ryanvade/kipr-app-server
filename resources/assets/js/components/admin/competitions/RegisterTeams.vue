@@ -79,8 +79,14 @@ export default {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
         window.notification("danger", error.message);
-        if(error.response.status == 404) {
+        if (error.response.status == 404) {
           this.showMissingCompetition = true;
         }
       });
@@ -92,6 +98,12 @@ export default {
       }).catch((error) => {
         window.notification("danger", error.message);
         console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
       });
     },
     cancel() {
@@ -99,7 +111,7 @@ export default {
       this.$router.push(`/admin/competitions/${id}`);
     },
     submit() {
-      if(this.teamids.length > 0) {
+      if (this.teamids.length > 0) {
         let id = this.compId;
         this.loading = true;
         window.axios.post(`/api/competition/${id}/team/register`, {
@@ -111,10 +123,16 @@ export default {
           window.notification("success", "Teams Registered");
         }).catch((error) => {
           console.error(error);
+          if (error.response.status == 401) {
+            // redirect to login page
+            window.notification("warning", "You have been logged out due to inactivity.");
+            document.cookie = "notification=danger|You have been logged out due to inactivity";
+            window.location.href = "/login";
+          }
           window.notification("danger", error.message);
           this.loading = false;
         });
-      }else {
+      } else {
         console.error("No Teams Selected");
         window.notification("warning", "No Teams Selected");
       }

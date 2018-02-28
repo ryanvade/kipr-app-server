@@ -7,6 +7,9 @@
   <title>Login</title>
 </head>
 <body>
+  <div id="notification">
+    <notification></notification>
+  </div>
   <section class="hero is-fullheight">
     <div class="hero-body">
       <div class="container">
@@ -52,5 +55,6 @@
       </div>
     </div>
 </section>
+<script src="{{ asset('js/notification.js') }}"></script>
 </body>
 </html>
