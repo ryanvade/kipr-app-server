@@ -14,13 +14,12 @@ class CompetitionController extends Controller
 {
 
   public function __construct() {
-    $this->middleware('auth', [
-      'except' => [
-        'getAll',
-        'getCurrentCompetitions',
-        'getCompetitionCount',
-        'get',
-        'getNames'
+    $this->middleware('auth:api', [
+      'only' => [
+        'delete',
+        'create',
+        'patch',
+        
       ]
     ]);
   }
