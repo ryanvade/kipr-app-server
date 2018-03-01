@@ -17,3 +17,4 @@ public/fonts
 public/mix-manifest.json
 yarn.lock
 package-lock.json
+node/node_modules

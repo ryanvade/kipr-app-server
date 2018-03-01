@@ -1,0 +1,14 @@
+{
+  "name": "kipr-websockets",
+  "version": "1.0.0",
+  "description": "Websocket server for Laravel Echo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Owens",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "laravel-echo-server": "^1.3.6"
+  }
+}
