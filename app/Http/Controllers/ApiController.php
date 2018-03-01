@@ -26,12 +26,9 @@ class ApiController extends Controller
         $tokens = $user->tokens()->get();
         $judging_tokens = [];
         foreach ($tokens as $token) {
-            if (in_array("judging", $token->scopes)) {
-                // If it is a fresh token, modify the expires_at to the competitions end date
-                if ($token->expires_at == (new Carbon($token->created_at))->addYears(1)) {
-                    $token->expires_at = $competition->end_date;
-                    $token->save();
-                }
+            if (in_array("judging", $token->scopes) && starts_with($token->name, "Competition " . $competition->id)) {
+                $token->expires_at = $competition->end_date;
+                $token->save();
                 // Append the required Competition information to the token
                 $token->competition = $competition;
                 // Turn the tokens into QR Codes
@@ -59,12 +56,9 @@ class ApiController extends Controller
         $tokens = $user->tokens()->get();
         $judging_tokens = [];
         foreach ($tokens as $token) {
-            if (in_array("sign_in", $token->scopes)) {
-                // If it is a fresh token, modify the expires_at to the competitions end date
-                if ($token->expires_at == (new Carbon($token->created_at))->addYears(1)) {
-                    $token->expires_at = $competition->end_date;
-                    $token->save();
-                }
+            if (in_array("sign_in", $token->scopes) && starts_with($token->name, "Competition " . $competition->id)) {
+                $token->expires_at = $competition->end_date;
+                $token->save();
                 // Append the required Competition information to the token
                 $token->competition = $competition;
                 // Turn the tokens into QR Codes
