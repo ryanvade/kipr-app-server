@@ -43,7 +43,10 @@ var io = require('socket.io')(server);
 // setup redis
 var redis = new Redis();
 // Subscribe to new 'Events' in redis
-redis.subscribe('');
+// redis.psubscribe("*");
+redis.subscribe([
+  // array of channel names
+]);
 // connection logger
 io.on('connection', (socket) => {
   logger.debug("SocketIO Connection Detected");
@@ -54,7 +57,7 @@ redis.on('message', (channel, message) => {
   switch(channel) {
     // do actions for each 'channel'
     default:
-    io.emit(`${channel}`, message.data);
+    io.emit(message.event, channel, message.data);
     logger.debug(`${channel}`);
   }
 });
@@ -64,4 +67,4 @@ server.listen(config.port, config.host, () => {
   logger.info("KIPR Socket Server Running!");
   logger.info(`Listening on port ${config.port}`);
   logger.info(server.address());
-})
+});
