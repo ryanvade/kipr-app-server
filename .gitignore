@@ -18,3 +18,5 @@ public/mix-manifest.json
 yarn.lock
 package-lock.json
 node/node_modules
+node/serverconfig.js
+node/*.log
