@@ -1,10 +1,10 @@
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Home
+    </ion-title> 
   </ion-navbar>
 </ion-header>
 
@@ -12,26 +12,25 @@
   <div *ngIf="loading">
     <ion-spinner></ion-spinner>
   </div>
-  
-  <div *ngIf="!noNetwork">
-    <div *ngIf="competitions.length > 0">
-      <h4>Welcome to KIPR Scoring App!<br> </h4>
-      <h4>Current Competitions</h4>
-      <h6>Click on a region to view more details.</h6>
-    </div>
-    <ion-list *ngIf="competitions.length > 0">
-      <button ion-item *ngFor="let comp of competitions">
-        <ion-label>{{ comp.name }}</ion-label>
-      </button>
-    </ion-list>
-    <h2 *ngIf="displayNoResults">No Competitions to Display</h2>
+  <ion-row justify-content-center> 
+  <h4>
+    <img height="30" src="../assets/imgs/botguy.png" style="padding-right:30px">
+        KIPR Scoring App  
+    <img height="30" src="../assets/imgs/botguy.png" style="padding-left:30px">
+  </h4>
+</ion-row>
     <h2 *ngIf="apiError">
       <ion-spinner></ion-spinner>
     </h2>
-  </div>
   <div *ngIf="noNetwork">
     <ion-spinner></ion-spinner>
   </div>
 
-  <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
+  <ion-list>
+      <p *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
+        <button ion-button full color="our-grey" text-center (click)="buttonSelected(button)">
+          {{button.title}}
+        </button>
+      </p>
+  </ion-list>
 </ion-content>

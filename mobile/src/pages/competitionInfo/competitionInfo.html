@@ -3,7 +3,7 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>Sign In</ion-title>
+      <ion-title>COMP TEAM HERE</ion-title>
     </ion-navbar>
   </ion-header>
 <!--Show list of teams and allow them to sign in through the checkmark button -->
@@ -13,13 +13,10 @@
       <ion-col col-auto padding>
         <h6>{{team.name}}</h6>
       </ion-col>
-      <ion-col col-right>
-        <ion-item item-right>
-            <button ion-button item-right color="light" (click)="teamSignedIn(team)">
-                <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
-              </button>
-        </ion-item>
-      </ion-col>
     </ion-row>
-</ion-list>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content loadingText="Loading more teams..."></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
 </ion-content>
