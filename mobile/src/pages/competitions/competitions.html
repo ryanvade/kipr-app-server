@@ -20,7 +20,7 @@
     Click on a Competition name to view more details.
   </p>
   <ion-list inset *ngIf="competitions.length > 0">
-    <button ion-item full *ngFor="let competition of competitions" (ionInput)="getCompetitions($event)" (click)="competitionClicked(competition)">
+    <button ion-item full detail-push *ngFor="let competition of competitions" (ionInput)="getCompetitions($event)" (click)="competitionClicked(competition)">
       {{ competition.name }}
     </button>
   </ion-list>

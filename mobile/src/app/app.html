@@ -12,11 +12,17 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
-      <!--<div *ngIf="!checkForJudging()">
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </div>-->
+      <ion-item>
+          <a href="https://www.facebook.com/profile.php?id=100006057450976" ion-button clear large>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://twitter.com/BotballRobotics" ion-button clear large>
+            <ion-icon name="logo-twitter" color="black"></ion-icon>
+          </a>
+          <a href="https://www.youtube.com/user/BotGuy12" ion-button clear large>
+            <ion-icon name="logo-youtube" color="black"></ion-icon>
+          </a>
+      </ion-item>
     </ion-list>
   </ion-content>
 
