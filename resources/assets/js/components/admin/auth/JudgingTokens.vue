@@ -37,6 +37,7 @@
             <p class="level-item"><a class="button is-primary" @click="createToken">Create</a></p>
           </div>
         </nav>
+        <!-- Display the QR Tokens -->
         <div class="card" v-for="token in tokens">
           <div class="card-image">
             <figure class="image">
@@ -144,6 +145,10 @@ export default {
     this.getCompetitions();
   },
   methods: {
+    /**
+     * Create Token - Perform an AJAX request to create a new Judging token
+     * @return {void}
+     */
     createToken() {
       // Create an Auth Token
       // Get all auth tokens
@@ -167,6 +172,11 @@ export default {
         window.notification("danger", error.message);
       });
     },
+    /**
+     * Delete Token - Perform an AJAX request to delete the specified token
+     * @param  {Token} token token to delete
+     * @return {void}
+     */
     deleteToken(token) {
       let id = token.id;
       let self = this;
@@ -187,15 +197,35 @@ export default {
         window.notification("danger", error.message);
       });
     },
+    /**
+     * Reload the page
+     * @return {void}
+     */
     reloadPage() {
       window.location.href = window.location.href;
     },
+    /**
+     * Pretty Date - Format a given date to look good
+     * @param  {String|Moment} date date to format
+     * @return {String}             Formated Date String
+     */
     prettyDate(date) {
       return window.moment(date).local().format('LLL');
     },
+    /**
+     * From Now - Get the amount of time from now until the specified Date
+     *            in a pretty format
+     * @param  {String|Moment} date date to format
+     * @return {String}             Time From Now
+     */
     fromNow(date) {
       return window.moment(date).local().fromNow();
     },
+    /**
+     * Get Tokens - Perform an AJAX request to get all of the Judging auth
+     *              token for the current user
+     * @return {void}
+     */
     getTokens() {
       let id = this.competition.id;
       this.tokens = [];
@@ -235,6 +265,11 @@ export default {
         window.notification("danger", error.message);
       });
     },
+    /**
+     * Display Token - Sets the current token and displays it in a modal
+     * @param  {Token} token Token to display
+     * @return {void}
+     */
     displayToken(token) {
       console.log(token.id);
       this.token = token;

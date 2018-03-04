@@ -100,7 +100,7 @@ class TeamController extends Controller
             return $competition->teams()->withPivot('signed_in')->where('signed_in', $signed_in)->get();
         }
         // No Filtering, return all registered teams
-        return $competition->teams()->get();
+        return $competition->teams()->paginate(20);
     }
 
     public function delete(Team $team)
