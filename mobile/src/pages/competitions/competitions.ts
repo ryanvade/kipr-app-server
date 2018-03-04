@@ -72,7 +72,7 @@ export class CompetitionsPage {
     //this.competitionId = get "id" from competitions[];
     this.navCtrl.push(CompetitionInfoPage,
     {
-        competitionID: competition.id
+        competition: competition
     });
   }
 

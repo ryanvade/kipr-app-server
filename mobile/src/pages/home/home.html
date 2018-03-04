@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home
-    </ion-title> 
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,11 +12,11 @@
   <div *ngIf="loading">
     <ion-spinner></ion-spinner>
   </div>
-  <ion-row justify-content-center> 
+  <ion-row justify-content-center>
   <h4>
-    <img height="30" src="../assets/imgs/botguy.png" style="padding-right:30px">
-        KIPR Scoring App  
-    <img height="30" src="../assets/imgs/botguy.png" style="padding-left:30px">
+    <!-- <img height="30" src="../assets/imgs/botguy.png" style="padding-right:30px"> -->
+        KIPR Community App
+    <!-- <img height="30" src="../assets/imgs/botguy.png" style="padding-left:30px"> -->
   </h4>
 </ion-row>
     <h2 *ngIf="apiError">
@@ -28,7 +28,7 @@
 
   <ion-list>
       <p *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
-        <button ion-button full color="our-grey" text-center (click)="buttonSelected(button)">
+        <button ion-button full color="" text-center (click)="buttonSelected(button)">
           {{button.title}}
         </button>
       </p>

@@ -25,14 +25,18 @@ export class HomePage {
   private loading: Boolean = true;
 
   hpbuttons: Array<{title: string, link: any}>;
- 
-  constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform, 
+
+  constructor(private competitionProvider: CompetitionProvider, private network: Network, private platform: Platform,
     private alertCtrl: AlertController, private openNativeSettings: OpenNativeSettings, public navCtrl: NavController) {
-    this.hpbuttons = [{title: 'Judging Sign In', link: SettingsPage}, 
-    {title: 'Tournament Bracket', link: CompetitionsPage}, 
-    {title: 'Competition Documents', link: SettingsPage}, 
-    {title: 'Scores', link: SettingsPage},
-    {title: 'Table Times', link: SettingsPage}];
+    this.hpbuttons = [
+      // {title: 'Judging Sign In', link: SettingsPage},
+      {title: "Competitions", link: CompetitionsPage},
+      // {title: 'Tournament Bracket', link: CompetitionsPage},
+      // {title: 'Competition Documents', link: SettingsPage},
+      {title: 'Scores', link: SettingsPage},
+      // {title: 'Table Times', link: SettingsPage}
+      {title: 'Teams', link: SettingsPage}
+    ];
 
     this.noNetwork = !this.hasNetwork();
     if (!this.noNetwork) {
@@ -136,5 +140,3 @@ export class HomePage {
 }
 
 }
-
-

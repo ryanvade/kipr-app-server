@@ -3,17 +3,46 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>COMP TEAM HERE</ion-title>
+      <ion-title>{{ competition.name }}</ion-title>
     </ion-navbar>
   </ion-header>
 <!--Show list of teams and allow them to sign in through the checkmark button -->
 <ion-content padding>
   <ion-list>
-    <ion-row *ngFor="let team of teams;let i = index;" justify-content align-items-center>
-      <ion-col col-auto padding>
-        <h6>{{team.name}}</h6>
-      </ion-col>
-    </ion-row>
+    <ion-list-header>
+      Details
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name="locate" item-start></ion-icon>
+      <ion-label>
+        {{ competition.location }}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>
+        {{ competition.start_date | date: 'MMMM d'}} - {{ competition.end_date | date: 'MMMM d'}}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="people" item-start></ion-icon>
+      <ion-label>{{ teamTotal }} Teams</ion-label>
+    </ion-item>
+    <ion-item>
+      <button ion-button icon-start><ion-icon name="checkmark"></ion-icon>Set Default</button>
+      <button ion-button icon-start><ion-icon name="calculator"></ion-icon>Scores</button>
+      <button ion-button icon-start><ion-icon name="clock"></ion-icon>Table Times</button>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Teams
+    </ion-list-header>
+    <ion-item *ngFor="let team of teams;">
+      <ion-label>
+        {{ team.name }}
+      </ion-label>
+    </ion-item>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

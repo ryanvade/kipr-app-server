@@ -17,17 +17,30 @@ export class CompetitionInfoPage {
   teamName: string;
   page: number;
   maxPages: number;
+  competition: {
+    created_at: Date,
+    end_date: Date,
+    id: number,
+    location: String,
+    name: String,
+    ruleset_id: number,
+    start_date: Date,
+    updated_at: Date
+  };
   competitionID: number;
+  teamTotal: number;
   private displayNoResults: Boolean;
   private loading: Boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
     private TeamPrvdr: TeamProvider, private settingsPrvdr: SettingsProvider, private compPrvdr: CompetitionProvider) {
     console.log(navParams);
-    this.competitionID = navParams.get('competitionID');
+    this.competition = navParams.get('competition');
+    this.competitionID = this.competition.id;
     this.page = 1;
     this.teams = [];
     this.getTeamList();
+    this.teamTotal = 0;
   }
 
   async getTeamList() {
@@ -36,6 +49,7 @@ export class CompetitionInfoPage {
       console.log(val);
       this.teams = this.teams.concat(val.data);
       this.maxPages = val.last_page;
+      this.teamTotal = val.total;
       console.log(this.teams);
       if (this.teams.length <= 0) {
         this.displayNoResults = true;
