@@ -28,7 +28,7 @@
 
   <ion-list>
       <p *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
-        <button ion-button full color="" text-center (click)="buttonSelected(button)">
+        <button ion-button block color="" text-center (click)="buttonSelected(button)">
           {{button.title}}
         </button>
       </p>
