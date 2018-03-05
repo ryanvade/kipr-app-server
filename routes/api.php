@@ -40,5 +40,8 @@ Route::get('/team/count', 'TeamController@getTeamCount');
 Route::get('/team/{team}', 'TeamController@get');
 Route::delete('/team/{team}', 'TeamController@delete');
 Route::patch('/team/{team}', 'TeamController@patch');
+
+// Matches
+Route::get('/match', 'MatchController@getAll');
 // Extra Auth
 Route::get('/auth/token', 'ApiController@getToken');

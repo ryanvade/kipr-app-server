@@ -16,6 +16,12 @@ class Match extends Model
       'team_B'
     ];
 
+    protected $with = [
+      'teamA',
+      'teamB',
+      'competition'
+    ];
+
     public function teamA()
     {
         return $this->belongsTo(Team::class, 'team_A');
