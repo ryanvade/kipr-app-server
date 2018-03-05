@@ -33,7 +33,7 @@ class MatchFilter extends Filter {
   }
 
   public function competition($competition) {
-    return $this->bulder->where('competition_id', $competition);
+    return $this->builder->where('competition_id', $competition);
   }
 
 }
