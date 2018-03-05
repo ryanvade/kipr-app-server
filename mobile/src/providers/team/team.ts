@@ -52,4 +52,15 @@ export class TeamProvider {
       .map(res => res.json().data)
       .toPromise();
   }
+
+  async getAllTeams(search, page = 1) {
+    let serverName = await this.settings.getServerName();
+    if (serverName == null) {
+      serverName = 'https://kipr.ryanowens.info'; // TODO: set default value
+    }
+    let url = serverName + "/api/team?page=" + page;
+    url = (search != "")? url + "&name=" + search : url;
+    return await this.http.get(url)
+                     .toPromise();
+  }
 }

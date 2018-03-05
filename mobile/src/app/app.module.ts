@@ -13,6 +13,7 @@ import { JudgingPage } from '../pages/judging/judging';
 import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
+import { TeamsPage } from '../pages/teams/teams';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -33,7 +34,8 @@ import { TeamProvider } from '../providers/team/team';
     JudgingPage,
     MatchesPage,
     SettingsPage,
-    SignInPage
+    SignInPage,
+    TeamsPage
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import { TeamProvider } from '../providers/team/team';
     JudgingPage,
     MatchesPage,
     SettingsPage,
-    SignInPage
+    SignInPage,
+    TeamsPage
   ],
   providers: [
     StatusBar,
