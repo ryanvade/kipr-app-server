@@ -31,6 +31,7 @@ export class JudgingPage {
   opponent: string;
   judgedOpponent: boolean;
   jsonRules = [];
+  jsonEvents = [];
   waiting: boolean = true;
 
   constructor(private alertCtrl:AlertController,private remoteService:RemoteServiceProvider,public navCtrl: NavController, public navParams: NavParams, public socket: SocketProvider) {
@@ -40,14 +41,40 @@ export class JudgingPage {
     this.match = {title: "", teamA: "", teamB: ""};
 
     this.getMatch().subscribe((channel) => {
-      let data = event.data;
+      let data = (event as MessageEvent).data;
       data = JSON.parse(data.slice(data.indexOf(`"match"`) -1, data.length - 1));
       this.match.teamA = data.match.team_a.name;
       this.match.teamB = data.match.team_b.name;
       this.teamName = data.match.team_a.name;
       this.opponent = data.match.team_b.name;
-      this.jsonRules = data.match.competition.ruleset;
-      this.waiting = false;
+      if(data.match.competition.ruleset) {
+        this.jsonRules = data.match.competition.ruleset.rules;
+        this.jsonEvents = data.match.competition.ruleset.events;
+        console.log(this.jsonRules);
+        console.log(this.jsonEvents);
+        let aRules = [];
+        let bRules = [];
+        this.jsonEvents.forEach((rule) => {
+          aRules.push({
+            value: <number> rule.min,
+            min: <number> rule.min,
+            max: <number> rule.max,
+            title: <string> rule.title,
+            description: <string> rule.description,
+            img: <string> rule.imgA
+          });
+          bRules.push({
+            value: <number> rule.min,
+            min: <number> rule.min,
+            max: <number> rule.max,
+            title: <string> rule.title,
+            description: <string> rule.description,
+            img: <string> rule.imgB
+          });
+        });
+        this.rules = aRules.concat(bRules);
+        this.waiting = false;
+      }
     });
   }
 
@@ -65,17 +92,17 @@ export class JudgingPage {
     console.log('Current index is', currentIndex);
   }
 
-  increment(item){
+  increment(i){
+    let item = this.rules[i];
     if(item.value < item.max){
-      item.value = item.value + 1;
-      console.log('add 1 to' + item);
+      item.value = Number(item.value) + 1;
     }
   }
 
-  decrement(item){
-    if(item.value > 0){
-      item.value = item.value - 1;
-      console.log('subtract 1 to' + item);
+  decrement(i){
+    let item = this.rules[i];
+    if(item.value > item.min){
+      item.value = Number(item.value) - 1;
     }
   }
 

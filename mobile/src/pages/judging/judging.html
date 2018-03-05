@@ -38,12 +38,11 @@
     <ion-row>
       <ion-slides pager (ionSlideDidChange)="slideChanged()">
         <ion-slide justify-content-center align-items-center>
-          Tutorial
             <br>Judges, swipe left to access scoring.
             <br>Increment or decrement score by pushing +/- buttons accordingly.
-            <br>Board and items checklist
+            <!-- <br>Board and items checklist -->
         </ion-slide>
-        <ion-slide padding-vertical *ngFor="let rule of rules">
+        <ion-slide padding-vertical *ngFor="let rule of rules; let i = index;">
           <ion-row justify-content-center>
             {{rule.title}}
           </ion-row>
@@ -51,16 +50,16 @@
             <img src="{{rule.img}}" class="slide-image" style="width:200px!important;height:200px!important;margin:0px auto;">
           </ion-row>
           <ion-row justify-content-center>
-            <ion-input type="number" placeholder="0" size="2" maxlength="2" value="{{rule.value}}" min="{{rule.min}}" max="{{rule.max}}"></ion-input>
+            <ion-input type="number" placeholder="0" size="2" maxlength="2" [(ngModel)]="rule.value" min="{{rule.min}}" max="{{rule.max}}"></ion-input>
           </ion-row>
           <ion-row justify-content-center>
             <ion-col col-auto padding-right>
-              <button ion-button color="light" (click)="decrement(rule)" icon-only>
+              <button ion-button color="light" (click)="decrement(i)" icon-only>
                 <ion-icon name="remove"></ion-icon>
               </button>
             </ion-col>
             <ion-col col-auto>
-              <button ion-button color="light" (click)="increment(rule)" icon-only>
+              <button ion-button color="light" (click)="increment(i)" icon-only>
                 <ion-icon name="add"></ion-icon>
               </button>
             </ion-col>
