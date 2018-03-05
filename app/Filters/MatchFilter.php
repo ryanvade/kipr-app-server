@@ -12,7 +12,8 @@ class MatchFilter extends Filter {
   protected $filters = [
     'scored',
     'teamA',
-    'teamB'
+    'teamB',
+    'competition'
   ];
 
   public function scored($scored) {
@@ -29,6 +30,10 @@ class MatchFilter extends Filter {
 
   public function teamB($teamB) {
     return $this->builder->where('team_B', $teamB);
+  }
+
+  public function competition($competition) {
+    return $this->bulder->where('competition_id', $competition);
   }
 
 }
