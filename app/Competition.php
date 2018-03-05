@@ -6,6 +6,7 @@ use KIPR\Team;
 use KIPR\Rule;
 use KIPR\Match;
 use KIPR\CompetitionTeam;
+use KIPR\Events\CompetitionCreated;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model
@@ -16,6 +17,20 @@ class Competition extends Model
       'start_date',
       'end_date'
     ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => CompetitionCreated::class,
+    ];
+
+    protected $with = [
+      'ruleset'
+    ];
+
 
     public function teams()
     {

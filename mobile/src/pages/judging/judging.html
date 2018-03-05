@@ -10,7 +10,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Judging</ion-title>
-    <ion-buttons end>
+    <ion-buttons end *ngIf="waiting == false">
       <button ion-button color="danger" (click)="dq()">DQ</button>
       <button ion-button (click)="noScore()">No Score</button>
     </ion-buttons>
@@ -19,7 +19,15 @@
 
 
 <ion-content padding>
-  <ion-grid>
+  <ion-grid *ngIf="waiting == true">
+    <ion-row justify-content-center align-items-center>
+      <ion-spinner></ion-spinner>
+    </ion-row>
+    <ion-row justify-content-center align-items-center>
+      <p>Waiting for a match.</p>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="waiting == false">
     <ion-row>
       <ion-col col-12>
         <ion-item>

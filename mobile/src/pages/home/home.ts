@@ -8,6 +8,7 @@ import { CompetitionProvider } from '../../providers/competition/competition';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { CompetitionsPage } from '../competitions/competitions';
+import { JudgingPage } from '../judging/judging';
 
 @Component({
   selector: 'page-home',
@@ -35,7 +36,8 @@ export class HomePage {
       // {title: 'Competition Documents', link: SettingsPage},
       {title: 'Scores', link: SettingsPage},
       // {title: 'Table Times', link: SettingsPage}
-      {title: 'Teams', link: SettingsPage}
+      {title: 'Teams', link: SettingsPage},
+      {title: 'Judging', link: JudgingPage }
     ];
 
     this.noNetwork = !this.hasNetwork();
