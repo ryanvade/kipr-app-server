@@ -16,24 +16,19 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid><!--turn this into a grid-->
-    <ion-row lines align-items-center justify-content-center *ngFor="let match of matches">
-      <ion-col col-auto>
-        {{match.title}}
-      </ion-col>
-      <ion-col col-auto>
-        <button ion-button (click)="teamTapped(match.teamA,match)">
-          {{match.teamA}}
-        </button>
-      </ion-col>
-      <ion-col col-auto>
+  <ion-list>
+    <ion-item *ngFor="let match of matches">
+      <ion-grid>
+        <ion-row>
+          {{match.teamA.name}}
+        </ion-row>
+        <ion-row lines>
           VS
-      </ion-col>
-      <ion-col col-auto>
-        <button ion-button (click)="teamTapped(match.teamB,match)">
-          {{match.teamB}}
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-row>
+        <ion-row>
+          {{match.teamB.name}}
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 </ion-content>

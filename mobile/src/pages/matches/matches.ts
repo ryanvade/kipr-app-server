@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { JudgingPage } from '../judging/judging';
+import { MatchProvider } from '../../providers/match/match';
 
 /**
  * Generated class for the MatchesPage page.
@@ -16,14 +17,12 @@ import { JudgingPage } from '../judging/judging';
 })
 export class MatchesPage {
 
-  matches: Array<{title:string, teamA:string, teamB:string}>;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    //will be generated based off of the how many teams sign up
-    this.matches = [
-      {title:'Match 1',teamA:'Team A', teamB:'Team B'},
-      {title:'Match 2',teamA:'Team C', teamB:'Team D'},
-      {title:'Match 3',teamA:'Team E', teamB:'Team F'}
-    ];
+  matches: Object[] = [];
+  page: number = 1;
+  maxMatches: number = 0;
+  maxPages: number = 0;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public matchProvider: MatchProvider) {
+    this.getMatches();
   }
 
   teamTapped(name,match){
@@ -38,6 +37,14 @@ export class MatchesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MatchesPage');
+  }
+
+  async getMatches() {
+    console.log(this, this.matches);
+    let response = await this.matchProvider.getMatches();
+    this.matches = this.matches.concat(response.json().data);
+    this.maxMatches = response.json().total;
+    this.maxPages = response.json().last_page;
   }
 
 }
