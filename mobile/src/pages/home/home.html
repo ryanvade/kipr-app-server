@@ -9,9 +9,9 @@
 </ion-header>
 
 <ion-content padding text-center>
-  <div *ngIf="loading">
+  <!-- <div *ngIf="loading">
     <ion-spinner></ion-spinner>
-  </div>
+  </div> -->
   <ion-row justify-content-center>
   <h4>
     <!-- <img height="30" src="../assets/imgs/botguy.png" style="padding-right:30px"> -->
@@ -19,12 +19,6 @@
     <!-- <img height="30" src="../assets/imgs/botguy.png" style="padding-left:30px"> -->
   </h4>
 </ion-row>
-    <h2 *ngIf="apiError">
-      <ion-spinner></ion-spinner>
-    </h2>
-  <div *ngIf="noNetwork">
-    <ion-spinner></ion-spinner>
-  </div>
 
   <ion-list>
       <p *ngFor="let button of hpbuttons;let i = index;" justify-content-center align-items-center>
