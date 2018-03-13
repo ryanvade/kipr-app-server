@@ -18,9 +18,9 @@
 <ion-content padding>
   <ion-card>
     <ion-item *ngFor="let match of matches">
-      <div class="card-title" text-wrap>{{match.teamA.name}}</div>
-      <div class="card-subtitle" *ngIf="match.teamB" >VS</div>
-      <div class="card-title" *ngIf="match.teamB" text-wrap>{{match.teamB.name}}</div>
+      <div class="card-title" text-wrap text-center>{{match.teamA.name}}</div>
+      <div class="card-subtitle" *ngIf="match.teamB" text-center>VS</div>
+      <div class="card-title" *ngIf="match.teamB" text-wrap text-center>{{match.teamB.name}}</div>
     </ion-item>
   </ion-card>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
