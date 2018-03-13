@@ -1,3 +1,22 @@
 page-matches {
-
+    ion-card {
+        position: relative;
+        text-align: center;
+      }
+    
+      .card-title {
+        top: 36%;
+        font-size: 1.0em;
+        padding: 5px;
+        width: 100%;;
+        color: #000000;
+      }
+    
+      .card-subtitle {
+        font-size: .7em;
+        top: 52%;
+        padding: 5px;
+        width: 100%;
+        color: #000000;
+      }
 }
