@@ -121,10 +121,6 @@ export default {
         }else if(this.mode == "dragging") {
             this.mode = "idle";
         }
-      } else if (this.mode == "idle") {
-        this.mode = "editing";
-        this.currentZone = [pos, pos];
-      }
       this.updateCanvas();
     },
     mouseMove(event) {
