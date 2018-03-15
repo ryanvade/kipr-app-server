@@ -16,6 +16,8 @@ class MatchScored implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $match;
+    public $fontawesome = "fa fa-calculator";
+    public $ionicon = "calculator";
     /**
      * Create a new event instance.
      *

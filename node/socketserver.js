@@ -26,7 +26,7 @@ log4js.configure({
   },
   categories: {
     default: {
-      appenders: [ 'everything' ],
+      appenders: ['everything'],
       level: config.logLevel
     }
   }
@@ -35,7 +35,9 @@ log4js.configure({
 var logger = log4js.getLogger();
 // get the 'app'
 var app = express();
-app.use(log4js.connectLogger(logger, { level: config.logLevel }));
+app.use(log4js.connectLogger(logger, {
+  level: config.logLevel
+}));
 // setup a server
 var server = https.createServer(options, app);
 // setup socket.io
@@ -46,6 +48,8 @@ var redis = new Redis();
 // redis.psubscribe("*"); // ALL channels
 redis.subscribe([
   // array of channel names
+  'public',
+  'admin',
   'matchscored',
   'teamsignedin',
   'matchcreated',
@@ -61,9 +65,18 @@ io.on('connection', (socket) => {
 });
 // Listen to 'all' messages and broadcast
 redis.on('message', (channel, message) => {
+  logger.debug(channel, message);
   message = JSON.parse(message);
-  switch(channel) {
+  switch (channel) {
     // do actions for each 'channel'
+    case 'admin':
+      io.emit(message.event, channel, message.data);
+      logger.debug(message.event, channel, message.data);
+      break;
+    case 'public':
+      io.emit(message.event, channel, message.data);
+      logger.debug(message.event, channel, message.data);
+      break;
     case 'teamsignedin':
       io.emit(message.event, channel, message.data);
       logger.debug(message.event, channel, message.data);

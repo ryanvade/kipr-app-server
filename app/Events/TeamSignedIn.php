@@ -16,6 +16,8 @@ class TeamSignedIn implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $fontawesome = "fa fa-sign-in";
+    public $ionicon = "log-in";
     public $team;
     public $time;
     /**
@@ -36,8 +38,6 @@ class TeamSignedIn implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return [
-          'teamsignedin'
-        ];
+        return ['admin', 'public'];
     }
 }

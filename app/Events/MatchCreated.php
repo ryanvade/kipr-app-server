@@ -2,6 +2,7 @@
 
 namespace KIPR\Events;
 
+use KIPR\Match;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,18 +11,21 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MatchCreated
+class MatchCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $fontawesome = "fa fa-trophy";
+    public $ionicon = "trophy";
+    public $match;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Match $match)
     {
-        //
+        $this->match = $match;
     }
 
     /**
@@ -31,6 +35,6 @@ class MatchCreated
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return ['admin'];
     }
 }

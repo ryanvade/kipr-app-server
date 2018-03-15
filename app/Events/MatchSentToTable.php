@@ -17,6 +17,8 @@ class MatchSentToTable implements ShouldBroadcast
 
     public $match;
     public $table;
+    public $fontawesome = "fa fa-paper-plane";
+    public $ionicon = "send";
     /**
      * Create a new event instance.
      *
@@ -35,6 +37,6 @@ class MatchSentToTable implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['matchsenttotable'];
+        return ['admin', 'matchsenttotable'];
     }
 }

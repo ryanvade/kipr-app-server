@@ -15,6 +15,8 @@ class RulesetCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $fontawesome = "fa fa-table";
+    public $ionicon = "";
     public $ruleset;
     /**
      * Create a new event instance.

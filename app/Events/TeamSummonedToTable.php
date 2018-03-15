@@ -15,6 +15,8 @@ class TeamSummonedToTable implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $fontawesome = "fa fa-clock-o";
+    public $ionicon = "time";
     public $team;
     public $table;
     /**
@@ -35,6 +37,6 @@ class TeamSummonedToTable implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['teamsummonedtotable'];
+        return ['admin', 'public', 'teamsummonedtotable'];
     }
 }

@@ -15,6 +15,8 @@ class TeamCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $fontawesome = "fa fa-users";
+    public $ionicon = "";
     public $team;
     /**
      * Create a new event instance.
@@ -33,6 +35,6 @@ class TeamCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['teamcreated'];
+        return ['admin'];
     }
 }
