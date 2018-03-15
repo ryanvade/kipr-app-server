@@ -8,18 +8,22 @@
   </ion-header>
 <!--Show list of teams and allow them to sign in through the checkmark button -->
 <ion-content padding>
-  <ion-list>
-    <ion-row *ngFor="let team of teams;let i = index;" justify-content align-items-center>
-      <ion-col col-auto padding>
-        <h6>{{team.name}}</h6>
-      </ion-col>
-      <ion-col col-right>
-        <ion-item item-right>
-            <button ion-button item-right color="light" (click)="teamSignedIn(team)">
-                <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
-              </button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-</ion-list>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <div *ngIf="!loading">
+    <ion-list *ngIf="teams.length > 0">
+      <ion-row *ngFor="let group of teams;" justify-content align-items-center>
+        <ion-col col-auto padding>
+          <h6>{{group[0]}}</h6>
+        </ion-col>
+        <ion-col col-right>
+          <ion-item item-right>
+            <button ion-button item-right color="light" (click)="displayTeamChooser(group)">
+              <ion-icon ios="ios-add" md="md-add"></ion-icon>
+            </button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+    <h2 *ngIf="teams.length < 1">No teams to Sign In.</h2>
+  </div>
 </ion-content>

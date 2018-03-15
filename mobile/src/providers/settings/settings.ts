@@ -27,18 +27,18 @@ export class SettingsProvider {
   async getAuthToken() {
     return await this.storage.get('auth:token');
   }
-  
-  getCompetitionID() {
-    return 1;
+
+
+  async getSignInCompetitionID(){
+    return await this.storage.get('signInAuth:competitionID');
   }
+  //get the competitionID and return 1 for testing purposes
+
 
   async getSignInAuthToken(){
     return await this.storage.get('signInAuth:token');
   }
 
-  async getSignInCompetitionID(){
-    return await this.storage.get('signInAuth:competitionID');
-  }
   //get the competitionID and return 1 for testing purposes
 
 

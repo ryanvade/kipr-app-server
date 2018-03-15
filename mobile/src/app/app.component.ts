@@ -61,6 +61,20 @@ export class MyApp {
     })
   }
 
+  async maybeAddAuthenticatedPages() {
+    let signInToken = await this.settings.getSignInAuthToken();
+    let judgingToken = await this.settings.getAuthToken();
+
+    if(signInToken != null && signInToken != "") {
+      this.pages.push({ title: 'Team Sign In', component: SignInPage });
+    }
+
+    if(judgingToken != null && judgingToken != "") {
+      this.pages.push({ title: 'Judging', component: JudgingPage });
+    }
+
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       // App Startup
@@ -74,19 +88,6 @@ export class MyApp {
       });
 
     });
-  }
-
-  async maybeAddAuthenticatedPages() {
-    let signInToken = await this.settings.getSignInAuthToken();
-    let judgingToken = await this.settings.getAuthToken();
-
-    if(signInToken != null && signInToken != "") {
-      this.pages.push({ title: 'Team Sign In', component: SignInPage });
-    }
-
-    if(judgingToken != null && judgingToken != "") {
-      this.pages.push({ title: 'Judging', component: JudgingPage });
-    }
   }
 
   openPage(page) {

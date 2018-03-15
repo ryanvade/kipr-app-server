@@ -4,6 +4,7 @@ namespace KIPR\Http\Controllers;
 
 use Carbon\Carbon;
 use KIPR\Competition;
+use Laravel\Passport\Token;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -12,6 +13,7 @@ class ApiController extends Controller
     {
         $this->middleware('auth:api');
     }
+
     /**
       * Get a Auth Tokens for judging.
       *
@@ -70,5 +72,16 @@ class ApiController extends Controller
         'status' => 'success',
         'tokens' => collect($judging_tokens)
       ]);
+    }
+
+    /**
+     * Validate Token - Get the Auth Token for Validation
+     * @param  Request $request
+     * @return Token|null
+     */
+    public function getToken(Request $request) {
+      $token = $request->header('Authorization');
+      $token = explode(" ", $token)[1];
+      return Token::where('id', $token)->first();
     }
 }
