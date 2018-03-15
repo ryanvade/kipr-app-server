@@ -7,16 +7,20 @@ use KIPR\Competition;
 use KIPR\Scheduling\Seeding;
 use KIPR\Scheduling\DoubleElim;
 use Illuminate\Http\Request;
+use Carbon;
+
 
 class ScheduleController extends Controller
 {
 
     public function schedule(Competition $competition) {
         $teams = $competition->teams()->withPivot("signed_in")->where("signed_in", true)->get();
+
+        // If no teams are signed in yet assume tenetive schedule
+        if($teams->count() == 0)
+            $teams = $competition->teams()->get();
+
         assert($teams->count() > 0);
-        if($teams->count() == 0) {
-            $x = 5/0;
-        }
 
         // Create seeding matches
         $seeding = new Seeding();
@@ -74,12 +78,51 @@ class ScheduleController extends Controller
         $matches = $this->schedule($competition);
 
         // Commit the schedule to the DB
+        $startTime = new Carbon\Carbon($competition->start_date);
+        $seedingLength = 0;
         foreach(["seeding", "elimination"] as $round) {
             foreach($matches[$round] as $match) {
+                if($match->team_A = "BYE") {
+                    $match->team_A = 0;
+                }
+                if($match->team_B = "BYE") {
+                    $match->team_B = 0;
+                }
+                unset($match->teamA);
+                unset($match->teamB);
+
+                if($match->match_time > $seedingLength) {
+                    $seedingLength = $match->match_time;
+                }
+
+                if($round == "elimination") {
+                    $match->match_time = $startTime->copy()->addMinutes(5 * ($match->match_time + $seedingLength) + 60);
+                } else {
+                    $match->match_time = $startTime->copy()->addMinutes(5 * $match->match_time);
+                }
+
                 $competition->matches()->save($match);
             }
         }
 
-        return response()->json(["status"=>"success", "matches"=>count($matches["seeding"]) + count($matches["elimination"])]);
+        $schedule = [];
+        $schedule["seeding"] = [];
+        $schedule["elimination"] = [];
+
+        foreach(["seeding", "elimination"] as $round) {
+            $firstMatch = $matches[$round][0]->match_time;
+            $lastMatch = $matches[$round][0]->match_time;
+            foreach($matches[$round] as $match) {
+                array_push($schedule[$round], [
+                    "match_id"=> $match->id,
+                    "start_time" => $match->match_time,
+                    "table_num" => $match->match_table]
+                );
+                $firstMatch = min($match->match_time, $firstMatch);
+                $lastMatch = max($match->match_time, $lastMatch);
+            }
+        }
+
+        return response()->json($schedule);
     }
 }

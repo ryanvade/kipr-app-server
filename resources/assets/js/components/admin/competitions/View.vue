@@ -48,6 +48,7 @@
         </tbody>
       </table>
     </div>
+    <schedule v-bind:competition="competition"/>
     <div class="delete-competition-modal-wrapper">
       <modal v-if="showWarning" v-on:close="showWarning = false">
         <div class="" slot="header">
@@ -87,9 +88,11 @@
 
 <script>
 import Modal from '../../Modal.vue';
+import Schedule from './Schedule.vue';
 export default {
   components: {
     'modal': Modal,
+    'schedule': Schedule
   },
   data() {
     return {

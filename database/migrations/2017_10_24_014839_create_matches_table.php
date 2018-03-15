@@ -21,7 +21,7 @@ class CreateMatchesTable extends Migration
             $table->dateTimeTz('match_time')->nullable();
             $table->unsignedInteger('match_table')->nullable();
 
-            $table->unsignedInteger('match_type');
+            $table->string('match_type');
             $table->unsignedInteger('round');
             $table->unsignedInteger('competition_id');
             $table->unsignedInteger('team_A');
