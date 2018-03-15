@@ -4,6 +4,7 @@ namespace KIPR;
 
 use KIPR\Team;
 use KIPR\Competition;
+use KIPR\Events\MatchCreated;
 use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
@@ -14,6 +15,15 @@ class Match extends Model
       'results',
       'team_A',
       'team_B'
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => MatchCreated::class,
     ];
 
     protected $with = [

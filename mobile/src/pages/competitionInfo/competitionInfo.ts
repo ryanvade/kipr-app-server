@@ -34,7 +34,7 @@ export class CompetitionInfoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
     private TeamPrvdr: TeamProvider, private settingsPrvdr: SettingsProvider, private compPrvdr: CompetitionProvider) {
-    console.log(navParams);
+    // console.log(navParams);
     this.competition = navParams.get('competition');
     this.competitionID = this.competition.id;
     this.page = 1;
@@ -45,12 +45,10 @@ export class CompetitionInfoPage {
 
   async getTeamList() {
     this.teamName = await this.compPrvdr.getRegisteredTeamsInComp(this.competitionID, this.page);
-    this.TeamPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
-      console.log(val);
+    this.compPrvdr.getRegisteredTeamsInComp(this.competitionID).then(val => {
       this.teams = this.teams.concat(val.data);
       this.maxPages = val.last_page;
       this.teamTotal = val.total;
-      console.log(this.teams);
       if (this.teams.length <= 0) {
         this.displayNoResults = true;
       }

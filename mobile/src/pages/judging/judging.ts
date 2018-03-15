@@ -5,6 +5,8 @@ import { AlertController } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { MatchesPage } from '../matches/matches';
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
+import { SocketProvider } from '../../providers/socket/socket';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the JudgingPage page.
@@ -29,51 +31,60 @@ export class JudgingPage {
   opponent: string;
   judgedOpponent: boolean;
   jsonRules = [];
+  jsonEvents = [];
+  waiting: boolean = true;
 
-  constructor(private alertCtrl:AlertController,private remoteService:RemoteServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl:AlertController,private remoteService:RemoteServiceProvider,public navCtrl: NavController, public navParams: NavParams, public socket: SocketProvider) {
     this.rules=[];
+    socket.connect();
+    console.log(socket);
+    this.match = {title: "", teamA: "", teamB: ""};
 
-    this.remoteService.getRules().subscribe(data=>{
-      console.log(data);
-      this.jsonRules = data;
-
-      //Will try to make this look a little cleaner later on
-      if(this.match.teamA === this.teamName){
-        for(var _i = 0; _i < this.jsonRules.length; _i++){
-            this.rules.push({
-              value:this.jsonRules[_i].min,
-              min:this.jsonRules[_i].min,
-              max:this.jsonRules[_i].max,
-              title:this.jsonRules[_i].title,
-              description:this.jsonRules[_i].description,
-              img:this.jsonRules[_i].imgA
-            }
-            );
-        }
-      }else{
-        for(var _j = 0; _j < this.jsonRules.length; _j++){
-            this.rules.push({
-              value:this.jsonRules[_j].min,
-              min:this.jsonRules[_j].min,
-              max:this.jsonRules[_j].max,
-              title:this.jsonRules[_j].title,
-              description:this.jsonRules[_j].description,
-              img:this.jsonRules[_j].imgB
-            }
-            );
-        }
+    this.getMatch().subscribe((channel) => {
+      let data = (event as MessageEvent).data;
+      data = JSON.parse(data.slice(data.indexOf(`"match"`) -1, data.length - 1));
+      this.match.teamA = data.match.team_a.name;
+      this.match.teamB = data.match.team_b.name;
+      this.teamName = data.match.team_a.name;
+      this.opponent = data.match.team_b.name;
+      if(data.match.competition.ruleset) {
+        this.jsonRules = data.match.competition.ruleset.rules;
+        this.jsonEvents = data.match.competition.ruleset.events;
+        console.log(this.jsonRules);
+        console.log(this.jsonEvents);
+        let aRules = [];
+        let bRules = [];
+        this.jsonEvents.forEach((rule) => {
+          aRules.push({
+            value: <number> rule.min,
+            min: <number> rule.min,
+            max: <number> rule.max,
+            title: <string> rule.title,
+            description: <string> rule.description,
+            img: <string> rule.imgA
+          });
+          bRules.push({
+            value: <number> rule.min,
+            min: <number> rule.min,
+            max: <number> rule.max,
+            title: <string> rule.title,
+            description: <string> rule.description,
+            img: <string> rule.imgB
+          });
+        });
+        this.rules = aRules.concat(bRules);
+        this.waiting = false;
       }
-
     });
+  }
 
-    this.teamName = navParams.get('name');
-    this.match = navParams.get('match');
-    this.judgedOpponent = navParams.get('judgedOpponent');
-
-    if(this.match.teamA == this.teamName)
-      this.opponent = this.match.teamB;
-    else
-      this.opponent = this.match.teamA;
+  getMatch() {
+    let observable = new Observable(observer => {
+      this.socket.on('KIPR\\Events\\MatchSentToTable', (channel) => {
+        observer.next(channel);
+      });
+    })
+    return observable;
   }
 
   slideChanged() {
@@ -81,17 +92,17 @@ export class JudgingPage {
     console.log('Current index is', currentIndex);
   }
 
-  increment(item){
+  increment(i){
+    let item = this.rules[i];
     if(item.value < item.max){
-      item.value = item.value + 1;
-      console.log('add 1 to' + item);
+      item.value = Number(item.value) + 1;
     }
   }
 
-  decrement(item){
-    if(item.value > 0){
-      item.value = item.value - 1;
-      console.log('subtract 1 to' + item);
+  decrement(i){
+    let item = this.rules[i];
+    if(item.value > item.min){
+      item.value = Number(item.value) - 1;
     }
   }
 

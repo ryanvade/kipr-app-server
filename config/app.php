@@ -175,7 +175,7 @@ return [
          */
         KIPR\Providers\AppServiceProvider::class,
         KIPR\Providers\AuthServiceProvider::class,
-        // KIPR\Providers\BroadcastServiceProvider::class,
+        KIPR\Providers\BroadcastServiceProvider::class,
         KIPR\Providers\EventServiceProvider::class,
         KIPR\Providers\RouteServiceProvider::class,
 

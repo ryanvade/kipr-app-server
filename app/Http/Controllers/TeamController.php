@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use KIPR\Competition;
 use KIPR\Filters\TeamFilter;
 use Illuminate\Http\Request;
+use KIPR\Events\TeamSignedIn;
 use KIPR\Http\Requests\CreateTeam;
 use KIPR\Http\Requests\UpdateTeam;
 
@@ -47,6 +48,7 @@ class TeamController extends Controller
             $teamPivot->pivot->sign_in_time = Carbon::now();
             $teamPivot->pivot->save();
         }
+        event(new TeamSignedIn($team));
         return response()->json([
         'team_id' => $team->id,
         'competition_id' => $competition->id,

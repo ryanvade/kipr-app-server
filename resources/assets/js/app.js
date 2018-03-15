@@ -13,10 +13,17 @@ import AdminPanel from './components/admin/AdminPanel.vue';
 import createPersistedState from 'vuex-persistedstate';
 import Modal from './components/Modal.vue';
 import VueRouter from 'vue-router';
+import Echo from "laravel-echo";
 import Vuex from 'vuex';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
+
+window.Echo = new Echo({
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ":3000",
+  namespace: "KIPR.Events"
+});
 
 const store = new Vuex.Store({
   plugins: [createPersistedState()],

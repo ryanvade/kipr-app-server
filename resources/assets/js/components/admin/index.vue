@@ -38,42 +38,63 @@
               <p class="card-header-title">
                 Events
               </p>
-              <a href="#" class="card-header-icon" aria-label="more options">
-                <span class="icon">
-                  <i class="fa fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </a>
             </header>
             <div class="card-table">
               <div class="content">
                 <table class="table is-fullwidth is-striped">
                   <tbody>
-                    <tr>
-                      <td width="5%"><i class="fa fa-sign-in"></i></td>
-                      <td>Team <a href="#">Robots</a> signed in</td>
-                      <td><a class="button is-small is-danger" href="#">Undo</a></td>
+                    <tr v-for="e in events">
+                      <td width="5%"><i :class="e.fontawesome"></i></td>
+                      <!-- Competition Created Event -->
+                      <td v-if="e.name == 'competitioncreated'">Competition Created</td>
+                      <td v-if="e.name == 'competitioncreated'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/competition/' + e.competition.id }">View</router-link>
+                      </td>
+                      <!-- Match Created Event -->
+                      <td v-if="e.name == 'matchcreated'">Match Created</td>
+                      <td v-if="e.name == 'matchcreated'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/match/' + e.match.id }">View</router-link>
+                      </td>
+                      <!-- Match Scored Event -->
+                      <td v-if="e.name == 'matchscored'">Match Scored</td>
+                      <td v-if="e.name == 'matchscored'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/match/' + e.match.id }">View</router-link>
+                      </td>
+                      <!-- Match Sent To Table Event -->
+                      <td v-if="e.name == 'matchsenttotable'">Match Sent to Table</td>
+                      <td v-if="e.name == 'matchsenttotable'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/match/' + e.match.id }">View</router-link>
+                      </td>
+                      <!-- Ruleset Created Event -->
+                      <td v-if="e.name == 'rulesetcreated'">Ruleset Created</td>
+                      <td v-if="e.name == 'rulesetcreated'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/ruleset/' + e.ruleset.id }">View</router-link>
+                      </td>
+                      <!-- Team Created Event -->
+                      <td v-if="e.name == 'teamcreated'">Team Created</td>
+                      <td v-if="e.name == 'teamcreated'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/team/' + e.team.id }">View</router-link>
+                      </td>
+                      <!-- Team Signed In Event -->
+                      <td v-if="e.name == 'teamsignedin'">Team Signed In</td>
+                      <td v-if="e.name == 'teamsignedin'">
+                        <button @click="signOutTeam(e)" class="button is-small is-danger">Undo</button>
+                      </td>
+                      <!-- Team Summoned To Table -->
+                      <td v-if="e.name == 'teamsummonedtotable'">Team Summoned To Table</td>
+                      <td v-if="e.name == 'teamsummonedtotable'">
+                        <router-link class="button is-small is-info" :to="{ path: '/admin/team/' + e.team.id }">View</router-link>
+                      </td>
                     </tr>
-                    <tr>
-                      <td width="5%"><i class="fa fa-trophy"></i></td>
-                      <td>Match <a href="#">1</a> scored</td>
-                      <td><a class="button is-small is-info" href="#">View</a></td>
-                    </tr>
-                    <tr>
-                      <td width="5%"><i class="fa fa-trophy"></i></td>
-                      <td>Match <a href="#">2</a> scored</td>
-                      <td><a class="button is-small is-info" href="#">View</a></td>
-                    </tr>
-                    <tr>
-                      <td width="5%"><i class="fa fa-trophy"></i></td>
-                      <td>Match <a href="#">3</a> scored</td>
-                      <td><a class="button is-small is-info" href="#">View</a></td>
+                    <tr v-if="events.length == 0">
+                      <td>No Events to Display</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
             <footer class="card-footer">
-              <a href="#" class="card-footer-item">View All</a>
+              <router-link class="card-footer-item" :to="{ name: 'view_all_events', params: {} }">View All</router-link>
             </footer>
           </div>
         </div>
@@ -153,7 +174,8 @@ export default {
       teams: [],
       teamname: "",
       competitions: [],
-      competitionname: ""
+      competitionname: "",
+      events: []
     };
   },
   mounted() {
@@ -166,7 +188,128 @@ export default {
   },
   methods: {
     getEvents() {
-      // TODO
+      window.Echo.channel('admin').listen('CompetitionCreated', (event) => {
+        event.name = "competitioncreated";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.competition.id == event.competition.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      }).listen('MatchCreated', (event) => {
+        event.name = "matchcreated";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.match.id == event.match.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      }).listen('MatchScored', (event) => {
+        event.name = "matchscored";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.match.id == event.match.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      }).listen('MatchSentToTable', (event) => {
+        event.name = "matchsenttotable";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.match.id == event.match.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      }).listen('RulesetCreated', (event) => {
+        event.name = "rulesetcreated";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.ruleset.id == event.ruleset.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      });
+      window.Echo.channel('admin').listen('TeamCreated', (event) => {
+        event.name = "teamcreated";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.team.id == event.team.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      }).listen('TeamSignedIn', (event) => {
+        event.name = "teamsignedin";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.team.id == event.team.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      }).listen('TeamSummonedToTable', (event) => {
+        event.name = "teamsummonedtotable";
+        let found = false;
+        this.events.forEach((e) => {
+          console.log(e, event);
+          if(e.name == event.name && e.team.id == event.team.id) {
+            found = true;
+          }
+        });
+        if(!found) {
+          if(this.events.length == 4) {
+            this.events.slice(0, this.events.length - 1);
+          }
+          this.events.unshift(event);
+        }
+      });
       this.eventsLoading = false;
     },
     getCompetitionCount() {

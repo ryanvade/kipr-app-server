@@ -27,6 +27,7 @@
     <notification></notification>
   </div>
     <!-- Scripts -->
+    <script src="//{{ Request::getHost() }}:3000/socket.io/socket.io.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/notification.js') }}"></script>
 </body>
