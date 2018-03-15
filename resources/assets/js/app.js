@@ -69,7 +69,7 @@ const routes = [{
   {
     path: '/admin/ruleset/create',
     name: 'ruleset_create',
-    component: require('./components/admin/rulesets/map.vue')
+    component: require('./components/admin/rulesets/NewRuleset.vue')
   },
   {
     path: '/admin/ruleset/zones',

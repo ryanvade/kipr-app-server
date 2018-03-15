@@ -1,48 +1,72 @@
 <template lang="html">
-  <section class="hero is-medium">
-        <div class="hero-body">
-          <div class="">
-            <div class="columns is-centered">
-              <article class="card is-rounded">
-                <div class="card-content">
-                  <h1 class="title is-flex">
-                    <span>Define scoring zones</span>
-                  </h1>
-                  <div>
-                      <div class="zone-list">
-                          <zonebar v-for="zone in zones" @preview="zoneHover" v-bind:region="zone"></zonebar>
+  <div class="box">
+    <nav class="level">
+      <div class="level-left">
+        <p class="subtitle has-text-centered">
+          <strong>Define scoring zones</strong>
+        </p>
+      </div>
+      <div class="level-left">
+          <a>Clear</a>
+      </div>
+    </nav>
+    <div class="columns" v-if="map_image.src != null">
+        <div class="column" id="frame">
+          <img ref="background" id="background" :src="map_image.src" :width="map_image.width" :height="map_image.height">
+          <canvas ref="canvas" id="zone-canvas" :width="map_image.width" :height="map_image.height" @mouseup="mouseUp" @mousedown="mouseDown" @click="mouseClick" @mousemove="mouseMove"/>
+        </div>
+        <div class="column zone-list">
+            <table class="table is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Zone Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="zone in zones" @mouseover="zoneHover(zone)">
+                    <td class="level">
+                        <div class="level-left">
+                            <input type="text" v-model="zone.name"/>
+                        </div>
+                      <div class="level-right">
+                        <!--<p class="level-item">-->
+                            <!--<a @click="edit">Edit</a>  -->
+                        <!--</p>-->
+                        <p class="level-item">
+                            <a @click="_delete(zone)">Delete</a>
+                        </p>
                       </div>
-                      <div id="frame">
-                          <canvas ref="canvas" id="zone-canvas" @click="mouseClick" @mousemove="mouseMove"/>
-                          <img ref="preview" id="preview"/>
-                      </div>
-                  </div>
-                  <p class="control">
-                    <button class="button is-primary is-medium is-fullwidth" @click="next">
-                      Next
-                    </button>
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
     </div>
-  </section>
+    <div v-else>
+        Please upload map image above
+    </div>
+  </div>
 </template>
 
 <script>
-import zonebar from "./zonebar.vue"
 
 export default {
+  components: {
+  },
+  props: ["map_image", "map_settings"],
   data() {
     return {
-      zones: [],
-      currentZone: [],
-      mode: "idle"
+        zones: [],
+        currentZone: [],
+        mode: "idle",
     }
   },
   methods: {
-    onEnter() {},
+    update() {
+        this.$emit("update", this.zones);
+    },
+    onEnter() {
+    },
     mousePosition(event) {
       var bounds = this.$refs.canvas.getBoundingClientRect();
       return {
@@ -51,19 +75,51 @@ export default {
       };
     },
     finishPath() {
-      this.zones.push(this.currentZone);
-      this.mode = "idle";
+        var id = this.zones.length;
+        this.zones.push({name: "Unnamed zone " + id, points: this.currentZone, id: id});
+        this.mode = "idle";
+        this.update();
+    },
+    distance(p1, p2) {
+        return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
+    },
+    mouseDown(event) {
+        console.log("Mouse down");
+        var pos = this.mousePosition(event);
+
+        if(this.mode == "idle") {
+            var selectedPoint = this.zones[0].points[0];
+            for(var zone of this.zones) {
+                for(var corner of zone.points) {
+                    var d = this.distance(pos, corner);
+                    console.log(d);
+                    if(d < 10) {
+                        console.log(zone);
+                        this.mode = "dragging";
+                        this.currentZone = zone.points;
+                    }
+                }
+            }
+        }
+    },
+    mouseUp(event) {
     },
     mouseClick(event) {
-      var pos = this.mousePosition(event);
-      if (this.mode == "editing") {
-        var start = this.currentZone[0];
-        var distanceFromStart = Math.sqrt((start.x - pos.x) * (start.x - pos.x) + (start.y - pos.y) * (start.y - pos.y));
+        var pos = this.mousePosition(event);
+        if(this.mode == "editing") {
+          var start = this.currentZone[0];
+          var distanceFromStart = this.distance(start, pos); 
 
-        if (distanceFromStart < 10) {
-          this.finishPath();
-        } else {
-          this.currentZone.push(pos);
+          if(distanceFromStart < 10) {
+              this.finishPath();
+          } else {
+            this.currentZone.push(pos);
+          }
+        } else if(this.mode == "idle") {
+          this.mode = "editing";
+          this.currentZone = [pos, pos];
+        }else if(this.mode == "dragging") {
+            this.mode = "idle";
         }
       } else if (this.mode == "idle") {
         this.mode = "editing";
@@ -83,15 +139,31 @@ export default {
       var context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      this.zones.forEach(function(region) {
-        this.drawRegion(context, region, "rgba(150,150,150,0.5)", "rgb(150,150,150)");
-      }, this);
+        for(var zone of this.zones) {
+            this.drawRegion(context, zone.points, "rgba(150,150,150,0.3)", "rgb(150,150,150)");
+            this.drawRegion(context, this.reflect(zone.points), "rgba(150,150,150,0.3)", "rgb(150,150,150)");
+        }
 
-      if (this.mode == "editing") {
-        this.drawRegion(context, this.currentZone, "rgba(250,150,150,0.5)", "rgb(250,150,150)");
-      } else if (this.mode == "idle") {
-        this.drawRegion(context, this.currentZone, "rgba(150,250,150,0.5)", "rgb(150,250,150)");
-      }
+        if(this.mode == "editing") {
+            this.drawRegion(context, this.currentZone, "rgba(250,150,150,0.3)", "rgb(250,150,150)");
+            this.drawRegion(context, this.reflect(this.currentZone), "rgba(250,150,150,0.3)", "rgb(250,150,150)");
+        } else if(this.mode == "idle") {
+            this.drawRegion(context, this.currentZone, "rgba(150,250,150,0.3)", "rgb(150,250,150)");
+            this.drawRegion(context, this.reflect(this.currentZone), "rgba(150,250,150,0.3)", "rgb(150,250,150)");
+        }
+    },
+    reflect(zone) {
+        var canvas = this.$refs.canvas;
+
+        var reflected = [];
+        for(var point of zone) {
+            reflected.push({
+                x: canvas.width-point.x,
+                y: canvas.height-point.y
+            });
+        }
+        return reflected;
+
     },
     drawRegion(canvas, region, fillStyle, strokeStyle) {
       if (region.length > 0) {
@@ -108,28 +180,39 @@ export default {
         canvas.stroke();
       }
     },
-    zoneHover(event) {
-      if (this.mode == "idle") {
-        this.currentZone = event.region;
+    zoneHover(zone) {
+        console.log("hover");
+        console.log(zone);
+        if(this.mode == "idle") {
+            this.currentZone = zone.points;
+            this.updateCanvas();
+        }
+    },
+    edit(event) {
+        console.log(event.target.parentElement)
+    },
+    _delete(zone) {
+        var zones = []
+        for(var z of this.zones) {
+            if(z.id != zone.id) {
+                z.id = zones.length
+                zones.push(z)
+            }
+        }
+        this.currentZone = [];
+        this.zones = zones;
+        this.update();
         this.updateCanvas();
-      }
     },
     next() {
 
+    },
+    resize_canvas() {
     }
-  },
-  mounted() {
-    var background = this.$store.state.map_image;
-    var backgroundImg = this.$refs.preview;
-    backgroundImg.src = background;
-    var canvas = this.$refs.canvas;
-    canvas.width = backgroundImg.width;
-    canvas.height = backgroundImg.height;
-  },
-  components: {
-    zonebar
-  }
 
+  },
+  mounted(){
+  },
 }
 </script>
 
@@ -141,13 +224,13 @@ export default {
     border: 1px solid black;
 }
 #frame canvas {
-    position:relative;
-    z-index: 20;
-}
-#frame img {
     position:absolute;
     top: 0px;
     left: 0px;
+    z-index: 20;
+}
+#frame img {
+    position:relative;
     z-index: 1;
 }
 

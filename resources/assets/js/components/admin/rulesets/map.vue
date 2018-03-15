@@ -1,56 +1,36 @@
 <template lang="html">
-  <div>
-  <section class="hero">
-        <div class="hero-body">
-          <div class="">
-            <div class="columns is-centered">
-              <article class="card is-rounded">
-                <div class="card-content">
-                  <h1 class="title is-flex">
-                    <span>Upload board image</span>
-                  </h1>
-
-				 <form enctype="multipart/form-data">
-					<img id="preview"/>
-					<div class="dropbox">
-						<!--<input name="myFile" type="file" accept="image/*"/>-->
-						<input type="file" @change="update_image($event.target.name, $event.target.files)" required>
-					</div>
-				  </form>
-                  <p class="control">
-                    <button class="button is-primary is-medium is-fullwidth" @click="submit">
-                      Next
-                    </button>
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-    </div>
-  </section>
-</div>
+  <div class="box">
+    <nav class="level">
+      <div class="level-left">
+        <p class="subtitle has-text-centered">
+          <strong>Upload map image</strong>
+        </p>
+      </div>
+    </nav>
+ <form enctype="multipart/form-data">
+     <div>
+        <input accept="image/*" type="file" @change="update_image($event.target.name, $event.target.files)" required>
+     </div>
+    <img id="preview"/>
+  </form>
+  </div>
 </template>
 
 <script>
-import Modal from '../../Modal.vue';
 export default {
   components: {
-    'modal': Modal,
   },
   data() {
     return {};
   },
   mounted() {},
   methods: {
-    submit() {
-      this.$router.push('/admin/ruleset/zones');
-    },
     update_image(name, file) {
       var url = window.URL.createObjectURL(file[0]);
       document.getElementById('preview').src = url;
       this.$store.commit('update_map', url);
-      console.log(this.$store);
-      console.log(url);
+      this.map_image = url;
+      this.$emit("map_changed", {src: url, width: 400, height: 400});
     }
   }
 }
