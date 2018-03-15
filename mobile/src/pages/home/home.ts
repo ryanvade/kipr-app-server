@@ -9,6 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { CompetitionsPage } from '../competitions/competitions';
 import { TeamsPage } from '../teams/teams';
+import { MatchesPage } from '../matches/matches';
 
 @Component({
   selector: 'page-home',
@@ -32,10 +33,10 @@ export class HomePage {
     this.hpbuttons = [
       // {title: 'Judging Sign In', link: SettingsPage},
       {title: "Competitions", link: CompetitionsPage},
-      // {title: 'Tournament Bracket', link: CompetitionsPage},
-      // {title: 'Competition Documents', link: SettingsPage},
-      {title: 'Scores', link: SettingsPage},
-      // {title: 'Table Times', link: SettingsPage}
+      {title: 'Tournament Bracket', link: CompetitionsPage},
+      {title: 'Competition Documents', link: SettingsPage},
+      {title: 'Matches', link: MatchesPage},
+      {title: 'Table Times', link: SettingsPage},
       {title: 'Teams', link: TeamsPage}
     ];
 
