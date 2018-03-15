@@ -69,4 +69,8 @@ export class SettingsProvider {
   setSignInCompetitionID(id){
     this.storage.set('signInAuth:competitionID', id);
   }
+
+  setJudgingCompetitionID(id) {
+    this.storage.set('judgingAuth:competitionID', id);
+  }
 }

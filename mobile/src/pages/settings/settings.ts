@@ -68,9 +68,12 @@ async scanForAuthToken(){
   this.barcodeScanner.scan().then(async (barcodeData) => {
     console.log(barcodeData.text);
     let valid = this.status.validateJudgingAuthToken(barcodeData.text, this.serverName);
+    let splitArray = barcodeData.text.split("|");
+
     if(valid) {
-      this.judgingAuthToken = barcodeData.text;
-      this.settingsProvider.setAuthToken(barcodeData.text);
+      this.judgingAuthToken = splitArray[0];
+      this.settingsProvider.setAuthToken(splitArray[0]);
+      this.settingsProvider.setJudgingCompetitionID(splitArray[1]);
       this.judgingEnabled = true;
       this.events.publish('authentication:judging', true);
     }else {
@@ -104,7 +107,7 @@ async scanForSignInAuthToken(){
     let splitArray = barcodeData.text.split("|");
 
     if(valid) {
-      this.judgingAuthToken = splitArray[0];
+      this.signInAuthToken = splitArray[0];
       this.settingsProvider.setSignInAuthToken(splitArray[0]);
       this.settingsProvider.setSignInCompetitionID(splitArray[1]);
       this.signInEnabled = true;

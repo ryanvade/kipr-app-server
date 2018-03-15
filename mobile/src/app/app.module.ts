@@ -14,6 +14,7 @@ import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from '../pages/settings/settings';
 import { SignInPage } from '../pages/signInGUI/signIn';
 import { TeamsPage } from '../pages/teams/teams';
+import { TeamSignInPickerPage } from '../pages/team-sign-in-picker/team-sign-in-picker';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -38,7 +39,8 @@ import { MatchProvider } from '../providers/match/match';
     MatchesPage,
     SettingsPage,
     SignInPage,
-    TeamsPage
+    TeamsPage,
+    TeamSignInPickerPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ import { MatchProvider } from '../providers/match/match';
     MatchesPage,
     SettingsPage,
     SignInPage,
-    TeamsPage
+    TeamsPage,
+    TeamSignInPickerPage
   ],
   providers: [
     StatusBar,
