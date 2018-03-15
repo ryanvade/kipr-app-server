@@ -26,6 +26,7 @@ import { StatusProvider } from '../providers/status/status';
 import { TeamProvider } from '../providers/team/team';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { SocketProvider } from '../providers/socket/socket';
+import { MatchProvider } from '../providers/match/match';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { SocketProvider } from '../providers/socket/socket';
     StatusProvider,
     TeamProvider,
     SocketProvider,
+    MatchProvider
   ]
 })
 export class AppModule {}
