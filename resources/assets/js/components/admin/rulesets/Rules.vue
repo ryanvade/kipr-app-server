@@ -103,7 +103,7 @@ export default {
   },
   methods: {
       update() {
-        this.$emit("rules_changed", this.rules);
+        this.$emit("update", this.rules);
       },
       add_rule(group) {
           group.rules.push({element_name:this.elements[0].name, zone_name:this.zones[0].name, score_type:"Is worth", value: 1})

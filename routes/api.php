@@ -48,5 +48,10 @@ Route::post('/competition/{competition}/updateSchedule', 'ScheduleController@upd
 
 // Matches
 Route::get('/match', 'MatchController@getAll');
+
+// Rulesets
+Route::post('/ruleset', 'RulesetController@create');
+Route::get('/ruleset/{ruleset}', 'RulesetController@get');
+
 // Extra Auth
 Route::get('/auth/token', 'ApiController@getToken');

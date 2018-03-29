@@ -63,9 +63,43 @@ export default {
       submit(event) {
           console.log(this.elements);
           console.log(this.rules);
+          var elements = {};
+
+          for (var element of this.elements) {
+              elements[element.name] = {count: element.quantity};
+          }
+
+          var events = {}; 
+          var rules = [];
+          for (var group of this.rules) {
+              for (var rule of group.rules) {
+                  var rule_name = rule.element_name +" in " + rule.zone_name;
+                  events[rule_name] = {min: 0, max: elements[rule.element_name].count};
+
+                  rules.push({type: "multiplier", value: rule.value, target:rule_name});
+              }
+          }
+          window.axios.post('/api/ruleset', {
+            name: "NEW RULESET",
+            events: events,
+            rules: rules
+          }).then((response) => {
+            console.log(response);
+            window.notification("success", "Ruleset Created");
+            this.$router.push('/admin/');
+          }).catch((error) => {
+            window.notification("danger", error.message);
+            console.error(error);
+            if (error.response.status == 401) {
+              // redirect to login page
+              window.notification("warning", "You have been logged out due to inactivity.");
+              document.cookie = "notification=danger|You have been logged out due to inactivity";
+              window.location.href = "/login";
+            }
+          });
       },
       cancel(event) {
-
+          this.$router.push('/admin/');
       }
   },
   mounted(){
