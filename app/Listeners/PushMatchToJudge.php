@@ -32,6 +32,7 @@ class PushMatchToJudge
             ->orderBy("match_time")
             ->first();
 
-        // TODO Push $next to the table judge on table $next->match_table
+        // Push $next to the table judge on table $next->match_table
+        event(new MatchSentToTable($next, $next->match_table));
     }
 }
