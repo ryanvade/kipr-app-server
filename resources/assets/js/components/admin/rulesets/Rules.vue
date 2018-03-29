@@ -8,7 +8,7 @@
       </div>
     </nav>
     <div>
-        <div v-for="group in rules">
+        <div class="box" v-for="group in rules">
             <div v-if="group.default">
                 <strong>Default rules</strong>
             </div>
@@ -34,13 +34,19 @@
                         <option v-for="element in elements">
                             {{ element.name }}
                         </option>
+                        <option>Constant</option>
                     </select>
-                    <strong class="level-item">In</strong>
-                    <select class="level-item" v-model="group.zone2">
-                        <option v-for="zone in zones">
-                            {{ zone.name }}
-                        </option>
-                    </select>
+                    <div class="level-left" v-if="group.element2 != 'Constant'">
+                        <strong class="level-item">In</strong>
+                        <select class="level-item" v-model="group.zone2">
+                            <option v-for="zone in zones">
+                                {{ zone.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div v-else>
+                        <input type="number"/>
+                    </div>
                     <strong class="level-item">Then</strong>
                 </div>
                 <div class="level-right">
@@ -57,12 +63,14 @@
                 <tr v-for="rule in group.rules">
                     <strong>Each</strong>
                     <select v-model="rule.element_name">
+                        <option>Everything</option>
                         <option v-for="element in elements">
                             {{ element.name }}
                         </option>
                     </select>
                     <strong>In</strong>
                     <select v-model="rule.zone_name">
+                        <option>Anywhere</option>
                         <option v-for="zone in zones">
                             {{ zone.name }}
                         </option>
@@ -77,7 +85,6 @@
                 <tr><a @click="add_rule(group)">Add Rule</a></tr>
               </tbody>
             </table>
-            <hr>
         </div>
         <a @click="add_group">Add Group</a>
     </div>
@@ -115,5 +122,8 @@ export default {
 <style lang="css">
 select {
     /*background-color: lightgray;*/
+}
+table {
+    left-margin: 20px;
 }
 </style>

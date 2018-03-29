@@ -5,7 +5,18 @@
         <zones @update="zones_changed" v-if="map_image.src" ref="zones" :map_image="map_image" v-bind:map_settings="map_settings"/>
         <elements @update="elements_changed" v-bind:map_settings="map_settings"/>
         <rules @update="rules_changed" v-if= "elements.length > 0 && zones.length > 0" :elements="elements" :zones="zones"/>
-        <button v-if="rules.length > 0">Submit</button>
+        <!--<div class="box">-->
+            <!--<nav class="level">-->
+                <!--<div class="level-left">-->
+                    <!--<p class="subtitle has-text-centered">-->
+                        <!--<strong>Create Scoring Rules</strong>-->
+                        <!--<button class="button">Submit</button>-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</nav>-->
+            <button type="button" class="button is-warning" @click="cancel">Cancel</button>
+            <button type="button" class="button is-primary" @click="submit">Submit</button>
+        <!--</div>-->
     </div>
 </template>
 
@@ -48,6 +59,13 @@ export default {
       },
       rules_changed(event) {
           this.rules = event;
+      },
+      submit(event) {
+          console.log(this.elements);
+          console.log(this.rules);
+      },
+      cancel(event) {
+
       }
   },
   mounted(){

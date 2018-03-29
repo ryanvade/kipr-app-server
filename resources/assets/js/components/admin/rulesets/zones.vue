@@ -221,8 +221,8 @@ export default {
 }
 #frame canvas {
     position:absolute;
-    top: 0px;
-    left: 0px;
+    top: 10px;
+    left: 10px;
     z-index: 20;
 }
 #frame img {
