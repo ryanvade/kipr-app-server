@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Matches
-Route::get('/match/count', 'MatchController@getMatchCount');
 // Competitions
 Route::post('/competition', 'CompetitionController@create');
 Route::get('/competition', 'CompetitionController@getAll');
@@ -48,6 +46,8 @@ Route::post('/competition/{competition}/updateSchedule', 'ScheduleController@upd
 
 // Matches
 Route::get('/match', 'MatchController@getAll');
+Route::get('/match/count', 'MatchController@getMatchCount');
+Route::get('/match/{match}', 'MatchController@get');
 
 // Rulesets
 Route::post('/ruleset', 'RulesetController@create');

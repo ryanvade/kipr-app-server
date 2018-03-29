@@ -20,7 +20,9 @@ class MatchController extends Controller
     {
         $this->middleware('auth:api', [
           'except' => [
-            'getAll'
+              'getAll',
+              'get',
+              'count'
           ]
         ]);
     }
@@ -44,6 +46,11 @@ class MatchController extends Controller
         $match->competition = Competition::find($match->competition_id);
       }
       return $results;
+    }
+
+    public function get(Match $match)
+    {
+        return $match;
     }
 
     public function score(Competition $competition, Match $match, Request $request)

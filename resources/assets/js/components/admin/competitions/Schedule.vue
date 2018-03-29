@@ -26,14 +26,14 @@
         <tbody>
           <tr v-for="time in sortedSeeding">
             <td>{{ new Date(time.time).toLocaleTimeString() }}</td>
-            <td v-for="match in time.matches"><a>{{ match.match_id }}</a></td>
+            <td v-for="match in time.matches" @click="gotoMatch(match)"><a>{{ match.match_id }}</a></td>
           </tr>
           <tr>
               <td> BREAK </td>
           </tr>
           <tr v-for="time in sortedEliminiation">
             <td>{{ new Date(time.time).toLocaleTimeString() }}</td>
-            <td v-for="match in time.matches"><a>{{ match.match_id }}</a></td>
+            <td v-for="match in time.matches" @click="gotoMatch(match)"><a>{{ match.match_id }}</a></td>
           </tr>
         </tbody>
       </table>
@@ -100,6 +100,10 @@ export default {
           }).catch((error) => {
             console.error(error);
           });
+    },
+    gotoMatch(match) {
+        console.log(match);
+      this.$router.push(`/admin/matches/${match.match_id}`);
     }
   },
   directives: {
