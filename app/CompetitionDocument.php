@@ -22,11 +22,15 @@ class CompetitionDocument extends Model
         parent::boot();
         // manually fire off deleted events
         static::deleted(function ($document) {
-          Storage('public')->delete($document->file_location);
+          Storage::disk('public')->delete($document->fileName());
         });
     }
 
     public function competitions() {
       return $this->belongsToMany(Competition::class, 'competition_competition_document', 'competition_id', 'document_id');
+    }
+
+    public function fileName() {
+      return basename($this->file_location);
     }
 }
