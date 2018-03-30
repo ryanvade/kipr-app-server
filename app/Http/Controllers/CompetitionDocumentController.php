@@ -4,9 +4,20 @@ namespace KIPR\Http\Controllers;
 
 use KIPR\CompetitionDocument;
 use Illuminate\Http\Request;
+use KIPR\Http\Requests\CreateCompetitionDocumentRequest;
 
 class CompetitionDocumentController extends Controller
 {
+
+    public function __construct() {
+      $this->middleware('auth:api', [
+        'only' => [
+          'destroy',
+          'update',
+          'store',
+        ]
+      ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,28 +25,27 @@ class CompetitionDocumentController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return CompetitionDocument::all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \KIPR\Http\Requests\CreateCompetitionDocumentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCompetitionDocumentRequest $request)
     {
-        //
+        $file = $request->file('file');
+        $file->store('', 'public');
+        $c = CompetitionDocument::create([
+          'name' => $request->name,
+          'file_location' => 'public/storage/' . $file->hashName()
+        ]);
+        return response()->json([
+          'status' => 'success',
+          'document' => $c
+        ]);
     }
 
     /**
@@ -45,17 +55,6 @@ class CompetitionDocumentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(CompetitionDocument $competitionDocument)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \KIPR\CompetitionDocument  $competitionDocument
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CompetitionDocument $competitionDocument)
     {
         //
     }

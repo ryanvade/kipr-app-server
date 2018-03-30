@@ -140,6 +140,16 @@ const routes = [{
     path: '/admin/teams/create',
     name: 'create_team',
     component: require('./components/admin/teams/CreateTeam.vue')
+  },
+  {
+    path: '/admin/documents',
+    name: 'view_all_documents',
+    component: require('./components/admin/documents/ViewAll.vue')
+  },
+  {
+    path: '/admin/documents/create',
+    name: 'create_document',
+    component: require('./components/admin/documents/CreateDocument.vue')
   }
 ];
 

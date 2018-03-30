@@ -71,6 +71,15 @@
                 <router-link class="" :to="{ name: 'ruleset_create', params: {} }">Create Ruleset</router-link>
               </li>
             </ul>
+            <p class="menu-label has-text-weight-bold">Competition Documents</p>
+            <ul class="menu-list">
+              <li>
+                <router-link class="" :to="{ name: 'view_all_documents', params: {} }">View All Documents</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'create_document', params: {} }">Upload Document</router-link>
+              </li>
+            </ul>
             <p class="menu-label has-text-weight-bold">Authentication</p>
             <ul class="menu-list">
               <li>
