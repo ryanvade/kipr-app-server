@@ -28,6 +28,7 @@ class CreateMatchesTable extends Migration
             $table->unsignedInteger('team_B')->nullable();
             $table->unsignedInteger('match_A')->nullable();
             $table->unsignedInteger('match_B')->nullable();
+            $table->string('bracket_type')->nullable();
             $table->json('results')->nullable();
         });
     }

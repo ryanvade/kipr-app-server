@@ -39,7 +39,7 @@ class Seeding extends Bracket {
         foreach ($teams as $team) {
             for($n = 0; $n < 3; $n++) {
                 $match = new Match();
-                $match->team_A = $team->id;
+                $match->teamA()->associate($team);
                 $match->match_type = "seeding";
                 $match->round = $n;
                 $matches->push($match);

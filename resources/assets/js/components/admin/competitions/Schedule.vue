@@ -3,37 +3,26 @@
     <nav class="level">
       <div class="level-left">
         <p class="subtitle has-text-centered">
-          <strong>Schedule</strong>
-        </p>
-      </div>
-      <div class="level-right">
-        <p class="level-item">
-          <a v-if="competition.schedule != null" class="card-footer-item" id="update" @click="updateSchedule">Update</a>
-          <a v-else class="card-footer-item" id="update" @click="updateSchedule">Create</a>
+          <strong>Seeding</strong>
         </p>
       </div>
     </nav>
-    <div v-if="competition.schedule == null">
+    <div v-if="schedule == null">
         A schedule has not been created yet.
     </div>
       <table v-else class="table is-hoverable is-fullwidth">
         <thead>
           <tr>
-            <th>Time</th>
-            <th v-for="table in 3">Table {{ table }}</th>
+            <th>Team</th>
+            <th v-for="match in 3">Round {{ match }}</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="time in sortedSeeding">
-            <td>{{ new Date(time.time).toLocaleTimeString() }}</td>
-            <td v-for="match in time.matches" @click="gotoMatch(match)"><a>{{ match.match_id }}</a></td>
-          </tr>
-          <tr>
-              <td> BREAK </td>
-          </tr>
-          <tr v-for="time in sortedEliminiation">
-            <td>{{ new Date(time.time).toLocaleTimeString() }}</td>
-            <td v-for="match in time.matches" @click="gotoMatch(match)"><a>{{ match.match_id }}</a></td>
+          <tr v-for="team in teams">
+            <td>{{ team.name }}</td>
+            <td v-for="match in team.matches" @click="gotoMatch(match)"><a v-if="match.results" >{{ match.results.score }}</a></td>
+            <td> 0 </td>
           </tr>
         </tbody>
       </table>
@@ -45,65 +34,57 @@ export default {
   props: ["competition"],
   data() {
     return {
-        seeding: {},
-        sortedSeeding: [],
-        elimination: {},
-        sortedEliminiation: []
+        schedule: null,
+        teams: {},
     };
   },
   mounted() {
       console.log(this.competition.tables)
+      this.getSchedule();
   },
   methods: {
-      updateSchedule() {
-          window.axios.post(`/api/competition/${this.competition.id}/updateSchedule`).then((response) => {
-            this.competition.schedule = response.data;
-            this.seeding = {};
-            this.elimination = {};
-            for (var i in this.competition.schedule.seeding) {
-                var match = this.competition.schedule.seeding[i];
-                match.start_time.date = Date.parse(match.start_time.date);
-
-                if(!this.seeding[match.start_time.date])
-                    this.seeding[match.start_time.date] = {time: match.start_time.date, matches: []};
-
-                this.seeding[match.start_time.date].matches.push(match);
-            }
-
-            for (var i in this.competition.schedule.elimination) {
-                var match = this.competition.schedule.elimination[i];
-
-                if(!this.elimination[match.start_time.date])
-                    this.elimination[match.start_time.date] = {time: match.start_time.date, matches: []};
-
-                this.elimination[match.start_time.date].matches.push(match);
-            }
-
-            this.sortedSeeding = [];
-
-            for(var timeslot in this.seeding) {
-                this.sortedSeeding.push(this.seeding[timeslot]);
-            }
-            this.sortedSeeding.sort(function(a, b) {
-                  return a.time - b.time;
-              });
-
-            this.sortedEliminiation = [];
-
-            for(var timeslot in this.elimination) {
-                this.sortedEliminiation.push(this.elimination[timeslot]);
-            }
-            this.sortedEliminiation.sort(function(a, b) {
-                  return a.time - b.time;
-              });
-
-          }).catch((error) => {
-            console.error(error);
-          });
+    displaySeeding() {
+		for (var match of this.schedule) {
+			if(match.match_type == "seeding") {
+                if(!this.teams[match.team_A]) {
+				    this.teams[match.team_A] = match.team_a;
+                    this.teams[match.team_A].matches = [];
+                }
+				this.teams[match.team_A].matches.push(match);
+			}
+		}
     },
     gotoMatch(match) {
-        console.log(match);
-      this.$router.push(`/admin/matches/${match.match_id}`);
+        console.log(this.$refs[match]);
+        this.highlighed = match;
+        this.$refs[match][0].scrollIntoView();
+    },
+    getSchedule() {
+      window.axios.get(`/api/competition/${this.competition.id}/matches`).then((response) => {
+        this.schedule = response.data;
+        this.loading = false;
+        this.displaySeeding();
+      }).catch((error) => {
+        console.error(error);
+        if (error.response.status == 401) {
+          // redirect to login page
+          window.notification("warning", "You have been logged out due to inactivity.");
+          document.cookie = "notification=danger|You have been logged out due to inactivity";
+          window.location.href = "/login";
+        }
+        window.notification("danger", error.message);
+      });
+    },
+    ontop(r) {
+        if(r <= 0) return 0;
+        if(r == 1) return 2.0;
+        return this.ontop(r-1) + this.between(r-2);
+        //return 0;
+    },
+    between(r) {
+        if(r == 0) return 1;
+        return (1 << (r + 1));
+        //return 1;
     }
   },
   directives: {

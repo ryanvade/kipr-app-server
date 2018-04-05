@@ -10,6 +10,7 @@ use KIPR\Competition;
 use KIPR\Judging\Tabulator;
 use KIPR\Judging\Score;
 use KIPR\Events\MatchScored;
+use KIPR\Http\Requests\ScoreMatch;
 use Illuminate\Http\Request;
 use KIPR\Filters\MatchFilter;
 use KIPR\Exceptions\InvalidResultException;
@@ -44,20 +45,20 @@ class MatchController extends Controller
         $match->teamA = Team::find($match->team_A);
         $match->teamB = Team::find($match->team_B);
         $match->competition = Competition::find($match->competition_id);
+        $match->results = json_decode($match->results);
       }
       return $results;
     }
 
     public function get(Match $match)
     {
+        $match->results = json_decode($match->results);
         return $match;
     }
 
-    public function score(Competition $competition, Match $match, Request $request)
+    public function score(Competition $competition, Match $match, ScoreMatch $request)
     {
-        $request->validate([
-          'results' => 'bail|required|json'
-        ]);
+        $results=$request->results;
 
         if ($competition->ruleset()->first() == null) {
             return response()->json([

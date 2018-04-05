@@ -16,11 +16,11 @@ class EventServiceProvider extends ServiceProvider
         'KIPR\Events\Event' => [
             'KIPR\Listeners\EventListener',
         ],
-        'App\Events\MatchScored' => [
-            'App\Listeners\UpdateBracket',
-            'App\Listeners\PushMatchToJudge',
+        'KIPR\Events\MatchScored' => [
+            'KIPR\Listeners\UpdateBracket',
+            //'KIPR\Listeners\PushMatchToJudge',
         ],
-        'App\Events\MatchReady' => [],
+        'KIPR\Events\MatchReady' => [],
     ];
 
     /**

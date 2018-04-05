@@ -55,6 +55,14 @@ class CompetitionController extends Controller
       return $competition;
     }
 
+    public function getMatches(Competition $competition) {
+        $matches = $competition->matches()->get();
+        foreach ($matches as $match) {
+            $match->results = json_decode($match->results);
+        }
+        return $matches;
+    }
+
     public function delete(Competition $competition) {
       $competition->delete();
       return response()->json([

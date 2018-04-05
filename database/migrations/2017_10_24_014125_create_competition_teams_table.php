@@ -17,6 +17,7 @@ class CreateCompetitionTeamsTable extends Migration
             $table->increments('id');
             $table->boolean('signed_in')->default(false);
             $table->dateTimeTz('sign_in_time')->nullable();
+            $table->unsignedInteger('seeding')->default(0);
             $table->timestamps();
 
             $table->unsignedInteger('competition_id');
