@@ -54,9 +54,9 @@ class CompetitionDocumentController extends Controller
      * @param  \KIPR\CompetitionDocument  $competitionDocument
      * @return \Illuminate\Http\Response
      */
-    public function show(CompetitionDocument $competitionDocument)
+    public function show(CompetitionDocument $document)
     {
-        //
+        return $document;
     }
 
     /**

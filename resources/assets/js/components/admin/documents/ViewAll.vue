@@ -19,35 +19,21 @@
       </div>
       <div class="level-right">
         <p class="level-item">
-          <router-link class="button is-primary" :to="{ name: 'create_competition', params: {} }">Create</router-link>
+          <router-link class="button is-primary" :to="{ name: 'create_document', params: {} }">Create</router-link>
         </p>
       </div>
     </nav>
 
-    <div class="" v-if="!loading">
-      <div class="card" v-for="doc in documents">
-        <div class="card-image">
-          <figure class="image">
-            DOCUMENT PREVIEW
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content">
-            </div>
-          </div>
-
-          <footer class="card-footer">
-            <a class="card-footer-item is-danger delete-button">Delete</a>
-          </footer>
-        </div>
-      </div>
+    <div class="document-preview-wrappers" v-if="!loading">
+      <DocumentPreview v-for="doc in documents" :document="doc"></DocumentPreview>
     </div>
   </div>
 </template>
 
 <script>
+import DocumentPreview from './DocumentPreview.vue';
 export default {
+  components: {DocumentPreview},
   data() {
     return {
       loading: true,

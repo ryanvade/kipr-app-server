@@ -47,4 +47,4 @@ Route::get('/match', 'MatchController@getAll');
 Route::get('/auth/token', 'ApiController@getToken');
 
 // Documents
-Route::resource('/document', 'CompetitionDocumentController');
+Route::apiResource('/document', 'CompetitionDocumentController');

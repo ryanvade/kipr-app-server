@@ -27,6 +27,8 @@
     <notification></notification>
   </div>
     <!-- Scripts -->
+    <script src="{{ asset('js/pdf.min.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('js/pdf.worker.min.js') }}" charset="utf-8"></script>
     <script src="//{{ Request::getHost() }}:3000/socket.io/socket.io.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/notification.js') }}"></script>
