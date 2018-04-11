@@ -234,3 +234,29 @@
   width: 100%;
   position: absolute;
 }
+
+.documents-page {
+  .level {
+    background: white;
+    padding: 15px;
+  }
+
+  .document-preview {
+    max-width: 350px;
+    min-width: 300px;
+    min-height: 100px;
+    max-height: 600px;
+    float: left;
+    margin-bottom: 20px;
+
+    .loader-wrapper {
+      height: auto;
+      padding-left: 95px;
+      padding-top: 25px;
+    }
+  }
+
+  .document-canvas {
+    cursor: pointer;
+  }
+}

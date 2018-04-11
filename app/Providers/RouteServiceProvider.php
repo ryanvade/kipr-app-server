@@ -2,6 +2,7 @@
 
 namespace KIPR\Providers;
 
+use KIPR\CompetitionDocument;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -26,6 +27,10 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind('document', function ($value) {
+          return CompetitionDocument::find($value) ?? abort(404);
+        });
     }
 
     /**

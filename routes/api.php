@@ -45,3 +45,6 @@ Route::patch('/team/{team}', 'TeamController@patch');
 Route::get('/match', 'MatchController@getAll');
 // Extra Auth
 Route::get('/auth/token', 'ApiController@getToken');
+
+// Documents
+Route::apiResource('/document', 'CompetitionDocumentController');

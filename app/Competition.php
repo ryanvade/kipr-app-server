@@ -6,6 +6,7 @@ use KIPR\Team;
 use KIPR\Rule;
 use KIPR\Match;
 use KIPR\CompetitionTeam;
+use KIPR\CompetitionDocument;
 use KIPR\Events\CompetitionCreated;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,5 +55,9 @@ class Competition extends Model
 
     public function competitionTeams() {
       return $this->hasMany(CompetitionTeam::class);
+    }
+
+    public function documents() {
+      return $this->belongsToMany(CompetitionDocument::class, 'competition_competition_document', 'document_id', 'competition_id');
     }
 }

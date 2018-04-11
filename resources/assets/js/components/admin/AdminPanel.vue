@@ -8,16 +8,47 @@
             <img src="/images/botguy.png" alt="Botguy" style="height: 40px!important; margin-right: 3px;">
             KIPR Scoring App
           </a>
-          <div class="navbar-burger burger" data-target="navMenu">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div class="navbar-burger burger" data-target="navMenu" @click="toggleMobileMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </div>
         </div>
-        <div id="navMenu" class="navbar-menu">
+        <div id="navMenu" :class="navClass">
           <!-- Left side of Navbar -->
-          <div class="navbar-start">
-            <router-link class="navbar-item" :to="{ name: 'index', params: {} }" exact>Admin Home</router-link>
+          <div class="navbar-start is-hidden-desktop">
+            <ul class="menu-list">
+              <li>
+                <router-link class="navbar-item" :to="{ name: 'index', params: {} }" exact>Admin Home</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'view_all_competitions', params: {} }" exact>View All Competitions</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'create_competition', params: {} }">Create Competition</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'view_all_teams', params: {} }" exact>View All Teams</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'create_team', params: {} }" exact>Create Team</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'ruleset_create', params: {} }" exact>Create Ruleset</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'view_all_documents', params: {} }" exact>View All Documents</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'create_document', params: {} }" exact>Upload Document</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'judging_tokens', params: {} }" exact>Judging Authentication</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'signin_tokens', params: {} }" exact>Sign In Authentication</router-link>
+              </li>
+            </ul>
           </div>
           <!-- Right side of Navbar -->
           <div class="navbar-right">
@@ -59,25 +90,34 @@
                 <router-link class="" :to="{ name: 'view_all_teams', params: {} }" exact>View All Teams</router-link>
               </li>
               <li>
-                <router-link class="" :to="{ name: 'create_team', params: {} }">Create Team</router-link>
+                <router-link class="" :to="{ name: 'create_team', params: {} }" exact>Create Team</router-link>
               </li>
-              <li>
-                <router-link class="" :to="{ name: 'upload_teams', params: {} }">Upload Teams</router-link>
-              </li>
+              <!-- <li>
+                <router-link class="" :to="{ name: 'upload_teams', params: {} }" exact>Upload Teams</router-link>
+              </li> -->
             </ul>
             <p class="menu-label has-text-weight-bold">Rulesets</p>
             <ul class="menu-list">
               <li>
-                <router-link class="" :to="{ name: 'ruleset_create', params: {} }">Create Ruleset</router-link>
+                <router-link class="" :to="{ name: 'ruleset_create', params: {} }" exact>Create Ruleset</router-link>
+              </li>
+            </ul>
+            <p class="menu-label has-text-weight-bold">Competition Documents</p>
+            <ul class="menu-list">
+              <li>
+                <router-link class="" :to="{ name: 'view_all_documents', params: {} }" exact>View All Documents</router-link>
+              </li>
+              <li>
+                <router-link class="" :to="{ name: 'create_document', params: {} }" exact>Upload Document</router-link>
               </li>
             </ul>
             <p class="menu-label has-text-weight-bold">Authentication</p>
             <ul class="menu-list">
               <li>
-                <router-link class="" :to="{ name: 'judging_tokens', params: {} }">Judging Authentication</router-link>
+                <router-link class="" :to="{ name: 'judging_tokens', params: {} }" exact>Judging Authentication</router-link>
               </li>
               <li>
-                <router-link class="" :to="{ name: 'signin_tokens', params: {} }">Sign In Authentication</router-link>
+                <router-link class="" :to="{ name: 'signin_tokens', params: {} }" exact>Sign In Authentication</router-link>
               </li>
             </ul>
           </aside>
@@ -94,7 +134,11 @@
 
 <script>
 export default {
-  mounted() {},
+  data() {
+    return {
+      isActive: false
+    };
+  },
   methods: {
     logout() {
       window.axios.post('/logout').then((response) => {
@@ -111,6 +155,14 @@ export default {
           window.location.href = "/login";
         }
       });
+    },
+    toggleMobileMenu() {
+      this.isActive = !this.isActive;
+    }
+  },
+  computed: {
+    navClass() {
+      return (this.isActive)? "navbar-menu is-active": "navbar-menu";
     }
   }
 }
