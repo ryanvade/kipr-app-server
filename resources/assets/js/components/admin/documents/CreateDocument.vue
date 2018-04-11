@@ -73,9 +73,10 @@ export default {
       window.axios.post('/api/document', data, config).then((response) => {
         console.log(response);
         window.notification("success", "Document Uploaded");
-        $router.push('/admin/documents/' + response.document.id);
+        this.$router.push('/admin/documents/' + response.data.document.id);
       }).catch((error) => {
         console.error(error);
+        window.notification("danger", error.message);
       });
     }
   }

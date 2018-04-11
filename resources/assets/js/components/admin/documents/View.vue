@@ -11,9 +11,9 @@
         </p>
       </div>
       <div class="level-right">
-        <p class="level-item">
+        <!-- <p class="level-item">
           <a class="card-footer-item" id="edit" @click="$router.push('/admin/documents/' + document.id + '/edit')">Edit</a>
-        </p>
+        </p> -->
         <p class="level-item">
           <a class="card-footer-item is-danger" id="delete" @click="showWarning = true">Delete</a>
         </p>
@@ -32,8 +32,7 @@
         <div class="" slot="body">
           <div class="has-text-weight-bold">Are you sure you wish to delete {{ document.name }}?</div>
           <p class="is-5 is-italic">
-            All related match information will also be deleted. Rulesets and teams will
-            be unaffected.
+            Files on disk will also be deleted.
           </p>
         </div>
         <div class="buttons has-addons is-centered" slot="footer">
@@ -93,7 +92,6 @@ export default {
         console.log(response);
         this.document = response.data;
         this.loadPreview();
-        this.loading = false;
       }).catch((error) => {
         console.error(error);
         if (error.response.status == 401) {
@@ -136,7 +134,7 @@ export default {
       let loader = window.pdfjsLib.getDocument(url);
       loader.promise.then((pdf) => {
         console.log("PDF Loaded");
-
+        self.loading = false;
         pdf.getPage(self.page).then((page) => {
           let viewport = page.getViewport(self.scale);
           let canvas = document.getElementById(self.documentPreviewId);
@@ -153,7 +151,10 @@ export default {
             console.log('Page rendered');
           });
         });
-      })
+      }).catch((error) => {
+        console.error(error);
+        self.loading = false;
+      });
     }
   }
 }

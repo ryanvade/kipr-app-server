@@ -2,6 +2,7 @@
 
 namespace KIPR;
 
+use Storage;
 use KIPR\Competition;
 use Illuminate\Database\Eloquent\Model;
 

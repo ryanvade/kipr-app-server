@@ -2,6 +2,7 @@
 
 namespace KIPR\Http\Controllers;
 
+use Storage;
 use KIPR\CompetitionDocument;
 use Illuminate\Http\Request;
 use KIPR\Http\Requests\CreateCompetitionDocumentRequest;
@@ -77,8 +78,12 @@ class CompetitionDocumentController extends Controller
      * @param  \KIPR\CompetitionDocument  $competitionDocument
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionDocument $competitionDocument)
+    public function destroy(CompetitionDocument $document)
     {
-        //
+        $document->delete();
+        return response()->json([
+          'status' => "success",
+          'message' => 'document deleted'
+        ]);
     }
 }
