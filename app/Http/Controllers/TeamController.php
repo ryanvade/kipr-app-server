@@ -22,7 +22,7 @@ class TeamController extends Controller
           'getTeamCount',
           'getAll',
           'get',
-
+          'seed',
         ]
       ]);
     }
@@ -54,6 +54,25 @@ class TeamController extends Controller
         'competition_id' => $competition->id,
         'sign_in_time' => $teamPivot->pivot->sign_in_at
       ]);
+    }
+
+    public function seed(Competition $competition, Team $team, Request $request)
+    {
+        info($competition->id);
+        info($team->id);
+        $teamPivot = $competition->teams()->where('team_id', $team->id)->first();
+        if ($teamPivot == null) {
+            return response()->json([
+            'status' => 'error',
+            'message' => 'the team is not registered with the competition'
+          ], 409);
+        }
+
+        return response()->json([
+            'team_id' => $team->id,
+            'competition_id' => $competition->id,
+            'seeding_score' => $teamPivot->pivot->seeding
+        ]);
     }
 
     public function getTeamCount()

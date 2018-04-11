@@ -23,6 +23,8 @@ class CreateCompetitionsTable extends Migration
             $table->dateTimeTz('end_date');
             $table->integer('ruleset_id')->unsigned()->nullable();
             $table->foreign('ruleset_id')->references('id')->on('rulesets')->onDelete('set null');
+            $table->integer('tables')->unsigned();
+            $table->json('schedule')->nullable();
         });
     }
 

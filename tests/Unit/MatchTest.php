@@ -33,6 +33,8 @@ class MatchTest extends TestCase
         # create a match
         $competition->matches()->create([
         'match_time' => Carbon::Now(),
+        'match_type' => 'testing',
+        'round' => 0,
         'team_A' => $team->id
       ]);
         # get the match
@@ -56,6 +58,8 @@ class MatchTest extends TestCase
         # create a match
         $competition->matches()->create([
         'match_time' => Carbon::Now(),
+        'match_type' => 'testing',
+        'round' => 0,
         'team_A' => $teamA->id,
         'team_B' => $teamB->id,
       ]);

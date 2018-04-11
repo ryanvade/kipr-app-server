@@ -17,7 +17,8 @@ class CompetitionSeeder extends Seeder
           'name' => 'Test Competition 1',
           'location' => 'Test Location 1',
           'start_date' => Carbon::now(),
-          'end_date' => Carbon::now()->addDays(2)
+          'end_date' => Carbon::now()->addDays(2),
+          'tables' => 1
         ]);
     }
 }

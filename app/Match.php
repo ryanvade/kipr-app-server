@@ -10,11 +10,17 @@ use Illuminate\Database\Eloquent\Model;
 class Match extends Model
 {
     protected $fillable = [
+      'match_type',
+      'round',
       'match_time',
+      'match_table',
       'competition_id',
       'results',
+      'winner',
       'team_A',
-      'team_B'
+      'team_B',
+      'match_A',
+      'match_B',
     ];
 
     /**
@@ -40,6 +46,21 @@ class Match extends Model
     public function teamB()
     {
         return $this->belongsTo(Team::class, 'team_B');
+    }
+
+    public function winner()
+    {
+        return $this->belongsTo(Team::class, 'winner');
+    }
+
+    public function matchA()
+    {
+        return $this->belongsTo(Match::class, 'match_A');
+    }
+
+    public function matchB()
+    {
+        return $this->belongsTo(Match::class, 'match_B');
     }
 
     public function competition()

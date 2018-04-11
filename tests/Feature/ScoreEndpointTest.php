@@ -35,6 +35,8 @@ class ScoreEndpointTest extends TestCase
         // Setup a Match
         $match = Match::create([
           'match_time' => Carbon::Now(),
+          'match_type' => 'testing',
+          'round' => 0,
           'competition_id' => $competition->id,
           'team_A' => $teamA->id,
           'team_B' => $teamB->id
@@ -71,6 +73,8 @@ class ScoreEndpointTest extends TestCase
         // Setup a Match
         $match = Match::create([
           'match_time' => Carbon::Now(),
+          'match_type' => 'testing',
+          'round' => 0,
           'competition_id' => $competition->id,
           'team_A' => $teamA->id,
           'team_B' => $teamB->id
@@ -115,6 +119,8 @@ class ScoreEndpointTest extends TestCase
       // Setup a Match
       $match = Match::create([
         'match_time' => Carbon::Now(),
+        'match_type' => 'testing',
+        'round' => 0,
         'competition_id' => $competition->id,
         'team_A' => $teamA->id,
         'team_B' => $teamB->id

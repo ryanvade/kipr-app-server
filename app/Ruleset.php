@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ruleset extends Model
 {
     protected $fillable = [
+        'name',
         'events',
         'rules',
     ];

@@ -16,6 +16,7 @@ class CreateRulesetsTable extends Migration
         Schema::create('rulesets', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('name');
             $table->json('events');
             $table->json('rules');
         });

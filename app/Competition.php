@@ -8,6 +8,8 @@ use KIPR\Match;
 use KIPR\CompetitionTeam;
 use KIPR\CompetitionDocument;
 use KIPR\Events\CompetitionCreated;
+use KIPR\Scheduling\DoubleElim;
+use KIPR\Scheduling\Seeding;
 use Illuminate\Database\Eloquent\Model;
 
 class Competition extends Model
@@ -31,7 +33,6 @@ class Competition extends Model
     protected $with = [
       'ruleset'
     ];
-
 
     public function teams()
     {

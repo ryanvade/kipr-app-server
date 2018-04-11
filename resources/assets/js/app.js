@@ -69,7 +69,7 @@ const routes = [{
   {
     path: '/admin/ruleset/create',
     name: 'ruleset_create',
-    component: require('./components/admin/rulesets/map.vue')
+    component: require('./components/admin/rulesets/NewRuleset.vue')
   },
   {
     path: '/admin/ruleset/zones',
@@ -110,6 +110,11 @@ const routes = [{
     path: '/admin/competitions/:id/teams/register',
     name: 'register_teams',
     component: require('./components/admin/competitions/RegisterTeams.vue')
+  },
+  {
+    path: '/admin/matches/:id',
+    name: 'view_match',
+    component: require('./components/admin/matches/View.vue')
   },
   {
     path: '/admin/teams',

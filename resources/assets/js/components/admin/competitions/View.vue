@@ -48,6 +48,9 @@
         </tbody>
       </table>
     </div>
+    <schedule v-bind:competition="competition"/>
+    <seeding v-bind:competition="competition"/>
+    <bracket v-bind:competition="competition"/>
     <div class="delete-competition-modal-wrapper">
       <modal v-if="showWarning" v-on:close="showWarning = false">
         <div class="" slot="header">
@@ -87,9 +90,15 @@
 
 <script>
 import Modal from '../../Modal.vue';
+import Schedule from './Schedule.vue';
+import Bracket from './Bracket.vue';
+import Seeding from './Seeding.vue';
 export default {
   components: {
     'modal': Modal,
+    'schedule': Schedule,
+    'bracket': Bracket,
+    'seeding': Seeding
   },
   data() {
     return {

@@ -2,7 +2,6 @@
 
 namespace KIPR\Events;
 
-use KIPR\Match;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,14 +9,13 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use KIPR\Match;
 
-class MatchScored implements ShouldBroadcast
+class Event
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $match;
-    public $fontawesome = "fa fa-calculator";
-    public $ionicon = "calculator";
+
     /**
      * Create a new event instance.
      *
@@ -25,7 +23,7 @@ class MatchScored implements ShouldBroadcast
      */
     public function __construct(Match $match)
     {
-        $this->match = $match;
+        $this->match = $match
     }
 
     /**

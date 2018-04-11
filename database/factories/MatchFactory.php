@@ -18,6 +18,8 @@ $factory->define(KIPR\Match::class, function (Faker $faker) {
     }
     return [
         'match_time' => $faker->dateTime,
+        'round' => $faker->numberBetween(0, 10),
+        'match_type' => "test", #$faker->randomElement(['seeding', 'double_elim']),
         'competition_id' => $competition->id,
         'team_A' => $team_A->id,
         'team_B' => $team_B->id
