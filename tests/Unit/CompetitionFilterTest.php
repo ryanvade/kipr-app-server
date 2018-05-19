@@ -7,6 +7,8 @@ use Tests\TestCase;
 use KIPR\Competition;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class CompetitionFilterTest extends TestCase
 {
@@ -21,13 +23,11 @@ class CompetitionFilterTest extends TestCase
     // register one of the teams with the competition
     $registered_competition->teams()->attach($team);
     // now get the teams not registered with the competition
-    $response = $this->get('/api/competition?registered=1,0'); // 1 = competition id, 0 = false
+    $response = $this->get('/api/competition?registered=' . $team->id . ',0'); // 1 = team id, 0 = false
     // now check the response JSON
     $response->assertStatus(200)
              ->assertJsonMissingExact($registered_competition->toArray())
-             ->assertJson([
-               'total' => '1'
-             ]);
+             ->assertSeeText('"total":1');
   }
 
   public function test_getting_all_registered_competitionss_does_not_include_nonregistered_competitions() {
@@ -39,12 +39,10 @@ class CompetitionFilterTest extends TestCase
     // register one of the teams with the competition
     $registered_competition->teams()->attach($team);
     // now get the teams not registered with the competition
-    $response = $this->get('/api/competition?registered=1,1'); // 1 = competition id, 0 = false
+    $response = $this->get('/api/competition?registered='. $team->id . ',1'); // 1 = team id, 1 = true
     // now check the response JSON
     $response->assertStatus(200)
              ->assertJsonMissingExact($non_registered_competition->toArray())
-             ->assertJson([
-               'total' => '1'
-             ]);
+             ->assertSeeText('"total":1');
   }
 }

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use KIPR\Competition;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ScheduleEndpointTest extends TestCase
 {

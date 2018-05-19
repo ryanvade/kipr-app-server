@@ -10,6 +10,8 @@ use Laravel\Passport\Passport;
 use Laravel\Passport\ClientRepository;
 use Laravel\Passport\PersonalAccessClient;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class SubmitScoreTest extends TestCase
 {

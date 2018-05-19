@@ -2,6 +2,9 @@
 
 namespace KIPR\Providers;
 
+use \DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +17,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Schema::defaultStringLength(191);
+        $date = DB::table('competitions')
+                  ->groupBy('start_date')
+                  ->pluck('start_date')
+                  ->sort()
+                  ->last();
+        if($date != null) {
+          $year = (new Carbon($date))->year;
+        } else {
+          $year = null;
+        }
+        View::share('latestseason', $year);
     }
 
     /**
@@ -24,6 +37,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-      //
+        //
     }
 }

@@ -1,4 +1,6 @@
-<!-- Copyright (c) 2018 KISS Institute for Practical Robotics
+<?php
+/*
+ Copyright (c) 2018 KISS Institute for Practical Robotics
 
 BSD v3 License
 
@@ -27,9 +29,8 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
-<?php
-
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 namespace KIPR\Http\Controllers;
 
 use KIPR\Match;
@@ -40,16 +41,16 @@ use KIPR\Events\MatchScored;
 use Illuminate\Http\Request;
 use Carbon;
 
-
 class ScheduleController extends Controller
 {
-
-    public function schedule(Competition $competition) {
+    public function schedule(Competition $competition)
+    {
         $teams = $competition->teams()->withPivot("signed_in")->where("signed_in", true)->get();
 
         // If no teams are signed in yet assume tenetive schedule
-        if($teams->count() == 0)
+        if ($teams->count() == 0) {
             $teams = $competition->teams()->get();
+        }
 
         assert($teams->count() > 0);
 
@@ -80,11 +81,13 @@ class ScheduleController extends Controller
         $schedule["seeding"] = [];
         $schedule["elimination"] = [];
 
-        foreach(["seeding", "elimination"] as $round) {
+        foreach (["seeding", "elimination"] as $round) {
             $firstMatch = $matches[$round][0]->match_time;
             $lastMatch = $matches[$round][0]->match_time;
-            foreach($matches[$round] as $match) {
-                array_push($schedule[$round], [
+            foreach ($matches[$round] as $match) {
+                array_push(
+                    $schedule[$round],
+                    [
                     "match_id"=> $match->id,
                     "start_time" => $match->match_time,
                     "table_num" => $match->match_table]
@@ -101,7 +104,8 @@ class ScheduleController extends Controller
     /**
      * Generates the match schedule and saves it in the database
      */
-    public function updateSchedule(Competition $competition, Request $request) {
+    public function updateSchedule(Competition $competition, Request $request)
+    {
         // Delete the current schedule
         $competition->matches()->delete();
 
@@ -111,9 +115,9 @@ class ScheduleController extends Controller
         // Commit the schedule to the DB
         $startTime = new Carbon\Carbon($competition->start_date);
         $seedingLength = 0;
-        foreach(["seeding", "elimination"] as $round) {
-            foreach($matches[$round] as $match) {
-                if($match->matchAObj) {
+        foreach (["seeding", "elimination"] as $round) {
+            foreach ($matches[$round] as $match) {
+                if ($match->matchAObj) {
                     info("Object A");
                     $competition->matches()->save($match->matchAObj);
 
@@ -123,22 +127,22 @@ class ScheduleController extends Controller
                     $match->matchA()->associate($match->matchAObj);
                     unset($match->matchAObj);
                 }
-                if($match->matchBObj) {
+                if ($match->matchBObj) {
                     info("Object B");
                     $match->matchB()->associate($match->matchBObj);
                     $competition->matches()->save($match->matchBObj);
                     unset($match->matchBObj);
                 }
 
-                if(!isset($match->team_A)) {
+                if (!isset($match->team_A)) {
                     $match->team_A = 0;
                 }
 
-                if($match->match_time > $seedingLength) {
+                if ($match->match_time > $seedingLength) {
                     $seedingLength = $match->match_time;
                 }
 
-                if($round == "elimination") {
+                if ($round == "elimination") {
                     $match->match_time = $startTime->copy()->addMinutes(5 * ($match->match_time + $seedingLength) + 60);
                 } else {
                     $match->match_time = $startTime->copy()->addMinutes(5 * $match->match_time);
@@ -148,42 +152,42 @@ class ScheduleController extends Controller
             }
         }
 
-            foreach($matches["elimination"] as $match) {
-                info($match->id);
-                if($match->match_A < 1) {
-                    if ($match->team_A < 1) {
-                        // BYE for B
-                        $match->results = "{\"score\": 0, \"winner\": $match->team_B, \"loser\": 0}";
-                        $competition->matches()->save($match);
-                        event(new MatchScored($match));
-                    }
-                }
-                if($match->match_B < 1) {
-                    if ($match->team_B < 1) {
-                        // BYE for A
-                        $match->results = "{\"score\": 0, \"winner\": $match->team_A, \"loser\": 0}";
-                        $competition->matches()->save($match);
-                        info("BYE FOR A");
-                        info($match);
-                        event(new MatchScored($match));
-                    }
+        foreach ($matches["elimination"] as $match) {
+            info($match->id);
+            if ($match->match_A < 1) {
+                if ($match->team_A < 1) {
+                    // BYE for B
+                    $match->results = "{\"score\": 0, \"winner\": $match->team_B, \"loser\": 0}";
+                    $competition->matches()->save($match);
+                    event(new MatchScored($match));
                 }
             }
+            if ($match->match_B < 1) {
+                if ($match->team_B < 1) {
+                    // BYE for A
+                    $match->results = "{\"score\": 0, \"winner\": $match->team_A, \"loser\": 0}";
+                    $competition->matches()->save($match);
+                    info("BYE FOR A");
+                    info($match);
+                    event(new MatchScored($match));
+                }
+            }
+        }
 
         //$schedule = [];
 
         //foreach(["seeding", "elimination"] as $round) {
-            //$firstMatch = $matches[$round][0]->match_time;
-            //$lastMatch = $matches[$round][0]->match_time;
-            //foreach($matches[$round] as $match) {
-                //array_push($schedule, [
-                    //"match_id"=> $match->id,
-                    //"start_time" => $match->match_time,
-                    //"table_num" => $match->match_table]
-                //);
-                //$firstMatch = min($match->match_time, $firstMatch);
-                //$lastMatch = max($match->match_time, $lastMatch);
-            //}
+        //$firstMatch = $matches[$round][0]->match_time;
+        //$lastMatch = $matches[$round][0]->match_time;
+        //foreach($matches[$round] as $match) {
+        //array_push($schedule, [
+        //"match_id"=> $match->id,
+        //"start_time" => $match->match_time,
+        //"table_num" => $match->match_table]
+        //);
+        //$firstMatch = min($match->match_time, $firstMatch);
+        //$lastMatch = max($match->match_time, $lastMatch);
+        //}
         //}
 
         return $competition->matches()->get();

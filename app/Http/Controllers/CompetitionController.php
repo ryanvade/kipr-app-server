@@ -1,4 +1,6 @@
-<!-- Copyright (c) 2018 KISS Institute for Practical Robotics
+<?php
+/*
+ Copyright (c) 2018 KISS Institute for Practical Robotics
 
 BSD v3 License
 
@@ -27,11 +29,11 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
-<?php
-
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 namespace KIPR\Http\Controllers;
 
+use Validator;
 use Carbon\Carbon;
 use KIPR\Competition;
 use Illuminate\Http\Request;
@@ -53,6 +55,19 @@ class CompetitionController extends Controller
       ]
     ]);
   }
+
+    public function index(Request $request) {
+      return Competition::orderBy('start_date', 'DESC')->paginate(20);
+    }
+
+    public function orderByYear(Request $request, $year) {
+      $start = new Carbon('first day of January ' . $year);
+      $end = new Carbon('last day of December ' . $year);
+      return Competition::where('start_date', '>=', $start)
+                          ->where('start_date', '<=', $end)
+                          ->paginate(20);
+    }
+
     public function getCurrentCompetitions()
     {
         $today = Carbon::now();

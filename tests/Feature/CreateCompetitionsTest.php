@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use Laravel\Passport\Passport;
 use KIPR\User;
 use Carbon\Carbon;
 use Tests\TestCase;
 use KIPR\Competition;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CreateCompetitionsTest extends TestCase
 {
@@ -23,8 +25,8 @@ class CreateCompetitionsTest extends TestCase
         $start_date = Carbon::createFromFormat("m/d/Y h:iA", "01/31/2018 05:01PM");
         $end_date = Carbon::createFromFormat("m/d/Y h:iA", "01/31/2018 05:01PM")->addDays(2);
         # attempt to create a competition
-        $response = $this->actingAs($user)
-                       ->json('POST', "/api/competition", [
+        Passport::actingAs($user);
+        $response = $this->json('POST', "/api/competition", [
                          'name' => $name,
                          'location' => $location,
                          'startDate' => $start_date->format("m/d/Y h:iA"),
@@ -86,8 +88,8 @@ class CreateCompetitionsTest extends TestCase
           'end_date' => Carbon::createFromFormat("m/d/Y h:iA", "02/28/2018 05:01PM")->addDays(2)
         ]);
         # attempt to create a competition
-        $response = $this->actingAs($user)
-                             ->json('POST', "/api/competition", [
+        Passport::actingAs($user);
+        $response = $this->json('POST', "/api/competition", [
                                'name' => $name,
                                'location' => $location,
                                'startDate' => $start_date->format("m/d/Y h:iA"),

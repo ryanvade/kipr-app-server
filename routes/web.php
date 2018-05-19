@@ -1,4 +1,6 @@
-<!-- Copyright (c) 2018 KISS Institute for Practical Robotics
+<?php
+/*
+ Copyright (c) 2018 KISS Institute for Practical Robotics
 
 BSD v3 License
 
@@ -27,24 +29,22 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
-<?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-Auth::routes();
+//Auth::routes();
+// Authentication Routes...
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout');
+
+// Competition Routes
+Route::get('/competitions', 'CompetitionController@index');
+Route::get('/competitions/{year}', 'CompetitionController@orderByYear');
+
 
 Route::get('/admin{any}', 'AdminPanelController@index')->where('any', '.*');

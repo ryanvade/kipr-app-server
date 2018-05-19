@@ -9,6 +9,8 @@ use Tests\TestCase;
 use KIPR\Competition;
 use KIPR\Http\Controllers\ScheduleController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class MatchCreationTest extends TestCase
 {
@@ -31,7 +33,8 @@ class MatchCreationTest extends TestCase
         $schedule = $controller->schedule($competition);
 
         $this->assertEquals($TEAMS*3, count($schedule["seeding"]));
-        $this->assertEquals(16, count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '0')));
+        // dd(Match::all());
+        $this->assertEquals(16, count($schedule["elimination"]->where('match_type', 'WW')->where('round', '0')));
         $this->assertEquals(8 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '1')));
         $this->assertEquals(4 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '2')));
         $this->assertEquals(2 , count($schedule["elimination"]->where('match_type', 'double_elim_win')->where('round', '3')));

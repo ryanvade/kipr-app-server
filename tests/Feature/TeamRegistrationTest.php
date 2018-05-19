@@ -8,6 +8,8 @@ use Tests\TestCase;
 use KIPR\Competition;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class TeamRegistrationTest extends TestCase
 {
@@ -20,11 +22,11 @@ class TeamRegistrationTest extends TestCase
       // that is registered with the competition
       $competition->teams()->attach($team);
       // get all of the competitions registered with the competition
-      $response = $this->json('GET', '/api/competition/1/team');
+      $response = $this->json('GET', '/api/competition/' . $competition->id . '/team');
       // and check that the response has the team
       $response->assertStatus(200)
-               ->assertJson([
-                   $team->toArray()
+               ->assertJsonFragment([
+                   $competition->teams()->first()->toArray()
                ]);
     }
 
@@ -38,11 +40,11 @@ class TeamRegistrationTest extends TestCase
       // register the first Team
       $competition->teams()->attach($registeredTeam);
       // then get the list of registered teams
-      $response = $this->json('GET', '/api/competition/1/team');
+      $response = $this->json('GET', '/api/competition/' . $competition->id . '/team');
       // and check that the second team is not included
       $response->assertStatus(200)
-                ->assertJson([
-                    $registeredTeam->toArray()
+                ->assertJsonFragment([
+                    $competition->teams()->first()->toArray()
                 ])
                 ->assertJsonMissing([
                     $nonRegisteredTeam->toArray()
@@ -65,7 +67,7 @@ class TeamRegistrationTest extends TestCase
       $teamPivot->pivot->sign_in_time = Carbon::now();
       $teamPivot->pivot->save();
       // then get the list of registered teams
-      $response = $this->json('GET', '/api/competition/1/team?signed_in=0');
+      $response = $this->json('GET', '/api/competition/' . $competition->id . '/team?signed_in=0');
       // dd($response);
       // and check that the signed in team is not included
       $response->assertStatus(200)
@@ -91,7 +93,7 @@ class TeamRegistrationTest extends TestCase
       $teamPivot->pivot->sign_in_time = Carbon::now();
       $teamPivot->pivot->save();
       // then get the list of registered teams
-      $response = $this->json('GET', '/api/competition/1/team?signed_in=1');
+      $response = $this->json('GET', '/api/competition/ ' . $competition->id . '/team?signed_in=1');
       // dd($response);
       // and check that the unsigned in team is not included
       $response->assertStatus(200)

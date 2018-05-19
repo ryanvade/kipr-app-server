@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::pattern('year', '(20)\d{2}$');
 
         parent::boot();
 

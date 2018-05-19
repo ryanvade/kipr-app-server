@@ -7,9 +7,12 @@ use Tests\TestCase;
 use KIPR\Competition;
 use KIPR\Ruleset;
 use KIPR\Exceptions\InvalidResultException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 class ScoringTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_no_modifiers()
     {
         $ruleset = new Ruleset;
@@ -31,7 +34,7 @@ class ScoringTest extends TestCase
             "blue_ball_in_cup": 5,
             "total": 11
         }';
-        
+
         $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
@@ -51,7 +54,7 @@ class ScoringTest extends TestCase
         $expected = '{
             "total": 0
         }';
-        
+
         $score = Tabulator::score($ruleset, json_decode($results, true));
         $this->assertEquals($score, json_decode($expected, true));
     }
@@ -182,7 +185,7 @@ class ScoringTest extends TestCase
             "red_ball_in_cup": 5,
             "blue_ball_in_cup": 5
         }';
-        
+
         $expected = '{
             "robot_on_terrace": 15,
             "red_ball_in_cup": 5,

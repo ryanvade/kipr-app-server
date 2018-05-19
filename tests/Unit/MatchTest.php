@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use KIPR\Competition;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class MatchTest extends TestCase
 {

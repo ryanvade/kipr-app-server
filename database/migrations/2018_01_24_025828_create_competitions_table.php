@@ -1,4 +1,6 @@
-<!-- Copyright (c) 2018 KISS Institute for Practical Robotics
+<?php
+/*
+ Copyright (c) 2018 KISS Institute for Practical Robotics
 
 BSD v3 License
 
@@ -27,8 +29,8 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
-<?php
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -53,7 +55,7 @@ class CreateCompetitionsTable extends Migration
             $table->dateTimeTz('end_date');
             $table->integer('ruleset_id')->unsigned()->nullable();
             $table->foreign('ruleset_id')->references('id')->on('rulesets')->onDelete('set null');
-            $table->integer('tables')->unsigned();
+            $table->integer('tables')->unsigned()->default(1);
             $table->json('schedule')->nullable();
         });
     }

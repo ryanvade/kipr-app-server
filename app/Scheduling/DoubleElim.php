@@ -1,4 +1,6 @@
-<!-- Copyright (c) 2018 KISS Institute for Practical Robotics
+<?php
+/*
+ Copyright (c) 2018 KISS Institute for Practical Robotics
 
 BSD v3 License
 
@@ -27,43 +29,48 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
-<?php
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 namespace KIPR\Scheduling;
 
 use KIPR\Team;
 use KIPR\Match;
 
-class DoubleElim extends Bracket {
-
-    public function scheduleMatches($matches) {
+class DoubleElim extends Bracket
+{
+    public function scheduleMatches($matches)
+    {
         $tables = 3;
         $rounds = 10;
 
         // Flatten the matches into a single list ordered by round number
         $matchesFlat = collect();
-        for($r = 0; $r < $rounds; $r++) {
+        for ($r = 0; $r < $rounds; $r++) {
             $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'WW')->where('round', $r));
             $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'LL')->where('round', $r));
             $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'WL')->where('round', $r));
         }
         $matchesFlat = $matchesFlat->concat($matches->where('match_type', 'double_elim_finals'));
-
         // Assign matches to table in a round robin fashion
         $timeslot = 0;
         $match = $matchesFlat->getIterator();
-        while($match->valid()) {
-            for($t = 0; $t < $tables; $t++) {
-                if(!$match->valid()) break;
+        while ($match->valid()) {
+            for ($t = 0; $t < $tables; $t++) {
+                if (!$match->valid()) {
+                    break;
+                }
                 // Skip byes
-                while(!$match->current()->teamA() && !$match->current()->matchA()
-                    || !$match->current()->teamB() && !$match->current()->matchB()) $match->next();
+                while (!$match->current()->teamA() && !$match->current()->matchA()
+                    || !$match->current()->teamB() && !$match->current()->matchB()) {
+                    $match->next();
+                }
 
                 // We can't schedule matches at the same time as their dependents
-                if($match->current()->matchA && $match->current()->matchA->match_time >= $timeslot ||
-                        $match->current()->matchB && $match->current()->matchB->match_time >= $timeslot)
+                if ($match->current()->matchA && $match->current()->matchA->match_time >= $timeslot ||
+                        $match->current()->matchB && $match->current()->matchB->match_time >= $timeslot) {
                     continue;
+                }
 
                 $match->current()->match_table = $t;
                 $match->current()->match_time = $timeslot;
@@ -73,14 +80,14 @@ class DoubleElim extends Bracket {
         }
     }
 
-    public function createMatches($competition, $teams) {
+    public function createMatches($competition, $teams)
+    {
         $teams = collect($teams);
         $matches = collect([]);
         // Calculate bracket size
         $bracket_size = 1;
         $rounds = 0;
-        while($bracket_size < count($teams))
-        {
+        while ($bracket_size < count($teams)) {
             $rounds++;
             $bracket_size = $bracket_size * 2;
         }
@@ -101,16 +108,16 @@ class DoubleElim extends Bracket {
         $b = count($teams) - 1;
         $winner_matches->push(collect([]));
 
-        while(count($winner_matches[0]) < $match_count) {
+        while (count($winner_matches[0]) < $match_count) {
             $newMatch = new Match();
 
             // A has a bye
-            if($bye_teams->has($teams[$a]->id)) {
+            if ($bye_teams->has($teams[$a]->id)) {
                 $newMatch->teamA()->associate($teams[$a]);
                 $a++;
 
             // B has a bye
-            } else if($bye_teams->has($teams[$b]->id)) {
+            } elseif ($bye_teams->has($teams[$b]->id)) {
                 $newMatch->teamA()->associate($teams[$b]);
                 $b--;
 
@@ -130,9 +137,9 @@ class DoubleElim extends Bracket {
         }
 
         // Generate winners bracket
-        for($r = 1; $r < $rounds; $r++) {
+        for ($r = 1; $r < $rounds; $r++) {
             $winner_matches->push(collect([]));
-            for($m = 0; $m < 1 << ($rounds - $r); $m+=2) {
+            for ($m = 0; $m < 1 << ($rounds - $r); $m+=2) {
                 $newMatch = new Match();
                 $newMatch->matchAObj=($winner_matches[$r-1][$m]);
                 $newMatch->matchBObj=($winner_matches[$r-1][$m+1]);
@@ -151,7 +158,7 @@ class DoubleElim extends Bracket {
         $r = 0;
         $loser_matches = collect([]);
         $loser_matches->push(collect([]));
-        for($m = 0; $m < 1 << (($deRounds - $r) / 2); $m+=2) {
+        for ($m = 0; $m < 1 << (($deRounds - $r) / 2); $m+=2) {
             $newMatch = new Match();
             $newMatch->match_A = -1;
             $newMatch->matchAObj=($winner_matches[$r][$m]);
@@ -168,7 +175,7 @@ class DoubleElim extends Bracket {
 
         $r = 1;
         $loser_matches->push(collect([]));
-        for($m = 0; $m < 1 << (($deRounds - $r) / 2); $m++) {
+        for ($m = 0; $m < 1 << (($deRounds - $r) / 2); $m++) {
             $newMatch = new Match();
             $newMatch->matchAObj=($loser_matches[0][$m]);
             $newMatch->matchBObj=($winner_matches[1][$m]);
@@ -182,9 +189,9 @@ class DoubleElim extends Bracket {
         }
 
         // Generate losers bracket
-        for($r = 2; $r < $deRounds; $r++) {
+        for ($r = 2; $r < $deRounds; $r++) {
             $loser_matches->push(collect([]));
-            for($m = 0; $m < 1 << (($deRounds - $r) / 2); $m+=2) {
+            for ($m = 0; $m < 1 << (($deRounds - $r) / 2); $m+=2) {
                 $newMatch = new Match();
                 $newMatch->matchAObj=($loser_matches[$r-1][$m]);
                 $newMatch->matchBObj=($loser_matches[$r-1][$m+1]);
@@ -199,7 +206,7 @@ class DoubleElim extends Bracket {
 
             $r++;
             $loser_matches->push(collect([]));
-            for($m = 0; $m < 1 << (($deRounds - $r) / 2); $m++) {
+            for ($m = 0; $m < 1 << (($deRounds - $r) / 2); $m++) {
                 $newMatch = new Match();
                 $newMatch->matchAObj=($loser_matches[$r-1][$m]);
                 $newMatch->matchBObj=($winner_matches[$r/2][$m]);

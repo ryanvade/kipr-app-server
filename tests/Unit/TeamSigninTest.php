@@ -9,6 +9,8 @@ use Tests\TestCase;
 use KIPR\Competition;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class TeamSigninTest extends TestCase
 {
@@ -28,7 +30,7 @@ class TeamSigninTest extends TestCase
         # which is registered with the competition
         $competition->teams()->attach($team);
         # signin the team
-        $response = $this->json('POST', "/api/competition/1/team/1/signin");
+        $response = $this->json('POST', "/api/competition/". $competition->id ."/team/" . $team->id . "/signin");
         # check if the response
         $response->assertStatus(200)
                  ->assertJson([
@@ -54,7 +56,7 @@ class TeamSigninTest extends TestCase
         # and a team
         $team = factory(Team::class)->create();
         # signin the team
-        $response = $this->json('POST', "/api/competition/1/team/1/signin");
+        $response = $this->json('POST', "/api/competition/" . $competition->id . "/team/" . $team->id . "/signin");
         # check the response
         $response->assertStatus(409)
                ->assertJson([

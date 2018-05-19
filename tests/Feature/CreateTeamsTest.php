@@ -8,6 +8,7 @@ use KIPR\Competition;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CreateTeamsTest extends TestCase
 {

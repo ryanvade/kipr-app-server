@@ -9,6 +9,8 @@ use KIPR\Competition;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class TeamRegistrationTest extends TestCase
 {
@@ -17,10 +19,7 @@ class TeamRegistrationTest extends TestCase
       // given an admin
       $admin = factory(User::class)->create();
       // acting as the admin
-      Passport::actingAs(
-        factory(User::class)->create(),
-        []
-      );
+      Passport::actingAs($admin);
       // and a competition
       $comp = factory(Competition::class)->create();
       // and some teams
@@ -29,7 +28,7 @@ class TeamRegistrationTest extends TestCase
       $teamC = factory(Team::class)->create();
       $teamD = factory(Team::class)->create();
       // attempt to register the teams with the competition
-      $response = $this->json('POST', '/api/competition/1/team/register', [
+      $response = $this->json('POST', '/api/competition/'. $comp->id .'/team/register', [
         'team_ids' => [
           $teamA->id,
           $teamB->id,
@@ -37,7 +36,6 @@ class TeamRegistrationTest extends TestCase
           $teamD->id
         ]
       ]);
-
       $response->assertStatus(200)
                ->assertJson([
                  'teams' => [
@@ -73,14 +71,11 @@ class TeamRegistrationTest extends TestCase
       // given an admin
       $admin = factory(User::class)->create();
       // acting as the admin
-      Passport::actingAs(
-        factory(User::class)->create(),
-        []
-      );
+      Passport::actingAs($admin);
       // and a competition
       $comp = factory(Competition::class)->create();
       // attempt to register the teams with the competition
-      $response = $this->json('POST', '/api/competition/1/team/register', [
+      $response = $this->json('POST', '/api/competition/' . $comp->id . '/team/register', [
         'team_ids' => [
           5,
           9,
@@ -153,7 +148,7 @@ class TeamRegistrationTest extends TestCase
       $comp->teams()->attach($teamC);
       $comp->teams()->attach($teamD);
       // attempt to register the teams with the competition
-      $response = $this->json('POST', '/api/competition/1/team/deregister', [
+      $response = $this->json('POST', '/api/competition/'. $comp->id . '/team/deregister', [
         'team_ids' => [
           $teamA->id,
           $teamB->id,
@@ -182,7 +177,7 @@ class TeamRegistrationTest extends TestCase
       $comp->teams()->attach($teamC);
       $comp->teams()->attach($teamD);
       // attempt to register the teams with the competition
-      $response = $this->json('POST', '/api/competition/1/team/register', [
+      $response = $this->json('POST', '/api/competition/'. $comp->id . '/team/register', [
         'team_ids' => [
           $teamA->id,
           $teamB->id,
@@ -197,14 +192,11 @@ class TeamRegistrationTest extends TestCase
       // given an admin
       $admin = factory(User::class)->create();
       // acting as the admin
-      Passport::actingAs(
-        factory(User::class)->create(),
-        []
-      );
+      Passport::actingAs($admin);
       // and a competition
       $comp = factory(Competition::class)->create();
       // attempt to register the teams with the competition
-      $response = $this->json('POST', '/api/competition/1/team/deregister', [
+      $response = $this->json('POST', '/api/competition/' . $comp->id . '/team/deregister', [
         'team_ids' => [
           5,
           9,
